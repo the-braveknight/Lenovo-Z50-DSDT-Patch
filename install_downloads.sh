@@ -159,12 +159,11 @@ if [ $? -ne 0 ]; then
 fi
 
 # install (injector) kexts in the repo itself
-install_kext AppleHDA_ALC283.kext
+install_kext AppleHDA_CX20751.kext
+install_kext ApplePS2SmartTouchPad.kext
 
 # USBXHC_u430 is mostly specific to 10.11, but it does inject non-removable=yes
 # for the touchscreen
-
-install_kext USBXHC_u430.kext
 
 #if [[ $MINOR_VER -ge 11 ]]; then
     # create custom AppleBacklightInjector.kext and install
