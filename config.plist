@@ -437,6 +437,16 @@
 				<key>Replace</key>
 				<data>AQAA6xc=</data>
 			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>10.11.dp1+ BT4LE-Handoff-Hotspot, credit RehabMan based on Dokterdok original</string>
+				<key>Find</key>
+				<data>SIX/dEdIiwc=</data>
+				<key>Name</key>
+				<string>IOBluetoothFamily</string>
+				<key>Replace</key>
+				<data>Qb4PAAAA60Q=</data>
+			</dict>
 		</array>
 	</dict>
 	<key>RtVariables</key>
