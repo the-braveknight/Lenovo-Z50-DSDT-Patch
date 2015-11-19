@@ -195,12 +195,3 @@ if [ $? -ne 0 ]; then
     done
     cd ../..
 fi
-
-# install VoodooPS2Daemon
-echo Installing VoodooPS2Daemon to /usr/bin and /Library/LaunchDaemons...
-cd ./downloads/kexts/RehabMan-Voodoo-*
-$SUDO cp ./Release/VoodooPS2Daemon /usr/bin
-$SUDO $TAG -a Gray /usr/bin/VoodooPS2Daemon
-$SUDO cp ./org.rehabman.voodoo.driver.Daemon.plist /Library/LaunchDaemons
-$SUDO $TAG -a Gray /Library/LaunchDaemons/org.rehabman.voodoo.driver.Daemon.plist
-cd ../..
