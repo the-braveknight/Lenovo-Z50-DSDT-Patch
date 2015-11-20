@@ -154,8 +154,6 @@
 			<false/>
 			<key>Generate</key>
 			<false/>
-			<key>PluginType</key>
-			<integer>1</integer>
 		</dict>
 		<key>SortedOrder</key>
 		<array>
