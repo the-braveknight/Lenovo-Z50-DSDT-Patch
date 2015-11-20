@@ -10,7 +10,7 @@ HDAINJECT=AppleHDA_CX20751.kext
 HDALAYOUT=layout28
 
 IASLFLAGS=-ve
-IASL=./tools/iasl
+IASL=iasl
 
 VERSION_ERA=$(shell ./print_version.sh)
 ifeq "$(VERSION_ERA)" "10.10-"
