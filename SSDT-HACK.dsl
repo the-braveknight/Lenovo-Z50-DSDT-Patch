@@ -98,6 +98,10 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "LENOVO", "hack", 0x00003000)
         Name(_CID, "backlight")
         Name(_UID, 10)
         Name(_STA, 0x0B)
+        Name(RMCF, Package()
+        {
+            "PWMMax", 0,
+        })
         Method(_INI)
         {
             If (CondRefOf(\_SB.PCI0.RP05.PEGP._OFF))
