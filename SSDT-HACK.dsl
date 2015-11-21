@@ -6,50 +6,59 @@
 
 DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "LENOVO", "hack", 0x00003000)
 {
-    External (\_SB.PCI0, DeviceObj)
-    External (\_SB.PCI0.LPCB.EC0, DeviceObj)
-    External (\_SB.PCI0.RP05.PEGP._OFF, MethodObj)
-    External (\_SB.PCI0.LPCB.PS2K, DeviceObj)
-    External (ECON, FieldUnitObj)
-    External (\_SB.PCI0.LPCB.EC0.XREG, MethodObj)
-    External (\_SB.PCI0.LPCB.EC0.GATY, FieldUnitObj)
-    External (\XPRW, MethodObj)
-    External (P8XH, MethodObj)
-    External (\_SB.PCI0.RP05.PEGP.LCTL, FieldUnitObj)
-    External (\_SB.PCI0.RP05.PEGP.ELCT, IntObj)
-    External (\_SB.PCI0.RP05.PEGP.VREG, FieldUnitObj)
-    External (\_SB.PCI0.RP05.PEGP.VGAB, BuffObj)
-    External (\_SB.PCI0.RP05.PEGP.LNKD, FieldUnitObj)
-    External (\_SB.PCI0.RP05.PEGP.LNKS, FieldUnitObj)
-    External (\_SB.PCI0.RP05.PEGP.SGPO, MethodObj)
-    External (\_SB.PCI0.RP05.PEGP.HLRS, FieldUnitObj)
-    External (\_SB.PCI0.RP05.PEGP.PWEN, FieldUnitObj)
-    
-    External (\_SB.PCI0.LPCB.EC0.BAT0.PBIF, PkgObj)
-    External (\_SB.PCI0.LPCB.EC0.BAT0.PBST, PkgObj)
-    External (\_SB.PCI0.LPCB.EC0.BAT0.OBST, BuffObj)
-    External (\_SB.PCI0.LPCB.EC0.BAT0.OBAC, BuffObj)
-    External (\_SB.PCI0.LPCB.EC0.BAT0.OBPR, BuffObj)
-    External (\_SB.PCI0.LPCB.EC0.BAT0.OBRC, BuffObj)
-    External (\_SB.PCI0.LPCB.EC0.BAT0.OBPV, BuffObj)
-    External (\_SB.PCI0.LPCB.EC0.B1ST, FieldUnitObj)
-    External (\_SB.PCI0.LPCB.EC0.SMPR, FieldUnitObj)
-    External (\_SB.PCI0.LPCB.EC0.SMST, FieldUnitObj)
-    External (\_SB.PCI0.LPCB.EC0.SMAD, FieldUnitObj)
-    External (\_SB.PCI0.LPCB.EC0.BCNT, FieldUnitObj)
-    External (\_SB.PCI0.LPCB.EC0.SMCM, FieldUnitObj)
-    External (\_SB.PCI0.LPCB.EC0.CMFP, MethodObj)
-    External (\_SB.PCI0.LPCB.EC0.CFMX, MutexObj)
-    External (P80H, FieldUnitObj)
-    External (SMID, FieldUnitObj)
-    External (\SFNO, FieldUnitObj)
-    External (\CAVR, FieldUnitObj)
-    External (\STDT, FieldUnitObj)
-    External (\BFDT, FieldUnitObj)
-    External (SMIC, FieldUnitObj)
-    External (\_SB.PCI0.LPCB.EC0.FUSL, FieldUnitObj)
-    External (\_SB.PCI0.LPCB.EC0.FUSH, FieldUnitObj)
-    External (\_SB.PCI0.LPCB.EC0.B1CT, FieldUnitObj)
+    External(_SB.PCI0, DeviceObj)
+    External(_SB.PCI0.LPCB, DeviceObj)
+    External(_SB.PCI0.LPCB.EC0, DeviceObj)
+    External(_SB.PCI0.RP05.PEGP._OFF, MethodObj)
+    External(_SB.PCI0.LPCB.PS2K, DeviceObj)
+    External(ECON, FieldUnitObj)
+    External(_SB.PCI0.LPCB.EC0.XREG, MethodObj)
+    External(_SB.PCI0.LPCB.EC0.GATY, FieldUnitObj)
+    External(XPRW, MethodObj)
+    External(P8XH, MethodObj)
+    External(_SB.PCI0.RP05.PEGP.LCTL, FieldUnitObj)
+    External(_SB.PCI0.RP05.PEGP.ELCT, IntObj)
+    External(_SB.PCI0.RP05.PEGP.VREG, FieldUnitObj)
+    External(_SB.PCI0.RP05.PEGP.VGAB, BuffObj)
+    External(_SB.PCI0.RP05.PEGP.LNKD, FieldUnitObj)
+    External(_SB.PCI0.RP05.PEGP.LNKS, FieldUnitObj)
+    External(_SB.PCI0.RP05.PEGP.SGPO, MethodObj)
+    External(_SB.PCI0.RP05.PEGP.HLRS, FieldUnitObj)
+    External(_SB.PCI0.RP05.PEGP.PWEN, FieldUnitObj)
+    External(_SB.PCI0.EH01, DeviceObj)
+
+    External(_SB.PCI0.LPCB.EC0.BAT0.PBIF, PkgObj)
+    External(_SB.PCI0.LPCB.EC0.BAT0.PBST, PkgObj)
+    External(_SB.PCI0.LPCB.EC0.BAT0.OBST, BuffObj)
+    External(_SB.PCI0.LPCB.EC0.BAT0.OBAC, BuffObj)
+    External(_SB.PCI0.LPCB.EC0.BAT0.OBPR, BuffObj)
+    External(_SB.PCI0.LPCB.EC0.BAT0.OBRC, BuffObj)
+    External(_SB.PCI0.LPCB.EC0.BAT0.OBPV, BuffObj)
+    External(_SB.PCI0.LPCB.EC0.B1ST, FieldUnitObj)
+    External(_SB.PCI0.LPCB.EC0.SMPR, FieldUnitObj)
+    External(_SB.PCI0.LPCB.EC0.SMST, FieldUnitObj)
+    External(_SB.PCI0.LPCB.EC0.SMAD, FieldUnitObj)
+    External(_SB.PCI0.LPCB.EC0.BCNT, FieldUnitObj)
+    External(_SB.PCI0.LPCB.EC0.SMCM, FieldUnitObj)
+    External(_SB.PCI0.LPCB.EC0.CMFP, MethodObj)
+    External(_SB.PCI0.LPCB.EC0.CFMX, MutexObj)
+    External(P80H, FieldUnitObj)
+    External(SMID, FieldUnitObj)
+    External(SFNO, FieldUnitObj)
+    External(CAVR, FieldUnitObj)
+    External(STDT, FieldUnitObj)
+    External(BFDT, FieldUnitObj)
+    External(SMIC, FieldUnitObj)
+    External(_SB.PCI0.LPCB.EC0.FUSL, FieldUnitObj)
+    External(_SB.PCI0.LPCB.EC0.FUSH, FieldUnitObj)
+    External(_SB.PCI0.LPCB.EC0.B1CT, FieldUnitObj)
+    External(_SB.PCI0.XHC, DeviceObj)
+    External(_SB.PCI0.XHC.PR2, FieldUnitObj)
+    External(_SB.PCI0.XHC.PR2M, FieldUnitObj)
+    External(_SB.PCI0.XHC.PR3, FieldUnitObj)
+    External(_SB.PCI0.XHC.PR3M, FieldUnitObj)
+    External(_SB.XUSB, FieldUnitObj)
+    External(_SB.PCI0.XHC.XRST, IntObj)
  
 
     // All _OSI calls in DSDT are routed to XOSI...
@@ -111,7 +120,64 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "LENOVO", "hack", 0x00003000)
         }
     }
     
-    Scope (\_SB.PCI0)
+    Device(UIAC)
+    {
+        Name(_HID, "UIA00000")
+        Name(RMCF, Package()
+        {
+            // EH01 has no ports (XHCIMux is used to force USB3 routing OFF)
+            "EH01", Package()
+            {
+                "port-count", Buffer() { 0, 0, 0, 0 },
+                "ports", Package() { },
+            },
+            // XHC overrides
+            "8086_9xxx", Package()
+            {
+                //"port-count", Buffer() { 0x0d, 0, 0, 0},
+                "ports", Package()
+                {
+                    "HS01", Package() // USB2 right
+                    {
+                        "UsbConnector", 0,
+                        "port", Buffer() { 0x01, 0, 0, 0 },
+                    },
+                    "HS02", Package() // HS USB3 
+                    {
+                        "UsbConnector", 3,
+                        "port", Buffer() { 0x02, 0, 0, 0 },
+                    },
+                    "HS03", Package() // USB2 left
+                    {
+                        "UsbConnector", 0,
+                        "port", Buffer() { 0x03, 0, 0, 0 },
+                    },
+                    "HS04", Package() // card reader
+                    {
+                        "UsbConnector", 255,
+                        "port", Buffer() { 0x04, 0, 0, 0 },
+                    },
+                    "HS06", Package() // webcam
+                    {
+                        "UsbConnector", 255,
+                        "port", Buffer() { 0x06, 0, 0, 0 },
+                    },
+                    "HS07", Package() // bluetooth
+                    {
+                        "UsbConnector", 255,
+                        "port", Buffer() { 0x07, 0, 0, 0 },
+                    },
+                    "SSP1", Package() // SS USB3 left
+                    {
+                        "UsbConnector", 3,
+                        "port", Buffer() { 0x0a, 0, 0, 0 },
+                    },
+                },
+            },
+        })
+    }
+    
+    Scope (_SB.PCI0)
     {
         Device(IMEI)
         {
@@ -133,6 +199,57 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "LENOVO", "hack", 0x00003000)
                 }
             }
         }
+        
+        Method(XHC.XSEL)
+        {
+            // This code is based on original XSEL, but without all the conditionals
+            // With this code, USB works correctly even in 10.10 after booting Windows
+            // setup to route all USB2 on XHCI to XHCI (not EHCI, which is disabled)
+            Store(1, XUSB)
+            Store(1, XRST)
+            Or(And (PR3, 0xFFFFFFC0), PR3M, PR3)
+            Or(And (PR2, 0xFFFF8000), PR2M, PR2)
+        }
+        
+        Scope(EH01)
+        {
+            OperationRegion(PSTS, PCI_Config, 0x54, 2)
+            Field(PSTS, WordAcc, NoLock, Preserve)
+            {
+                PSTE, 2  // bits 2:0 are power state
+            }
+        }
+        
+        Scope(LPCB)
+        {
+            OperationRegion(RMLP, PCI_Config, 0xF0, 4)
+            Field(RMLP, DWordAcc, NoLock, Preserve)
+            {
+                RCB1, 32, // Root Complex Base Address
+            }
+            // address is in bits 31:14
+            OperationRegion(FDM1, SystemMemory, Add(And(RCB1,Not(Subtract(ShiftLeft(1,14),1))),0x3418), 4)
+            Field(FDM1, DWordAcc, NoLock, Preserve)
+            {
+                ,15,    // skip first 15 bits
+                FDE1,1, // should be bit 15 (0-based) (FD EHCI#1)
+            }
+        }
+        
+        Device(RMD1)
+        {
+            //Name(_ADR, 0)
+            Name(_HID, "RMD10000")
+            Method(_INI)
+            {
+                // disable EHCI#1
+                // put EHCI#1 in D3hot (sleep mode)
+                Store(3, ^^EH01.PSTE)
+                // disable EHCI#1 PCI space
+                Store(1, ^^LPCB.FDE1)
+            }
+        }
+        
         Method (RP05.PEGP._OFF, 0, Serialized)
         {
             P8XH (Zero, 0xD6, One)
@@ -150,6 +267,13 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "LENOVO", "hack", 0x00003000)
             SGPO (PWEN, Zero)
             Return (Zero)
         }
+        
+        Method (LPCB.EC0._REG, 2, NotSerialized)
+        {
+            \_SB.PCI0.LPCB.EC0.XREG(Arg0, Arg1) // call original _REG
+            If (ECON) { Store (Zero, \_SB.PCI0.LPCB.EC0.GATY) }
+        }
+        
         Method(LPCB.EC0._Q11)
         {
             Notify (PS2K, 0x20)
@@ -159,15 +283,9 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "LENOVO", "hack", 0x00003000)
         {
             Notify (PS2K, 0x10)
         }
-        
-        Method (LPCB.EC0._REG, 2, NotSerialized)
-        {
-            \_SB.PCI0.LPCB.EC0.XREG(Arg0, Arg1) // call original _REG
-            If (ECON) { Store (Zero, \_SB.PCI0.LPCB.EC0.GATY) }
-        }
     }
     
-    Scope(\_SB.PCI0.LPCB.EC0) // Battery Patches
+    Scope(_SB.PCI0.LPCB.EC0) // Battery Patches
     {      
         Method (BAT0._BST, 0, Serialized)  // _BST: Battery Status
         {
