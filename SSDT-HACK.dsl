@@ -43,6 +43,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "LENOVO", "hack", 0x00003000)
     External(_SB.PCI0.LPCB.EC0.CMFP, MethodObj)
     External(_SB.PCI0.LPCB.EC0.CFMX, MutexObj)
     External(P80H, FieldUnitObj)
+    External(PS2V, FieldUnitObj)
     External(SMID, FieldUnitObj)
     External(SFNO, FieldUnitObj)
     External(CAVR, FieldUnitObj)
@@ -250,7 +251,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "LENOVO", "hack", 0x00003000)
             }
         }
         
-        Method (RP05.PEGP._OFF, 0, Serialized)
+        Method (RP05.PEGP._OFF, 0, Serialized) // Disable nVidia from method _OFF
         {
             P8XH (Zero, 0xD6, One)
             P8XH (One, 0xF0, One)
@@ -268,20 +269,34 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "LENOVO", "hack", 0x00003000)
             Return (Zero)
         }
         
-        Method (LPCB.EC0._REG, 2, NotSerialized)
+        Method (LPCB.EC0._REG, 2, NotSerialized) // Disable nVidia from method _REG
         {
             \_SB.PCI0.LPCB.EC0.XREG(Arg0, Arg1) // call original _REG
             If (ECON) { Store (Zero, \_SB.PCI0.LPCB.EC0.GATY) }
         }
         
-        Method(LPCB.EC0._Q11)
+        Method(LPCB.EC0._Q11) // Brightness down
         {
-            Notify (PS2K, 0x20)
+            if (LEqual(PS2V, 2)) // If the touchpad is Synaptics & using RehabMan's VoodooPS2 driver...
+            {
+                Notify (PS2K, 0x0405)
+            }
+            Else // If the touchpad is ELAN/Other & using EMlyDinEsH's PS2 driver...
+            {
+                Notify(PS2K, 0x20)
+            }
         }
         
-        Method(LPCB.EC0._Q12)
+        Method(LPCB.EC0._Q12) // Btightness up
         {
-            Notify (PS2K, 0x10)
+            if (LEqual(PS2V, 2)) // If the touchpad is Synaptics & using RehabMan's VoodooPS2 driver...
+            {
+                Notify (PS2K, 0x0406)
+            }
+            Else // If the touchpad is ELAN/Other & using EMlyDinEsH's PS2 driver...
+            {
+                Notify(PS2K, 0x10)
+            }
         }
     }
     
