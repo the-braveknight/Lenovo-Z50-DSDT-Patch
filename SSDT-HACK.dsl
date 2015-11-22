@@ -26,7 +26,6 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "LENOVO", "hack", 0x00003000)
     External(_SB.PCI0.RP05.PEGP.HLRS, FieldUnitObj)
     External(_SB.PCI0.RP05.PEGP.PWEN, FieldUnitObj)
     External(_SB.PCI0.EH01, DeviceObj)
-
     External(_SB.PCI0.LPCB.EC0.BAT0.PBIF, PkgObj)
     External(_SB.PCI0.LPCB.EC0.BAT0.PBST, PkgObj)
     External(_SB.PCI0.LPCB.EC0.BAT0.OBST, BuffObj)
@@ -63,15 +62,15 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "LENOVO", "hack", 0x00003000)
  
 
     // All _OSI calls in DSDT are routed to XOSI...
-    // XOSI simulates "Windows 2009" (which is Windows 7)
+    // XOSI simulates "Windows 2015" (which is Windows 10)
     // Note: According to ACPI spec, _OSI("Windows") must also return true
     //  Also, it should return true for all previous versions of Windows.
-    Method(XOSI, 1)
+    Method (XOSI, 1)
     {
         // simulation targets
         // source: (google 'Microsoft Windows _OSI')
         //  http://download.microsoft.com/download/7/E/7/7E7662CF-CBEA-470B-A97E-CE7CE0D98DC2/WinACPI_OSI.docx
-        Store(Package()
+        Store (Package()
         {
             "Windows",              // generic Windows query
             "Windows 2001",         // Windows XP
@@ -94,25 +93,24 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "LENOVO", "hack", 0x00003000)
     // The purpose of this implementation is to avoid "instant wake"
     // by returning 0 in the second position (sleep state supported)
     // of the return package.
-    Method(GPRW, 2)
+    Method (GPRW, 2)
     {
-        If (LEqual(Arg0, 0x6d)) { Return(Package() { 0x6d, 0, }) }
-        Return(XPRW(Arg0, Arg1))
+        If (LEqual (Arg0, 0x6d)) { Return (Package() { 0x6d, 0, }) }
+        Return (XPRW(Arg0, Arg1))
     }
 
-    // For backlight control
-    Device(PNLF)
+    Device (PNLF) // Add device PNLF for Backlight control
     {
-        Name(_ADR, Zero)
-        Name(_HID, EisaId ("APP0002"))
-        Name(_CID, "backlight")
-        Name(_UID, 10)
-        Name(_STA, 0x0B)
-        Name(RMCF, Package()
+        Name (_ADR, Zero)
+        Name (_HID, EisaId ("APP0002"))
+        Name (_CID, "backlight")
+        Name (_UID, 10)
+        Name (_STA, 0x0B)
+        Name (RMCF, Package()
         {
             "PWMMax", 0,
         })
-        Method(_INI)
+        Method (_INI) // Disable nVidia from method _OFF
         {
             If (CondRefOf(\_SB.PCI0.RP05.PEGP._OFF))
             {
@@ -121,10 +119,10 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "LENOVO", "hack", 0x00003000)
         }
     }
     
-    Device(UIAC)
+    Device (UIAC) // Override settings for USBInjectAll.kext, injects only necessary ports
     {
-        Name(_HID, "UIA00000")
-        Name(RMCF, Package()
+        Name (_HID, "UIA00000")
+        Name (RMCF, Package()
         {
             // EH01 has no ports (XHCIMux is used to force USB3 routing OFF)
             "EH01", Package()
@@ -153,17 +151,17 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "LENOVO", "hack", 0x00003000)
                         "UsbConnector", 0,
                         "port", Buffer() { 0x03, 0, 0, 0 },
                     },
-                    "HS04", Package() // card reader
+                    "HS04", Package() // Card reader
                     {
                         "UsbConnector", 255,
                         "port", Buffer() { 0x04, 0, 0, 0 },
                     },
-                    "HS06", Package() // webcam
+                    "HS06", Package() // Webcam
                     {
                         "UsbConnector", 255,
                         "port", Buffer() { 0x06, 0, 0, 0 },
                     },
-                    "HS07", Package() // bluetooth
+                    "HS07", Package() // Bluetooth
                     {
                         "UsbConnector", 255,
                         "port", Buffer() { 0x07, 0, 0, 0 },
@@ -180,20 +178,20 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "LENOVO", "hack", 0x00003000)
     
     Scope (_SB.PCI0)
     {
-        Device(IMEI)
+        Device (IMEI) // Add device IMEI
         {
             Name (_ADR, 0x00160000)
         }
         
-        Device(SBUS.BUS0)
+        Device (SBUS.BUS0) // Add device SMBus
         {
-            Name(_CID, "smbus")
-            Name(_ADR, Zero)
-            Device(DVL0)
+            Name (_CID, "smbus")
+            Name (_ADR, Zero)
+            Device (DVL0)
             {
-                Name(_ADR, 0x57)
-                Name(_CID, "diagsvault")
-                Method(_DSM, 4)
+                Name (_ADR, 0x57)
+                Name (_CID, "diagsvault")
+                Method (_DSM, 4)
                 {
                     If (LEqual (Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
                     Return (Package() { "address", 0x57 })
@@ -201,53 +199,53 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "LENOVO", "hack", 0x00003000)
             }
         }
         
-        Method(XHC.XSEL)
+        Method (XHC.XSEL)
         {
             // This code is based on original XSEL, but without all the conditionals
             // With this code, USB works correctly even in 10.10 after booting Windows
             // setup to route all USB2 on XHCI to XHCI (not EHCI, which is disabled)
-            Store(1, XUSB)
-            Store(1, XRST)
+            Store (1, XUSB)
+            Store (1, XRST)
             Or(And (PR3, 0xFFFFFFC0), PR3M, PR3)
             Or(And (PR2, 0xFFFF8000), PR2M, PR2)
         }
         
-        Scope(EH01)
+        Scope (EH01) // Disable EHCI#1
         {
-            OperationRegion(PSTS, PCI_Config, 0x54, 2)
-            Field(PSTS, WordAcc, NoLock, Preserve)
+            OperationRegion (PSTS, PCI_Config, 0x54, 2)
+            Field (PSTS, WordAcc, NoLock, Preserve)
             {
                 PSTE, 2  // bits 2:0 are power state
             }
         }
         
-        Scope(LPCB)
+        Scope (LPCB) // Disable EHCI#1
         {
-            OperationRegion(RMLP, PCI_Config, 0xF0, 4)
-            Field(RMLP, DWordAcc, NoLock, Preserve)
+            OperationRegion (RMLP, PCI_Config, 0xF0, 4)
+            Field (RMLP, DWordAcc, NoLock, Preserve)
             {
                 RCB1, 32, // Root Complex Base Address
             }
             // address is in bits 31:14
-            OperationRegion(FDM1, SystemMemory, Add(And(RCB1,Not(Subtract(ShiftLeft(1,14),1))),0x3418), 4)
-            Field(FDM1, DWordAcc, NoLock, Preserve)
+            OperationRegion (FDM1, SystemMemory, Add(And(RCB1,Not(Subtract(ShiftLeft(1,14),1))),0x3418), 4)
+            Field (FDM1, DWordAcc, NoLock, Preserve)
             {
                 ,15,    // skip first 15 bits
                 FDE1,1, // should be bit 15 (0-based) (FD EHCI#1)
             }
         }
         
-        Device(RMD1)
+        Device (RMD1) // Disable EHCI#1
         {
-            //Name(_ADR, 0)
-            Name(_HID, "RMD10000")
-            Method(_INI)
+            //Name (_ADR, 0)
+            Name (_HID, "RMD10000")
+            Method (_INI)
             {
                 // disable EHCI#1
                 // put EHCI#1 in D3hot (sleep mode)
-                Store(3, ^^EH01.PSTE)
+                Store (3, ^^EH01.PSTE)
                 // disable EHCI#1 PCI space
-                Store(1, ^^LPCB.FDE1)
+                Store (1, ^^LPCB.FDE1)
             }
         }
         
@@ -271,36 +269,36 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "LENOVO", "hack", 0x00003000)
         
         Method (LPCB.EC0._REG, 2, NotSerialized) // Disable nVidia from method _REG
         {
-            \_SB.PCI0.LPCB.EC0.XREG(Arg0, Arg1) // call original _REG
+            \_SB.PCI0.LPCB.EC0.XREG(Arg0, Arg1)
             If (ECON) { Store (Zero, \_SB.PCI0.LPCB.EC0.GATY) }
         }
         
-        Method(LPCB.EC0._Q11) // Brightness down
+        Method (LPCB.EC0._Q11) // Brightness down
         {
-            if (LEqual(PS2V, 2)) // If the touchpad is Synaptics & using RehabMan's VoodooPS2 driver...
+            if (LEqual (PS2V, 2)) // If the touchpad is Synaptics & using RehabMan's VoodooPS2 driver...
             {
                 Notify (PS2K, 0x0405)
             }
             Else // If the touchpad is ELAN/Other & using EMlyDinEsH's PS2 driver...
             {
-                Notify(PS2K, 0x20)
+                Notify (PS2K, 0x20)
             }
         }
         
-        Method(LPCB.EC0._Q12) // Btightness up
+        Method (LPCB.EC0._Q12) // Btightness up
         {
-            if (LEqual(PS2V, 2)) // If the touchpad is Synaptics & using RehabMan's VoodooPS2 driver...
+            if (LEqual (PS2V, 2)) // If the touchpad is Synaptics & using RehabMan's VoodooPS2 driver...
             {
                 Notify (PS2K, 0x0406)
             }
             Else // If the touchpad is ELAN/Other & using EMlyDinEsH's PS2 driver...
             {
-                Notify(PS2K, 0x10)
+                Notify (PS2K, 0x10)
             }
         }
     }
     
-    Scope(_SB.PCI0.LPCB.EC0) // Battery Patches
+    Scope (_SB.PCI0.LPCB.EC0) // Battery patches...
     {      
         Method (BAT0._BST, 0, Serialized)  // _BST: Battery Status
         {
@@ -385,52 +383,46 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "LENOVO", "hack", 0x00003000)
         
         Method (RE1B, 1, NotSerialized)
         {
-            OperationRegion(ERM2, EmbeddedControl, Arg0, 1)
-            Field(ERM2, ByteAcc, NoLock, Preserve) { BYTE, 8 }
-            Return(BYTE)
+            OperationRegion (ERM2, EmbeddedControl, Arg0, 1)
+            Field (ERM2, ByteAcc, NoLock, Preserve) { BYTE, 8 }
+            Return (BYTE)
         }
         Method (RECB, 2, Serialized)
         // Arg0 - offset in bytes from zero-based EC
         // Arg1 - size of buffer in bits
         {
             ShiftRight(Arg1, 3, Arg1)
-            Name(TEMP, Buffer(Arg1) { })
+            Name (TEMP, Buffer(Arg1) { })
             Add(Arg0, Arg1, Arg1)
-            Store(0, Local0)
+            Store (0, Local0)
             While (LLess(Arg0, Arg1))
             {
-                Store(RE1B(Arg0), Index(TEMP, Local0))
-                Increment(Arg0)
-                Increment(Local0)
+                Store (RE1B(Arg0), Index(TEMP, Local0))
+                Increment (Arg0)
+                Increment (Local0)
             }
-            Return(TEMP)
+            Return (TEMP)
         }
         
         OperationRegion (ERM2, EmbeddedControl, Zero, 0xFF)
         Field (ERM2, ByteAcc, Lock, Preserve)
         {
             Offset (0xC2),
-            RC00, 8,
-            RC01, 8,
+            RC00, 8, RC01, 8,
             Offset (0xC6),
-            FV00, 8,
-            FV01, 8, 
-            DV00, 8,
-            DV01, 8, 
-            DC00, 8,
-            DC01, 8, 
-            FC00, 8,
-            FC01, 8,
+            FV00, 8, FV01, 8, 
+            DV00, 8, DV01, 8, 
+            DC00, 8, DC01, 8, 
+            FC00, 8, FC01, 8,
             Offset (0xD2),
-            AC00, 8,
-            AC01, 8,
+            AC00, 8, AC01, 8,
         }   
         
         Method (WE1B, 2, NotSerialized)
         {
-            OperationRegion(ERM2, EmbeddedControl, Arg0, 1)
-            Field(ERM2, ByteAcc, NoLock, Preserve) { BYTE, 8 }
-            Store(Arg1, BYTE)
+            OperationRegion (ERM2, EmbeddedControl, Arg0, 1)
+            Field (ERM2, ByteAcc, NoLock, Preserve) { BYTE, 8 }
+            Store (Arg1, BYTE)
         }
         Method (WECB, 3, Serialized)
         // Arg0 - offset in bytes from zero-based EC
@@ -438,15 +430,15 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "LENOVO", "hack", 0x00003000)
         // Arg2 - value to write
         {
             ShiftRight(Arg1, 3, Arg1)
-            Name(TEMP, Buffer(Arg1) { })
-            Store(Arg2, TEMP)
+            Name (TEMP, Buffer(Arg1) { })
+            Store (Arg2, TEMP)
             Add(Arg0, Arg1, Arg1)
-            Store(0, Local0)
+            Store (0, Local0)
             While (LLess(Arg0, Arg1))
             {
                 WE1B(Arg0, DerefOf(Index(TEMP, Local0)))
-                Increment(Arg0)
-                Increment(Local0)
+                Increment (Arg0)
+                Increment (Local0)
             }
         }
         Method (VPC0.MHPF, 1, NotSerialized)
@@ -709,6 +701,6 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "LENOVO", "hack", 0x00003000)
                 }
             }
         }
-        Method (\B1B2, 2, NotSerialized) { Return(Or(Arg0, ShiftLeft(Arg1, 8))) }
+        Method (\B1B2, 2, NotSerialized) { Return (Or(Arg0, ShiftLeft(Arg1, 8))) }
     }
 }
