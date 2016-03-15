@@ -704,3 +704,4 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "LENOVO", "hack", 0x00003000)
         Method (\B1B2, 2, NotSerialized) { Return (Or(Arg0, ShiftLeft(Arg1, 8))) }
     }
 }
+//EOF
