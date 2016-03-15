@@ -10,7 +10,7 @@ function createAppleHDAInjector()
 # create AppleHDA injector for Clover setup...
     echo -n "Creating AppleHDA injector for $1..."
     rm -Rf AppleHDA_$1.kext
-    cp -R $unpatched/AppleHDA.kext/ AppleHDA_$1.kext
+    cp -RX $unpatched/AppleHDA.kext/ AppleHDA_$1.kext
     rm -R AppleHDA_$1.kext/Contents/Resources/*
     rm -R AppleHDA_$1.kext/Contents/PlugIns
     rm -R AppleHDA_$1.kext/Contents/_CodeSignature
