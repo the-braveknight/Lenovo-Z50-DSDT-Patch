@@ -88,6 +88,19 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "LENOVO", "hack", 0x00003000)
         Return (LNotEqual(Match(Local0, MEQ, Arg0, MTR, 0, 0), Ones))
     }
 
+    External(_SB.PCI0.LPCB.PS2K, DeviceObj)
+    Scope (_SB.PCI0.LPCB.PS2K)
+    {
+        // overrides for VoodooPS2 configuration...
+        Name(RMCF, Package()
+        {
+            "Synaptics TouchPad", Package()
+            {
+                "DynamicEWMode", ">y",
+            },
+        })
+    }
+
     // In DSDT, native GPRW is renamed to XPRW with Clover binpatch.
     // As a result, calls to GPRW land here.
     // The purpose of this implementation is to avoid "instant wake"
