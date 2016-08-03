@@ -4,7 +4,7 @@
 // A bit experimental, and a bit more difficult with laptops, but
 // still possible.
 
-DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "LENOVO", "hack", 0x00003000)
+DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
 {
     External(_SB.PCI0, DeviceObj)
     External(_SB.PCI0.LPCB, DeviceObj)
@@ -81,11 +81,24 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "LENOVO", "hack", 0x00003000)
             "Windows 2006 SP1",     // Windows Vista SP1
             //"Windows 2006.1",     // Windows Server 2008
             "Windows 2009",         // Windows 7/Windows Server 2008 R2
-            "Windows 2012",       // Windows 8/Windows Sesrver 2012
+            "Windows 2012",       // Windows 8/Windows Server 2012
             "Windows 2013",       // Windows 8.1/Windows Server 2012 R2
             "Windows 2015",       // Windows 10/Windows Server TP
         }, Local0)
-        Return (LNotEqual(Match(Local0, MEQ, Arg0, MTR, 0, 0), Ones))
+        Return (Ones != Match(Local0, MEQ, Arg0, MTR, 0, 0))
+    }
+
+    External(_SB.PCI0.LPCB.PS2K, DeviceObj)
+    Scope (_SB.PCI0.LPCB.PS2K)
+    {
+        // overrides for VoodooPS2 configuration...
+        Name(RMCF, Package()
+        {
+            "Synaptics TouchPad", Package()
+            {
+                "DynamicEWMode", ">y",
+            },
+        })
     }
 
     // In DSDT, native GPRW is renamed to XPRW with Clover binpatch.
@@ -95,7 +108,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "LENOVO", "hack", 0x00003000)
     // of the return package.
     Method (GPRW, 2)
     {
-        If (LEqual (Arg0, 0x6d)) { Return (Package() { 0x6d, 0, }) }
+        If (0x6d == Arg0) { Return(Package() { 0x6d, 0, }) }
         Return (XPRW(Arg0, Arg1))
     }
 
@@ -193,7 +206,7 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "LENOVO", "hack", 0x00003000)
                 Name (_CID, "diagsvault")
                 Method (_DSM, 4)
                 {
-                    If (LEqual (Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
+                    If (!Arg2) { Return (Buffer() { 0x03 } ) }
                     Return (Package() { "address", 0x57 })
                 }
             }
@@ -213,13 +226,13 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "LENOVO", "hack", 0x00003000)
         Scope (EH01) // Disable EHCI#1
         {
             OperationRegion (PSTS, PCI_Config, 0x54, 2)
-            Field (PSTS, WordAcc, NoLock, Preserve)
+            Field(PSTS, WordAcc, NoLock, Preserve)
             {
                 PSTE, 2  // bits 2:0 are power state
             }
         }
         
-        Scope (LPCB) // Disable EHCI#1
+        Scope(LPCB) // Disable EHCI#1
         {
             OperationRegion (RMLP, PCI_Config, 0xF0, 4)
             Field (RMLP, DWordAcc, NoLock, Preserve)
@@ -704,3 +717,4 @@ DefinitionBlock ("SSDT-HACK.aml", "SSDT", 1, "LENOVO", "hack", 0x00003000)
         Method (\B1B2, 2, NotSerialized) { Return (Or(Arg0, ShiftLeft(Arg1, 8))) }
     }
 }
+//EOF
