@@ -10,7 +10,7 @@ function createAppleHDAInjector()
 # create AppleHDA injector for Clover setup...
     echo -n "Creating AppleHDA injector for $1..."
     rm -Rf AppleHDA_$1.kext
-    cp -R $unpatched/AppleHDA.kext/ AppleHDA_$1.kext
+    cp -RX $unpatched/AppleHDA.kext/ AppleHDA_$1.kext
     rm -R AppleHDA_$1.kext/Contents/Resources/*
     rm -R AppleHDA_$1.kext/Contents/PlugIns
     rm -R AppleHDA_$1.kext/Contents/_CodeSignature
@@ -37,7 +37,7 @@ if [ 0 -eq 0 ]; then
     /usr/libexec/plistbuddy -c "Copy ':HardwareConfigDriver_Temp:IOKitPersonalities:HDA Hardware Config Resource' ':IOKitPersonalities:HDA Hardware Config Resource'" $plist
     /usr/libexec/plistbuddy -c "Delete ':HardwareConfigDriver_Temp'" $plist
     /usr/libexec/plistbuddy -c "Delete ':IOKitPersonalities:HDA Hardware Config Resource:HDAConfigDefault'" $plist
-    #/usr/libexec/plistbuddy -c "Delete ':IOKitPersonalities:HDA Hardware Config Resource:PostConstructionInitialization'" $plist
+    /usr/libexec/plistbuddy -c "Delete ':IOKitPersonalities:HDA Hardware Config Resource:PostConstructionInitialization'" $plist
     /usr/libexec/plistbuddy -c "Add ':IOKitPersonalities:HDA Hardware Config Resource:IOProbeScore' integer" $plist
     /usr/libexec/plistbuddy -c "Set ':IOKitPersonalities:HDA Hardware Config Resource:IOProbeScore' 2000" $plist
     /usr/libexec/plistbuddy -c "Merge ./Resources_$1/ahhcd.plist ':IOKitPersonalities:HDA Hardware Config Resource'" $plist

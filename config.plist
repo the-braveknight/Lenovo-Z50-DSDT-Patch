@@ -147,6 +147,14 @@
 					<key>Replace</key>
 					<data>WFhFTAg=</data>
 				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>change _PRW in LID to XPRW (disabling it)</string>
+					<key>Find</key>
+					<data>CF9QUlcSBgIKDgoD</data>
+					<key>Replace</key>
+					<data>CFhQUlcSBgIKDgoD</data>
+				</dict>
 			</array>
 		</dict>
 		<key>DropTables</key>

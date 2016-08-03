@@ -10,7 +10,7 @@
 			<key>Codec</key>
 			<string>Conexant - CX20751/2</string>
 			<key>CodecID</key>
-			<real>351359247</real>
+			<integer>351359247</integer>
 			<key>ConfigData</key>
 			<data>AWccQAFnHRABZx4hAWcfBAF3HBABdx0BAXceFwF3H5ABlxwwAZcdEAGXHoEBlx8EAaccIAGnHQEBpx6gAacfkA==</data>
 			<key>FuncGroup</key>
