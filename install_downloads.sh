@@ -1,9 +1,12 @@
+#!/bin/bash
+
 #set -x
 
 SUDO=sudo
 #SUDO='echo #'
 #SUDO=nothing
-TAG=`pwd`/tools/tag
+TAG=tag_file
+TAGCMD=`pwd`/tools/tag
 SLE=/System/Library/Extensions
 LE=/Library/Extensions
 EXCEPTIONS="Sensors|FakePCIID_BCM57XX|FakePCIID_Intel_GbX|FakePCIID_Intel_HDMI|FakePCIID_XHCIMux|BrcmPatchRAM|BrcmBluetoothInjector|BrcmFirmwareData|USBInjectAll"
@@ -17,6 +20,14 @@ KEXTDEST=$LE
 else
 KEXTDEST=$SLE
 fi
+
+# this could be removed if 'tag' can be made to work on old systems
+function tag_file
+{
+if [[ $MINOR_VER -ge 9 ]]; then
+$SUDO $TAGCMD "$@"
+fi
+}
 
 function check_directory
 {
@@ -40,7 +51,7 @@ if [ "$1" != "" ]; then
 echo installing $1 to $KEXTDEST
 $SUDO rm -Rf $SLE/`basename $1` $KEXTDEST/`basename $1`
 $SUDO cp -Rf $1 $KEXTDEST
-$SUDO $TAG -a Gray $KEXTDEST/`basename $1`
+$TAG -a Gray $KEXTDEST/`basename $1`
 fi
 }
 
@@ -50,7 +61,7 @@ if [ "$1" != "" ]; then
 echo installing $1 to /Applications
 $SUDO rm -Rf /Applications/`basename $1`
 $SUDO cp -Rf $1 /Applications
-$SUDO $TAG -a Gray /Applications/`basename $1`
+$TAG -a Gray /Applications/`basename $1`
 fi
 }
 
@@ -60,7 +71,7 @@ if [ "$1" != "" ]; then
 echo installing $1 to /usr/bin
 $SUDO rm -f /usr/bin/`basename $1`
 $SUDO cp -f $1 /usr/bin
-$SUDO $TAG -a Gray /usr/bin/`basename $1`
+$TAG -a Gray /usr/bin/`basename $1`
 fi
 }
 
@@ -119,6 +130,20 @@ if [ "$(id -u)" != "0" ]; then
 echo "This script requires superuser access..."
 fi
 
+
+# unzip/install tools
+check_directory ./downloads/tools/*.zip
+if [ $? -ne 0 ]; then
+echo Installing tools...
+cd ./downloads/tools
+for tool in *.zip; do
+install $tool
+done
+cd ../..
+fi
+
+if [ "$1" != "toolsonly" ]; then
+
 # unzip/install kexts
 check_directory ./downloads/kexts/*.zip
 if [ $? -ne 0 ]; then
@@ -162,12 +187,28 @@ fi
 cd ../..
 fi
 
-# install (injector) kexts in the repo itself
-install_kext AppleHDA_CX20751.kext
+# install kexts in the repo itself
+
+# patching AppleHDA
+HDA=CX20751
+$SUDO rm -Rf $KEXTDEST/AppleHDA_$HDA.kext
+$SUDO rm -Rf $KEXTDEST/AppleHDAHCD_$HDA.kext
+$SUDO rm -f $SLE/AppleHDA.kext/Contents/Resources/*.zml*
+if [[ 0 -eq 1 ]]; then
+# dummyHDA configuration
+make AppleHDA_$HDA.kext
+install_kext AppleHDA_$HDA.kext
+else
+# alternate configuration (requires .xml.zlib .zml.zlib AppleHDA patch)
+#make AppleHDAHCD_$HDA.kext
+#install_kext AppleHDAHCD_$HDA.kext
+$SUDO cp AppleHDA_${HDA}_Resources/*.zml* $SLE/AppleHDA.kext/Contents/Resources
+$TAG -a Gray $SLE/AppleHDA.kext
+fi
 
 # install ApplePS2SmartTouchPad.kext by EMlyDinEsH from OSXLatitude.com
-
 install_kext ApplePS2SmartTouchPad.kext
+
 #if [[ $MINOR_VER -ge 11 ]]; then
 # create custom AppleBacklightInjector.kext and install
 #./patch_backlight.sh
@@ -188,13 +229,13 @@ install_kext ApplePS2SmartTouchPad.kext
 # force cache rebuild with output
 $SUDO touch $SLE && $SUDO kextcache -u /
 
-# unzip/install tools
-check_directory ./downloads/tools/*.zip
-if [ $? -ne 0 ]; then
-echo Installing tools...
-cd ./downloads/tools
-for tool in *.zip; do
-install $tool
-done
-cd ../..
-fi
+# install VoodooPS2Daemon
+echo Installing VoodooPS2Daemon to /usr/bin and /Library/LaunchDaemons...
+cd ./downloads/kexts/RehabMan-Voodoo-*
+$SUDO cp ./Release/VoodooPS2Daemon /usr/bin
+$TAG -a Gray /usr/bin/VoodooPS2Daemon
+$SUDO cp ./org.rehabman.voodoo.driver.Daemon.plist /Library/LaunchDaemons
+$TAG -a Gray /Library/LaunchDaemons/org.rehabman.voodoo.driver.Daemon.plist
+cd ../../..
+
+fi # "toolsonly"
