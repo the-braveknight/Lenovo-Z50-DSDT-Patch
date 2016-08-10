@@ -9,7 +9,7 @@ TAG=tag_file
 TAGCMD=`pwd`/tools/tag
 SLE=/System/Library/Extensions
 LE=/Library/Extensions
-EXCEPTIONS="Sensors|FakePCIID_BCM57XX|FakePCIID_Intel_GbX|FakePCIID_Intel_HDMI|FakePCIID_XHCIMux|BrcmPatchRAM|BrcmBluetoothInjector|BrcmFirmwareData|USBInjectAll"
+EXCEPTIONS="Sensors|FakePCIID_BCM57XX|FakePCIID_Intel_GbX|FakePCIID_Intel_HDMI|FakePCIID_XHCIMux|FakePCIID_AR9280_as_AR946x|BrcmPatchRAM|BrcmBluetoothInjector|BrcmFirmwareData|BrcmNonPatchRAM|USBInjectAll"
 
 # extract minor version (eg. 10.9 vs. 10.10 vs. 10.11)
 MINOR_VER=$([[ "$(sw_vers -productVersion)" =~ [0-9]+\.([0-9]+) ]] && echo ${BASH_REMATCH[1]})
@@ -155,6 +155,7 @@ done
 if [[ $MINOR_VER -ge 11 ]]; then
 # 10.11 needs BrcmPatchRAM2.kext
 cd RehabMan-BrcmPatchRAM*/Release && install_kext BrcmPatchRAM2.kext && cd ../..
+cd RehabMan-BrcmPatchRAM*/Release && install_kext BrcmNonPatchRAM2.kext && cd ../..
 # 10.11 needs USBInjectAll.kext
 cd RehabMan-USBInjectAll*/Release && install_kext USBInjectAll.kext && cd ../..
 # remove BrcPatchRAM.kext just in case
@@ -164,6 +165,7 @@ $SUDO rm -Rf $SLE/BrcmBluetoothInjector.kext $KEXTDEST/BrcmBluetoothInjector.kex
 else
 # prior to 10.11, need BrcmPatchRAM.kext
 cd RehabMan-BrcmPatchRAM*/Release && install_kext BrcmPatchRAM.kext && cd ../..
+cd RehabMan-BrcmPatchRAM*/Release && install_kext BrcmNonPatchRAM.kext && cd ../..
 # remove BrcPatchRAM2.kext just in case
 $SUDO rm -Rf $SLE/BrcmPatchRAM2.kext $KEXTDEST/BrcmPatchRAM2.kext
 # remove injector just in case
