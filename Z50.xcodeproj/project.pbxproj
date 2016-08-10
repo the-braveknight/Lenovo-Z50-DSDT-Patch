@@ -12,11 +12,17 @@
 		84490D5D1A14945B000E1BFB /* patch_hda.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = patch_hda.sh; sourceTree = "<group>"; };
 		8455352818E65265001ADBFD /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
 		8467C38E1A23A9FC00FCF396 /* mount_efi.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = mount_efi.sh; sourceTree = "<group>"; };
+		B818FE241D5BD78E00489224 /* SSDT-CX20751.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SSDT-CX20751.dsl"; sourceTree = "<group>"; };
+		B818FE251D5BD7A500489224 /* install_tools.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = install_tools.sh; sourceTree = "<group>"; };
+		B818FE261D5BD7B000489224 /* update_config.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = update_config.sh; sourceTree = "<group>"; };
+		B818FE271D5BD7E500489224 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = USBXHC_z50.kext/Contents/Info.plist; sourceTree = "<group>"; };
+		B818FE291D5BD80E00489224 /* Backlight.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Backlight.plist; sourceTree = "<group>"; };
+		B818FE2A1D5BD81400489224 /* patch_backlight.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = patch_backlight.sh; sourceTree = "<group>"; };
 		ED3F518A1A2029DE0060691A /* install_downloads.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = install_downloads.sh; sourceTree = "<group>"; };
 		ED3F518B1A2029DE0060691A /* download.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = download.sh; sourceTree = "<group>"; };
 		ED48DF001B4CCCC800BDDC62 /* SSDT-HACK.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SSDT-HACK.dsl"; sourceTree = "<group>"; };
-		EDC7F9421B4C64FA00B49451 /* layout28.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = layout28.plist; path = Resources_CX20751/layout/layout28.plist; sourceTree = "<group>"; };
-		EDC7F9431B4C64FA00B49451 /* Platforms.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Platforms.plist; path = Resources_CX20751/layout/Platforms.plist; sourceTree = "<group>"; };
+		EDC7F9421B4C64FA00B49451 /* layout28.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = layout28.plist; path = Resources_CX20751/layout28.plist; sourceTree = "<group>"; };
+		EDC7F9431B4C64FA00B49451 /* Platforms.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Platforms.plist; path = Resources_CX20751/Platforms.plist; sourceTree = "<group>"; };
 		EDF134011B4F62DA009D8597 /* ahhcd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = ahhcd.plist; path = Resources_CX20751/ahhcd.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -27,11 +33,16 @@
 				8406FCD6188627B8006D8DB7 /* README.md */,
 				8455352818E65265001ADBFD /* config.plist */,
 				ED48DF001B4CCCC800BDDC62 /* SSDT-HACK.dsl */,
+				B818FE241D5BD78E00489224 /* SSDT-CX20751.dsl */,
 				840152EF182AE45E00D58B0A /* makefile */,
 				8467C38E1A23A9FC00FCF396 /* mount_efi.sh */,
 				ED3F518B1A2029DE0060691A /* download.sh */,
+				B818FE251D5BD7A500489224 /* install_tools.sh */,
 				ED3F518A1A2029DE0060691A /* install_downloads.sh */,
+				B818FE261D5BD7B000489224 /* update_config.sh */,
+				B818FE281D5BD7EE00489224 /* USBXHC_z50.kext */,
 				84B540381ACB34B600D8ABAE /* audio */,
+				B818FE2B1D5BD81B00489224 /* backlight */,
 			);
 			sourceTree = "<group>";
 		};
@@ -44,6 +55,23 @@
 				EDC7F9431B4C64FA00B49451 /* Platforms.plist */,
 			);
 			name = audio;
+			sourceTree = "<group>";
+		};
+		B818FE281D5BD7EE00489224 /* USBXHC_z50.kext */ = {
+			isa = PBXGroup;
+			children = (
+				B818FE271D5BD7E500489224 /* Info.plist */,
+			);
+			name = USBXHC_z50.kext;
+			sourceTree = "<group>";
+		};
+		B818FE2B1D5BD81B00489224 /* backlight */ = {
+			isa = PBXGroup;
+			children = (
+				B818FE2A1D5BD81400489224 /* patch_backlight.sh */,
+				B818FE291D5BD80E00489224 /* Backlight.plist */,
+			);
+			name = backlight;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,7 +99,7 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = RehabMan;
 			};
-			buildConfigurationList = 840152E8182AE40B00D58B0A /* Build configuration list for PBXProject "Z50" */;
+			buildConfigurationList = 840152E8182AE40B00D58B0A /* Build configuration list for PBXProject "z50" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -180,7 +208,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		840152E8182AE40B00D58B0A /* Build configuration list for PBXProject "Z50" */ = {
+		840152E8182AE40B00D58B0A /* Build configuration list for PBXProject "z50" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				840152EA182AE40B00D58B0A /* Debug */,
