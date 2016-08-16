@@ -8,6 +8,12 @@ Please refer to this guide thread on tonymacx86.com for a step-by-step process, 
 
 http://www.tonymacx86.com/el-capitan-laptop-guides/179520-guide-lenovo-z50-70-using-clover-uefi-10-11-a.html
 
+2016-08-03
+
+- Merged changes and fixes from RehabMan’s repo.
+- Updated SSDT-HACK.dsl for using the new iasl (ACPI 6.1).
+
+
 2015-12-24
 
 - Added link to the-braveknight guide/thread on tonymacx86
@@ -16,3 +22,4 @@ http://www.tonymacx86.com/el-capitan-laptop-guides/179520-guide-lenovo-z50-70-us
 2015-11-04
 
 - Initial creation based on RehabMan's scripts.
+
