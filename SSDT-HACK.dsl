@@ -59,18 +59,17 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
     External(_SB.PCI0.XHC.PR3M, FieldUnitObj)
     External(_SB.XUSB, FieldUnitObj)
     External(_SB.PCI0.XHC.XRST, IntObj)
- 
 
     // All _OSI calls in DSDT are routed to XOSI...
-    // XOSI simulates "Windows 2015" (which is Windows 10)
+    // XOSI simulates "Windows 2012" (which is Windows 8)
     // Note: According to ACPI spec, _OSI("Windows") must also return true
     //  Also, it should return true for all previous versions of Windows.
-    Method (XOSI, 1)
+    Method(XOSI, 1)
     {
         // simulation targets
         // source: (google 'Microsoft Windows _OSI')
         //  http://download.microsoft.com/download/7/E/7/7E7662CF-CBEA-470B-A97E-CE7CE0D98DC2/WinACPI_OSI.docx
-        Store (Package()
+        Store(Package()
         {
             "Windows",              // generic Windows query
             "Windows 2001",         // Windows XP
@@ -81,58 +80,30 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
             "Windows 2006 SP1",     // Windows Vista SP1
             //"Windows 2006.1",     // Windows Server 2008
             "Windows 2009",         // Windows 7/Windows Server 2008 R2
-            "Windows 2012",       // Windows 8/Windows Server 2012
-            "Windows 2013",       // Windows 8.1/Windows Server 2012 R2
-            "Windows 2015",       // Windows 10/Windows Server TP
+            "Windows 2012",         // Windows 8/Windows Server 2012
+            "Windows 2013",         // Windows 8.1/Windows Server 2012 R2
+            "Windows 2015",         // Windows 10/Windows Server TP
         }, Local0)
         Return (Ones != Match(Local0, MEQ, Arg0, MTR, 0, 0))
     }
 
-    External(_SB.PCI0.LPCB.PS2K, DeviceObj)
-    Scope (_SB.PCI0.LPCB.PS2K)
-    {
-        // overrides for VoodooPS2 configuration...
-        Name(RMCF, Package()
-        {
-            "Synaptics TouchPad", Package()
-            {
-                "DynamicEWMode", ">y",
-            },
-        })
-    }
+//
+// USB related
+//
 
     // In DSDT, native GPRW is renamed to XPRW with Clover binpatch.
     // As a result, calls to GPRW land here.
     // The purpose of this implementation is to avoid "instant wake"
     // by returning 0 in the second position (sleep state supported)
     // of the return package.
-    Method (GPRW, 2)
+    Method(GPRW, 2)
     {
         If (0x6d == Arg0) { Return(Package() { 0x6d, 0, }) }
-        Return (XPRW(Arg0, Arg1))
-    }
-
-    Device (PNLF) // Add device PNLF for Backlight control
-    {
-        Name (_ADR, Zero)
-        Name (_HID, EisaId ("APP0002"))
-        Name (_CID, "backlight")
-        Name (_UID, 10)
-        Name (_STA, 0x0B)
-        Name (RMCF, Package()
-        {
-            "PWMMax", 0,
-        })
-        Method (_INI) // Disable nVidia from method _OFF
-        {
-            If (CondRefOf(\_SB.PCI0.RP05.PEGP._OFF))
-            {
-                \_SB.PCI0.RP05.PEGP._OFF()
-            }
-        }
+        Return(XPRW(Arg0, Arg1))
     }
     
-    Device (UIAC) // Override settings for USBInjectAll.kext, injects only necessary ports
+    // Override for USBInjectAll.kext 
+    Device(UIAC)
     {
         Name (_HID, "UIA00000")
         Name (RMCF, Package()
@@ -189,81 +160,86 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
         })
     }
     
-    Scope (_SB.PCI0)
+    Device(PNLF)
     {
-        Device (IMEI) // Add device IMEI
+        Name(_ADR, Zero)
+        Name(_HID, EisaId ("APP0002"))
+        Name(_CID, "backlight")
+        Name(_UID, 10)
+        Name(_STA, 0x0B)
+        Name(RMCF, Package()
         {
-            Name (_ADR, 0x00160000)
-        }
-        
-        Device (SBUS.BUS0) // Add device SMBus
+            "PWMMax", 0,
+        })
+        Method(_INI)
         {
-            Name (_CID, "smbus")
-            Name (_ADR, Zero)
-            Device (DVL0)
+            // disable discrete graphics (Nvidia) if it is present
+            If (CondRefOf(\_SB.PCI0.RP05.PEGP._OFF))
             {
-                Name (_ADR, 0x57)
-                Name (_CID, "diagsvault")
-                Method (_DSM, 4)
-                {
-                    If (!Arg2) { Return (Buffer() { 0x03 } ) }
-                    Return (Package() { "address", 0x57 })
-                }
+                \_SB.PCI0.RP05.PEGP._OFF()
             }
         }
-        
-        Method (XHC.XSEL)
+    }
+
+//
+// Disabling EHCI #1
+//
+    Scope(_SB.PCI0)
+    {
+        Method(XHC.XSEL)
         {
             // This code is based on original XSEL, but without all the conditionals
             // With this code, USB works correctly even in 10.10 after booting Windows
             // setup to route all USB2 on XHCI to XHCI (not EHCI, which is disabled)
-            Store (1, XUSB)
-            Store (1, XRST)
+            Store(1, XUSB)
+            Store(1, XRST)
             Or(And (PR3, 0xFFFFFFC0), PR3M, PR3)
             Or(And (PR2, 0xFFFF8000), PR2M, PR2)
         }
-        
-        Scope (EH01) // Disable EHCI#1
+        // registers needed for disabling EHC#1
+        Scope(EH01)
         {
-            OperationRegion (PSTS, PCI_Config, 0x54, 2)
+            OperationRegion(PSTS, PCI_Config, 0x54, 2)
             Field(PSTS, WordAcc, NoLock, Preserve)
             {
                 PSTE, 2  // bits 2:0 are power state
             }
         }
         
-        Scope(LPCB) // Disable EHCI#1
+        Scope(LPCB)
         {
-            OperationRegion (RMLP, PCI_Config, 0xF0, 4)
-            Field (RMLP, DWordAcc, NoLock, Preserve)
+            OperationRegion(RMLP, PCI_Config, 0xF0, 4)
+            Field(RMLP, DWordAcc, NoLock, Preserve)
             {
                 RCB1, 32, // Root Complex Base Address
             }
             // address is in bits 31:14
-            OperationRegion (FDM1, SystemMemory, Add(And(RCB1,Not(Subtract(ShiftLeft(1,14),1))),0x3418), 4)
-            Field (FDM1, DWordAcc, NoLock, Preserve)
+            OperationRegion(FDM1, SystemMemory, Add(And(RCB1,Not(Subtract(ShiftLeft(1,14),1))),0x3418), 4)
+            Field(FDM1, DWordAcc, NoLock, Preserve)
             {
                 ,15,    // skip first 15 bits
                 FDE1,1, // should be bit 15 (0-based) (FD EHCI#1)
             }
         }
-        
-        Device (RMD1) // Disable EHCI#1
+        Device(RMD1)
         {
-            //Name (_ADR, 0)
-            Name (_HID, "RMD10000")
-            Method (_INI)
+            //Name(_ADR, 0)
+            Name(_HID, "RMD10000")
+            Method(_INI)
             {
                 // disable EHCI#1
                 // put EHCI#1 in D3hot (sleep mode)
-                Store (3, ^^EH01.PSTE)
+                Store(3, ^^EH01.PSTE)
                 // disable EHCI#1 PCI space
-                Store (1, ^^LPCB.FDE1)
+                Store(1, ^^LPCB.FDE1)
             }
         }
-        
-        Method (RP05.PEGP._OFF, 0, Serialized) // Disable nVidia from method _OFF
-        {
+    }
+    
+    Scope (_SB.PCI0) // disable nVidia from methods _OFF & _REG
+    {
+        Method (RP05.PEGP._OFF, 0, Serialized) // disable nVidia from method _OFF
+        { 
             P8XH (Zero, 0xD6, One)
             P8XH (One, 0xF0, One)
 
@@ -280,13 +256,64 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
             Return (Zero)
         }
         
-        Method (LPCB.EC0._REG, 2, NotSerialized) // Disable nVidia from method _REG
+        Method (LPCB.EC0._REG, 2, NotSerialized) // disable nVidia from method _REG
         {
             \_SB.PCI0.LPCB.EC0.XREG(Arg0, Arg1)
             If (ECON) { Store (Zero, \_SB.PCI0.LPCB.EC0.GATY) }
         }
-        
-        Method (LPCB.EC0._Q11) // Brightness down
+    }
+
+//
+// Standard Injections/Fixes
+//
+
+    Scope(_SB.PCI0)
+    {
+        Device(IMEI)
+        {
+            Name (_ADR, 0x00160000)
+        }
+
+        Device(SBUS.BUS0)
+        {
+            Name(_CID, "smbus")
+            Name(_ADR, Zero)
+            Device(DVL0)
+            {
+                Name(_ADR, 0x57)
+                Name(_CID, "diagsvault")
+                Method(_DSM, 4)
+                {
+                    If (!Arg2) { Return (Buffer() { 0x03 } ) }
+                    Return (Package() { "address", 0x57 })
+                }
+            }
+        }
+
+    }
+
+//
+// Keyboard/Trackpad
+//
+
+    Scope (_SB.PCI0.LPCB.PS2K)
+    {
+        Name(RMCF, Package()
+        {
+            "Synaptics TouchPad", Package()
+            {
+                "DynamicEWMode", ">y",
+            },
+        })  
+    }
+
+//
+// Backlight control
+//
+
+    Scope(_SB.PCI0.LPCB.EC0) // brightness buttons
+    {
+        Method (_Q11) // Brightness down
         {
             if (LEqual (PS2V, 2)) // If the touchpad is Synaptics & using RehabMan's VoodooPS2 driver...
             {
@@ -298,7 +325,7 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
             }
         }
         
-        Method (LPCB.EC0._Q12) // Btightness up
+        Method (_Q12) // Btightness up
         {
             if (LEqual (PS2V, 2)) // If the touchpad is Synaptics & using RehabMan's VoodooPS2 driver...
             {
@@ -310,8 +337,11 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
             }
         }
     }
-    
-    Scope (_SB.PCI0.LPCB.EC0) // Battery patches...
+
+//
+// Battery Status
+//
+    Scope (_SB.PCI0.LPCB.EC0)
     {      
         Method (BAT0._BST, 0, Serialized)  // _BST: Battery Status
         {
@@ -717,4 +747,4 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
         Method (\B1B2, 2, NotSerialized) { Return (Or(Arg0, ShiftLeft(Arg1, 8))) }
     }
 }
-//EOF
+// EOF

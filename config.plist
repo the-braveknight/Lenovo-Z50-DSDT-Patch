@@ -12,8 +12,6 @@
 				<true/>
 				<key>FixHPET_0010</key>
 				<true/>
-				<key>FixRegions_10000000</key>
-				<true/>
 				<key>NewWay_80000000</key>
 				<true/>
 			</dict>
@@ -155,15 +153,16 @@
 					<key>Replace</key>
 					<data>CFhQUlcSBgIKDgoD</data>
 				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>change _DSM to XDSM</string>
+					<key>Find</key>
+					<data>X0RTTQ==</data>
+					<key>Replace</key>
+					<data>WERTTQ==</data>
+				</dict>
 			</array>
 		</dict>
-		<key>DropTables</key>
-		<array>
-			<dict>
-				<key>Signature</key>
-				<string>DMAR</string>
-			</dict>
-		</array>
 		<key>SSDT</key>
 		<dict>
 			<key>DropOem</key>
@@ -171,11 +170,6 @@
 			<key>Generate</key>
 			<false/>
 		</dict>
-		<key>SortedOrder</key>
-		<array>
-			<string>SSDT.aml</string>
-			<string>SSDT-HACK.aml</string>
-		</array>
 	</dict>
 	<key>Boot</key>
 	<dict>
@@ -185,8 +179,6 @@
 		<false/>
 		<key>Timeout</key>
 		<integer>5</integer>
-		<key>XMPDetection</key>
-		<string>Yes</string>
 	</dict>
 	<key>CPU</key>
 	<dict>
@@ -379,7 +371,7 @@
 		<key>Scan</key>
 		<true/>
 		<key>Theme</key>
-		<string>El Capitan</string>
+		<string>embedded</string>
 	</dict>
 	<key>Graphics</key>
 	<dict>
@@ -392,11 +384,7 @@
 	<key>KernelAndKextPatches</key>
 	<dict>
 		<key>AppleRTC</key>
-		<false/>
-		<key>AsusAICPUPM</key>
-		<false/>
-		<key>KernelLapic</key>
-		<false/>
+		<true/>
 		<key>KernelPm</key>
 		<true/>
 		<key>KextsToPatch</key>
@@ -420,6 +408,18 @@
 				<string>AppleHDA</string>
 				<key>Replace</key>
 				<data>D1HxFA==</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>AppleHDA .xml.zlib to .zml.zlib</string>
+				<key>Disabled</key>
+				<false/>
+				<key>Find</key>
+				<data>LnhtbC56bA==</data>
+				<key>Name</key>
+				<string>AppleHDA</string>
+				<key>Replace</key>
+				<data>LnptbC56bA==</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
@@ -453,6 +453,16 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
+				<string>10.10.2+ 5Ghz US FCC, the-darkvoid</string>
+				<key>Find</key>
+				<data>QYP8/3QsSA==</data>
+				<key>Name</key>
+				<string>AirPortBrcm4360</string>
+				<key>Replace</key>
+				<data>ZscGVVPrKw==</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
 				<string>10.11.dp1+ BT4LE-Handoff-Hotspot, credit RehabMan based on Dokterdok original</string>
 				<key>Find</key>
 				<data>SIX/dEdIiwc=</data>
@@ -473,7 +483,7 @@
 	<key>SMBIOS</key>
 	<dict>
 		<key>ProductName</key>
-		<string>MacBookPro11,2</string>
+		<string>MacBookPro11,1</string>
 		<key>Trust</key>
 		<false/>
 	</dict>
