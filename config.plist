@@ -173,8 +173,6 @@
 	</dict>
 	<key>Boot</key>
 	<dict>
-		<key>DefaultVolume</key>
-		<string>LastBootedVolume</string>
 		<key>Secure</key>
 		<false/>
 		<key>Timeout</key>
@@ -183,7 +181,7 @@
 	<key>CPU</key>
 	<dict>
 		<key>#FrequencyMHz</key>
-		<integer>2600</integer>
+		<integer>2000</integer>
 	</dict>
 	<key>Devices</key>
 	<dict>
