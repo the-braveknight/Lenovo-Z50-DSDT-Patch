@@ -22,7 +22,7 @@ DefinitionBlock ("", "SSDT", 2, "hack", "CX20751", 0)
                     Package(){},
                     Package()
                     {
-                        "LayoutID", 28,
+                        "LayoutID", 3,
                         "PinConfigs", Package()
                         {
                             Package(){},
