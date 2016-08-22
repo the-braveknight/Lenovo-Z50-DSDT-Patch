@@ -19,94 +19,6 @@
 			<array>
 				<dict>
 					<key>Comment</key>
-					<string>Method (MHPF to Method (XHPF</string>
-					<key>Find</key>
-					<data>TUhQRgE=</data>
-					<key>Replace</key>
-					<data>WEhQRgE=</data>
-				</dict>
-				<dict>
-					<key>Comment</key>
-					<string>Method (MHIF to Method (XHIF</string>
-					<key>Find</key>
-					<data>TUhJRgE=</data>
-					<key>Replace</key>
-					<data>WEhJRgE=</data>
-				</dict>
-				<dict>
-					<key>Comment</key>
-					<string>Method (GBID to Method (XBID</string>
-					<key>Find</key>
-					<data>R0JJRAg=</data>
-					<key>Replace</key>
-					<data>WEJJRAg=</data>
-				</dict>
-				<dict>
-					<key>Comment</key>
-					<string>Method (CFUN to Method (XFUN</string>
-					<key>Find</key>
-					<data>Q0ZVTgw=</data>
-					<key>Replace</key>
-					<data>WEZVTgw=</data>
-				</dict>
-				<dict>
-					<key>Comment</key>
-					<string>Method (_BST to Method (XBST</string>
-					<key>Find</key>
-					<data>X0JTVAg=</data>
-					<key>Replace</key>
-					<data>WEJTVAg=</data>
-				</dict>
-				<dict>
-					<key>Comment</key>
-					<string>Method (_BIF to Method (XBIF</string>
-					<key>Find</key>
-					<data>X0JJRgA=</data>
-					<key>Replace</key>
-					<data>WEJJRgA=</data>
-				</dict>
-				<dict>
-					<key>Comment</key>
-					<string>Method(_OFF,0) to XOFF</string>
-					<key>Find</key>
-					<data>X09GRgg=</data>
-					<key>Replace</key>
-					<data>WE9GRgg=</data>
-				</dict>
-				<dict>
-					<key>Comment</key>
-					<string>change _Q11 to XQ11</string>
-					<key>Find</key>
-					<data>X1ExMQ==</data>
-					<key>Replace</key>
-					<data>WFExMQ==</data>
-				</dict>
-				<dict>
-					<key>Comment</key>
-					<string>change _Q12 to XQ12</string>
-					<key>Find</key>
-					<data>X1ExMg==</data>
-					<key>Replace</key>
-					<data>WFExMg==</data>
-				</dict>
-				<dict>
-					<key>Comment</key>
-					<string>change Method(GPRW,2,..) to Method(XPRW,2,..)</string>
-					<key>Find</key>
-					<data>R1BSVwI=</data>
-					<key>Replace</key>
-					<data>WFBSVwI=</data>
-				</dict>
-				<dict>
-					<key>Comment</key>
-					<string>Change Method(_REG,2,..) to XREG</string>
-					<key>Find</key>
-					<data>X1JFRwI=</data>
-					<key>Replace</key>
-					<data>WFJFRwI=</data>
-				</dict>
-				<dict>
-					<key>Comment</key>
 					<string>change _OSI to XOSI</string>
 					<key>Find</key>
 					<data>X09TSQ==</data>
@@ -123,6 +35,14 @@
 				</dict>
 				<dict>
 					<key>Comment</key>
+					<string>change Method(GPRW,2,N) to XPRW</string>
+					<key>Find</key>
+					<data>R1BSVwI=</data>
+					<key>Replace</key>
+					<data>WFBSVwI=</data>
+				</dict>
+				<dict>
+					<key>Comment</key>
 					<string>change GFX0 to IGPU</string>
 					<key>Find</key>
 					<data>R0ZYMA==</data>
@@ -136,6 +56,86 @@
 					<data>QjBEMw==</data>
 					<key>Replace</key>
 					<data>SERBVQ==</data>
+				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>change Method( _Q11,0,N) to XQ11</string>
+					<key>Find</key>
+					<data>X1ExMQA=</data>
+					<key>Replace</key>
+					<data>WFExMQA=</data>
+				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>change Method(_Q12,0,N) to XQ12</string>
+					<key>Find</key>
+					<data>X1ExMgA=</data>
+					<key>Replace</key>
+					<data>WFExMgA=</data>
+				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>change Method(MHPF,1,N) to XHPF</string>
+					<key>Find</key>
+					<data>TUhQRgE=</data>
+					<key>Replace</key>
+					<data>WEhQRgE=</data>
+				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>change Method(MHIF,1,N) to XHIF</string>
+					<key>Find</key>
+					<data>TUhJRgE=</data>
+					<key>Replace</key>
+					<data>WEhJRgE=</data>
+				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>change Method(GBID,0,S) to XBID</string>
+					<key>Find</key>
+					<data>R0JJRAg=</data>
+					<key>Replace</key>
+					<data>WEJJRAg=</data>
+				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>change Method(CFUN,4,S) to XFUN</string>
+					<key>Find</key>
+					<data>Q0ZVTgw=</data>
+					<key>Replace</key>
+					<data>WEZVTgw=</data>
+				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>change Method(_BST,0,S) to XBST</string>
+					<key>Find</key>
+					<data>X0JTVAg=</data>
+					<key>Replace</key>
+					<data>WEJTVAg=</data>
+				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>change Method(_BIF,0,N) to XBIF</string>
+					<key>Find</key>
+					<data>X0JJRgA=</data>
+					<key>Replace</key>
+					<data>WEJJRgA=</data>
+				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>change Method(_OFF,0,S) to XOFF</string>
+					<key>Find</key>
+					<data>X09GRgg=</data>
+					<key>Replace</key>
+					<data>WE9GRgg=</data>
+				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>Change Method(_REG,2,N) to XREG</string>
+					<key>Find</key>
+					<data>X1JFRwI=</data>
+					<key>Replace</key>
+					<data>WFJFRwI=</data>
 				</dict>
 				<dict>
 					<key>Comment</key>
@@ -483,7 +483,7 @@
 		<key>ProductName</key>
 		<string>MacBookPro11,1</string>
 		<key>Trust</key>
-		<false/>
+		<true/>
 	</dict>
 	<key>SystemParameters</key>
 	<dict>
