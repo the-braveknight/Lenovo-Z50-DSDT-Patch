@@ -117,6 +117,9 @@ if [ $? -ne 0 ]; then
     cd ../..
 fi
 
+
+# Copy custom firmware to BrcmFirmwareRepo.kext to make it
+# able to be injected.
 plist=$KEXTDEST/BrcmFirmwareRepo.kext/Contents/Info.plist
 /usr/libexec/plistbuddy -c "Merge ./bt_dev_id.plist ':IOKitPersonalities'" $plist
 /usr/libexec/plistbuddy -c "Merge ./bt_firmware.plist ':IOKitPersonalities:BrcmFirmwareStore'" $plist
