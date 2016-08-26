@@ -63,6 +63,15 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 
+# Copy kexts in Clover/kexts/10.* folders to Clover/kexts/Other
+# and delete Clover/kexts/10.* folders.
+for each in $(find $EFIDIR/EFI/CLOVER/kexts/ -name "10.*" -type d); do
+    for innerdir in $(find $each -name "*.kext" -type d); do
+        cp -R $innerdir $KEXTDEST
+    done
+    rm -R $each
+done
+
 # unzip/install kexts
 check_directory ./downloads/kexts/*.zip
 if [ $? -ne 0 ]; then
