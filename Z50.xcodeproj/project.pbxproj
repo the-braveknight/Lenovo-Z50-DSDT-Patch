@@ -46,7 +46,7 @@
 				B8BB68B31D708AF7009ABC2F /* ACPI */,
 				B8BB68B21D708AD3009ABC2F /* Reference */,
 				84B540381ACB34B600D8ABAE /* Audio */,
-				B8BB68AF1D708A5E009ABC2F /* BluetoothFirmware */,
+				B8BB68AF1D708A5E009ABC2F /* Bluetooth Firmware */,
 			);
 			sourceTree = "<group>";
 		};
@@ -78,13 +78,13 @@
 			name = Backlight;
 			sourceTree = "<group>";
 		};
-		B8BB68AF1D708A5E009ABC2F /* BluetoothFirmware */ = {
+		B8BB68AF1D708A5E009ABC2F /* Bluetooth Firmware */ = {
 			isa = PBXGroup;
 			children = (
 				B8BB68AD1D708A5A009ABC2F /* bt_dev_id.plist */,
 				B8BB68AE1D708A5A009ABC2F /* bt_firmware.plist */,
 			);
-			name = BluetoothFirmware;
+			name = "Bluetooth Firmware";
 			sourceTree = "<group>";
 		};
 		B8BB68B21D708AD3009ABC2F /* Reference */ = {
