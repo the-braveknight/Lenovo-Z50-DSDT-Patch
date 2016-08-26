@@ -233,12 +233,12 @@ install_kext ApplePS2SmartTouchPad.kext
 $SUDO touch $SLE && $SUDO kextcache -u /
 
 # install VoodooPS2Daemon
-echo Installing VoodooPS2Daemon to /usr/bin and /Library/LaunchDaemons...
-cd ./downloads/kexts/RehabMan-Voodoo-*
-$SUDO cp ./Release/VoodooPS2Daemon /usr/bin
-$TAG -a Gray /usr/bin/VoodooPS2Daemon
-$SUDO cp ./org.rehabman.voodoo.driver.Daemon.plist /Library/LaunchDaemons
-$TAG -a Gray /Library/LaunchDaemons/org.rehabman.voodoo.driver.Daemon.plist
-cd ../../..
+#echo Installing VoodooPS2Daemon to /usr/bin and /Library/LaunchDaemons...
+#cd ./downloads/kexts/RehabMan-Voodoo-*
+#$SUDO cp ./Release/VoodooPS2Daemon /usr/bin
+#$TAG -a Gray /usr/bin/VoodooPS2Daemon
+#$SUDO cp ./org.rehabman.voodoo.driver.Daemon.plist /Library/LaunchDaemons
+#$TAG -a Gray /Library/LaunchDaemons/org.rehabman.voodoo.driver.Daemon.plist
+#cd ../../..
 
 fi # "toolsonly"
