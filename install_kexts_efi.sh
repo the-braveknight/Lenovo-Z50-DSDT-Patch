@@ -1,6 +1,7 @@
 #!/bin/bash
 
-#set -x
+# Script to install/update kexts in Clover/kexts/Other
+# folder, also merges 10.x folders into 'Other' folder.
 
 SUDO=sudo
 EFIDIR=$($SUDO ./mount_efi.sh /)
@@ -120,8 +121,10 @@ fi
 
 # Copy custom firmware to BrcmFirmwareRepo.kext to make it
 # able to be injected.
+#
+# Note: DW1560 BCM94352Z WiFi/BT firmware is injected.
 plist=$KEXTDEST/BrcmFirmwareRepo.kext/Contents/Info.plist
-/usr/libexec/plistbuddy -c "Merge ./bt_dev_id.plist ':IOKitPersonalities'" $plist
-/usr/libexec/plistbuddy -c "Merge ./bt_firmware.plist ':IOKitPersonalities:BrcmFirmwareStore'" $plist
+/usr/libexec/plistbuddy -c "Merge ./BluetoothFirmware/bt_dev_id.plist ':IOKitPersonalities'" $plist
+/usr/libexec/plistbuddy -c "Merge ./BluetoothFirmware/bt_firmware.plist ':IOKitPersonalities:BrcmFirmwareStore'" $plist
 rm -R $KEXTDEST/BrcmFirmwareRepo.kext/Contents/Resources
 
