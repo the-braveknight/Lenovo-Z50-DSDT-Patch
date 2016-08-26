@@ -7,7 +7,7 @@ SUDO=sudo
 EFIDIR=$($SUDO ./mount_efi.sh /)
 KEXTDEST=$EFIDIR/EFI/CLOVER/kexts/Other
 EXCEPTIONS="Sensors|FakePCIID_BCM57XX|FakePCIID_Intel_GbX|FakePCIID_Intel_HDMI|FakePCIID_XHCIMux|FakePCIID_AR9280_as_AR946x|BrcmPatchRAM|BrcmBluetoothInjector|BrcmFirmwareData|BrcmNonPatchRAM|USBInjectAll"
-
+MINOR_VER=$([[ "$(sw_vers -productVersion)" =~ [0-9]+\.([0-9]+) ]] && echo ${BASH_REMATCH[1]})
 
 function check_directory
 {
@@ -118,6 +118,8 @@ if [ $? -ne 0 ]; then
     cd ../..
 fi
 
+# install ApplePS2SmartTouchPad.kext by EMlyDinEsH from OSXLatitude.com
+install_kext ApplePS2SmartTouchPad.kext
 
 # Copy custom firmware to BrcmFirmwareRepo.kext to make it
 # able to be injected.
