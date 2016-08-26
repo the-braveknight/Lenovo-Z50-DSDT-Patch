@@ -62,9 +62,6 @@ if [ "$(id -u)" != "0" ]; then
     echo "This script requires superuser access..."
 fi
 
-# remove 10.xx folders from Clover/kexts, all kexts are copied to Clover/kexts/Other instead.'
-cp -R $EFIDIR/EFI/CLOVER/kexts/10.*/*.kext $KEXTDEST
-rm -R $EFIDIR/EFI/CLOVER/kexts/10.*
 
 # unzip/install kexts
 check_directory ./downloads/kexts/*.zip
