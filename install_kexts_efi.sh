@@ -126,7 +126,7 @@ install_kext ApplePS2SmartTouchPad.kext
 #
 # Note: DW1560 BCM94352Z WiFi/BT firmware is injected.
 plist=$KEXTDEST/BrcmFirmwareRepo.kext/Contents/Info.plist
-/usr/libexec/plistbuddy -c "Merge ./BluetoothFirmware/bt_dev_id.plist ':IOKitPersonalities'" $plist
-/usr/libexec/plistbuddy -c "Merge ./BluetoothFirmware/bt_firmware.plist ':IOKitPersonalities:BrcmFirmwareStore'" $plist
+/usr/libexec/plistbuddy -c "Merge ./BTFirmware/bt_dev_id.plist ':IOKitPersonalities'" $plist
+/usr/libexec/plistbuddy -c "Merge ./BTFirmware/bt_firmware.plist ':IOKitPersonalities:BrcmFirmwareStore'" $plist
 rm -R $KEXTDEST/BrcmFirmwareRepo.kext/Contents/Resources
 

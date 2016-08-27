@@ -19,8 +19,8 @@
 		B818FE291D5BD80E00489224 /* Backlight.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Backlight.plist; path = Reference/Backlight/Backlight.plist; sourceTree = "<group>"; };
 		B818FE2A1D5BD81400489224 /* patch_backlight.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = patch_backlight.sh; path = Reference/Backlight/patch_backlight.sh; sourceTree = "<group>"; };
 		B8BB68AC1D708A34009ABC2F /* install_kexts_efi.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = install_kexts_efi.sh; sourceTree = "<group>"; };
-		B8BB68AD1D708A5A009ABC2F /* bt_dev_id.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = bt_dev_id.plist; path = BluetoothFirmware/bt_dev_id.plist; sourceTree = "<group>"; };
-		B8BB68AE1D708A5A009ABC2F /* bt_firmware.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = bt_firmware.plist; path = BluetoothFirmware/bt_firmware.plist; sourceTree = "<group>"; };
+		B8BB68AD1D708A5A009ABC2F /* bt_dev_id.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = bt_dev_id.plist; path = BTFirmware/bt_dev_id.plist; sourceTree = "<group>"; };
+		B8BB68AE1D708A5A009ABC2F /* bt_firmware.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = bt_firmware.plist; path = BTFirmware/bt_firmware.plist; sourceTree = "<group>"; };
 		B8BB68B11D708AC7009ABC2F /* z50_cx27051_codec.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = z50_cx27051_codec.txt; path = Reference/z50_cx27051_codec.txt; sourceTree = "<group>"; };
 		ED3F518A1A2029DE0060691A /* install_downloads.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = install_downloads.sh; sourceTree = "<group>"; };
 		ED3F518B1A2029DE0060691A /* download.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = download.sh; sourceTree = "<group>"; };
