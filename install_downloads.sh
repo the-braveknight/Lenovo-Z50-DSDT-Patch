@@ -210,7 +210,7 @@ else
 fi
 
 # install ApplePS2SmartTouchPad.kext by EMlyDinEsH from OSXLatitude.com
-install_kext ApplePS2SmartTouchPad.kext
+install_kext ./kexts/ApplePS2SmartTouchPad.kext
 
 #if [[ $MINOR_VER -ge 11 ]]; then
     # create custom AppleBacklightInjector.kext and install
