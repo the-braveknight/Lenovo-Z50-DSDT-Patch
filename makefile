@@ -65,7 +65,7 @@ $(HDAHCDINJECT): $(RESOURCES)/*.plist ./patch_hda.sh
 clean_hda:
 	rm -rf $(HDAHCDINJECT) $(HDAZML) # $(HDAINJECT)
 
-$(BACKLIGHTINJECT): Backlight.plist patch_backlight.sh
+$(BACKLIGHTINJECT): ./backlight/Backlight.plist ./backlight/patch_backlight.sh
 	./backlight/patch_backlight.sh
 	touch $@
 
