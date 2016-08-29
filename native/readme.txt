@@ -1,0 +1,1 @@
+Native ACPI files for Lenovo Z50-70.
