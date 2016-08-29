@@ -15,13 +15,8 @@
 		B818FE241D5BD78E00489224 /* SSDT-CX20751.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SSDT-CX20751.dsl"; sourceTree = "<group>"; };
 		B818FE251D5BD7A500489224 /* install_tools.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = install_tools.sh; sourceTree = "<group>"; };
 		B818FE261D5BD7B000489224 /* update_config.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = update_config.sh; sourceTree = "<group>"; };
-		B818FE271D5BD7E500489224 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Reference/USBXHC_z50.kext/Contents/Info.plist; sourceTree = "<group>"; };
-		B818FE291D5BD80E00489224 /* Backlight.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Backlight.plist; path = Reference/Backlight/Backlight.plist; sourceTree = "<group>"; };
-		B818FE2A1D5BD81400489224 /* patch_backlight.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = patch_backlight.sh; path = Reference/Backlight/patch_backlight.sh; sourceTree = "<group>"; };
-		B8BB68AC1D708A34009ABC2F /* install_kexts_efi.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = install_kexts_efi.sh; sourceTree = "<group>"; };
-		B8BB68AD1D708A5A009ABC2F /* bt_dev_id.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = bt_dev_id.plist; path = BTFirmware/bt_dev_id.plist; sourceTree = "<group>"; };
-		B8BB68AE1D708A5A009ABC2F /* bt_firmware.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = bt_firmware.plist; path = BTFirmware/bt_firmware.plist; sourceTree = "<group>"; };
-		B8BB68B11D708AC7009ABC2F /* z50_cx27051_codec.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = z50_cx27051_codec.txt; path = Reference/z50_cx27051_codec.txt; sourceTree = "<group>"; };
+		B8AAEC0B1D749D110096BC78 /* Backlight.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Backlight.plist; path = backlight/Backlight.plist; sourceTree = "<group>"; };
+		B8AAEC0C1D749D110096BC78 /* patch_backlight.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = patch_backlight.sh; path = backlight/patch_backlight.sh; sourceTree = "<group>"; };
 		ED3F518A1A2029DE0060691A /* install_downloads.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = install_downloads.sh; sourceTree = "<group>"; };
 		ED3F518B1A2029DE0060691A /* download.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = download.sh; sourceTree = "<group>"; };
 		ED48DF001B4CCCC800BDDC62 /* SSDT-HACK.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SSDT-HACK.dsl"; sourceTree = "<group>"; };
@@ -36,21 +31,20 @@
 			children = (
 				8406FCD6188627B8006D8DB7 /* README.md */,
 				8455352818E65265001ADBFD /* config.plist */,
+				ED48DF001B4CCCC800BDDC62 /* SSDT-HACK.dsl */,
+				B818FE241D5BD78E00489224 /* SSDT-CX20751.dsl */,
 				840152EF182AE45E00D58B0A /* makefile */,
 				8467C38E1A23A9FC00FCF396 /* mount_efi.sh */,
 				ED3F518B1A2029DE0060691A /* download.sh */,
 				B818FE251D5BD7A500489224 /* install_tools.sh */,
 				ED3F518A1A2029DE0060691A /* install_downloads.sh */,
-				B8BB68AC1D708A34009ABC2F /* install_kexts_efi.sh */,
 				B818FE261D5BD7B000489224 /* update_config.sh */,
-				B8BB68B31D708AF7009ABC2F /* ACPI */,
-				B8BB68B21D708AD3009ABC2F /* Reference */,
-				84B540381ACB34B600D8ABAE /* Audio */,
-				B8BB68AF1D708A5E009ABC2F /* Bluetooth Firmware */,
+				84B540381ACB34B600D8ABAE /* audio */,
+				B8AAEC0D1D749D150096BC78 /* backlight */,
 			);
 			sourceTree = "<group>";
 		};
-		84B540381ACB34B600D8ABAE /* Audio */ = {
+		84B540381ACB34B600D8ABAE /* audio */ = {
 			isa = PBXGroup;
 			children = (
 				84490D5D1A14945B000E1BFB /* patch_hda.sh */,
@@ -58,52 +52,16 @@
 				EDC7F9421B4C64FA00B49451 /* layout3.plist */,
 				EDC7F9431B4C64FA00B49451 /* Platforms.plist */,
 			);
-			name = Audio;
+			name = audio;
 			sourceTree = "<group>";
 		};
-		B818FE281D5BD7EE00489224 /* USBXHC_z50.kext */ = {
+		B8AAEC0D1D749D150096BC78 /* backlight */ = {
 			isa = PBXGroup;
 			children = (
-				B818FE271D5BD7E500489224 /* Info.plist */,
+				B8AAEC0B1D749D110096BC78 /* Backlight.plist */,
+				B8AAEC0C1D749D110096BC78 /* patch_backlight.sh */,
 			);
-			name = USBXHC_z50.kext;
-			sourceTree = "<group>";
-		};
-		B818FE2B1D5BD81B00489224 /* Backlight */ = {
-			isa = PBXGroup;
-			children = (
-				B818FE2A1D5BD81400489224 /* patch_backlight.sh */,
-				B818FE291D5BD80E00489224 /* Backlight.plist */,
-			);
-			name = Backlight;
-			sourceTree = "<group>";
-		};
-		B8BB68AF1D708A5E009ABC2F /* Bluetooth Firmware */ = {
-			isa = PBXGroup;
-			children = (
-				B8BB68AD1D708A5A009ABC2F /* bt_dev_id.plist */,
-				B8BB68AE1D708A5A009ABC2F /* bt_firmware.plist */,
-			);
-			name = "Bluetooth Firmware";
-			sourceTree = "<group>";
-		};
-		B8BB68B21D708AD3009ABC2F /* Reference */ = {
-			isa = PBXGroup;
-			children = (
-				B8BB68B11D708AC7009ABC2F /* z50_cx27051_codec.txt */,
-				B818FE281D5BD7EE00489224 /* USBXHC_z50.kext */,
-				B818FE2B1D5BD81B00489224 /* Backlight */,
-			);
-			name = Reference;
-			sourceTree = "<group>";
-		};
-		B8BB68B31D708AF7009ABC2F /* ACPI */ = {
-			isa = PBXGroup;
-			children = (
-				ED48DF001B4CCCC800BDDC62 /* SSDT-HACK.dsl */,
-				B818FE241D5BD78E00489224 /* SSDT-CX20751.dsl */,
-			);
-			name = ACPI;
+			name = backlight;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
