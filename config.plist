@@ -367,7 +367,10 @@
 			<false/>
 		</dict>
 		<key>Scan</key>
-		<true/>
+		<dict>
+			<key>Legacy</key>
+			<false/>
+		</dict>
 		<key>Theme</key>
 		<string>embedded</string>
 	</dict>
