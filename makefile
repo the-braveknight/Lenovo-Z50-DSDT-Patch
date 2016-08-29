@@ -66,7 +66,7 @@ clean_hda:
 	rm -rf $(HDAHCDINJECT) $(HDAZML) # $(HDAINJECT)
 
 $(BACKLIGHTINJECT): Backlight.plist patch_backlight.sh
-	./patch_backlight.sh
+	./backlight/patch_backlight.sh
 	touch $@
 
 .PHONY: update_kernelcache
