@@ -98,7 +98,7 @@
 						<key>UsbConnector</key>
 						<integer>255</integer>
 						<key>port</key>
-						<data>AwAAAA==</data>
+						<data>BwAAAA==</data>
 					</dict>
 					<key>SSP1</key>
 					<dict>
@@ -188,7 +188,7 @@
 						<key>UsbConnector</key>
 						<integer>255</integer>
 						<key>port</key>
-						<data>AwAAAA==</data>
+						<data>BwAAAA==</data>
 					</dict>
 					<key>SSP1</key>
 					<dict>
