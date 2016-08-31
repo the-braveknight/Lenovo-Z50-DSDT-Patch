@@ -135,11 +135,7 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
                         "UsbConnector", 0,
                         "port", Buffer() { 0x03, 0, 0, 0 },
                     },
-                    "HS04", Package() // Card reader
-                    {
-                        "UsbConnector", 255,
-                        "port", Buffer() { 0x04, 0, 0, 0 },
-                    },
+                    // HS04 is card reader, not supported
                     "HS06", Package() // Webcam
                     {
                         "UsbConnector", 255,

@@ -5,9 +5,9 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleGetInfoString</key>
-	<string>1.0, Copyright © 2015 RehabMan. All Rights Reserved.</string>
+	<string>1.0, Copyright © 2016 the-braveknight. All Rights Reserved.</string>
 	<key>CFBundleIdentifier</key>
-	<string>org.rehabman.injector.USBXHCI-z50</string>
+	<string>org.the-braveknight.USBXHCI-z50</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -78,13 +78,6 @@
 						<integer>0</integer>
 						<key>port</key>
 						<data>AwAAAA==</data>
-					</dict>
-					<key>HS04</key>
-					<dict>
-						<key>UsbConnector</key>
-						<integer>255</integer>
-						<key>port</key>
-						<data>BAAAAA==</data>
 					</dict>
 					<key>HS06</key>
 					<dict>
@@ -168,13 +161,6 @@
 						<integer>0</integer>
 						<key>port</key>
 						<data>AwAAAA==</data>
-					</dict>
-					<key>HS04</key>
-					<dict>
-						<key>UsbConnector</key>
-						<integer>255</integer>
-						<key>port</key>
-						<data>BAAAAA==</data>
 					</dict>
 					<key>HS06</key>
 					<dict>
