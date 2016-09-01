@@ -108,14 +108,8 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
         Name (_HID, "UIA00000")
         Name (RMCF, Package()
         {
-            // EH01 has no ports (XHCIMux is used to force USB3 routing OFF)
-            "EH01", Package()
-            {
-                "port-count", Buffer() { 0, 0, 0, 0 },
-                "ports", Package() { },
-            },
             // XHC overrides
-            "8086_9xxx", Package()
+            "8086_9c31", Package()
             {
                 //"port-count", Buffer() { 0x0d, 0, 0, 0},
                 "ports", Package()
@@ -123,33 +117,39 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
                     "HS01", Package() // USB2 right
                     {
                         "UsbConnector", 0,
-                        "port", Buffer() { 0x01, 0, 0, 0 },
+                        "port", Buffer() { 1, 0, 0, 0 },
                     },
                     "HS02", Package() // HS USB3 
                     {
                         "UsbConnector", 3,
-                        "port", Buffer() { 0x02, 0, 0, 0 },
+                        "port", Buffer() { 2, 0, 0, 0 },
                     },
                     "HS03", Package() // USB2 left
                     {
                         "UsbConnector", 0,
-                        "port", Buffer() { 0x03, 0, 0, 0 },
+                        "port", Buffer() { 3, 0, 0, 0 },
                     },
-                    // HS04 is card reader, not supported
+                    #if 0
+                    "HS04", Package() // Card reader (disabled)
+                    {
+                        "UsbConnector", 255,
+                        "port", Buffer() { 4, 0, 0, 0 },
+                    },
+                    #endif
                     "HS06", Package() // Webcam
                     {
                         "UsbConnector", 255,
-                        "port", Buffer() { 0x06, 0, 0, 0 },
+                        "port", Buffer() { 6, 0, 0, 0 },
                     },
                     "HS07", Package() // Bluetooth
                     {
                         "UsbConnector", 255,
-                        "port", Buffer() { 0x07, 0, 0, 0 },
+                        "port", Buffer() { 7, 0, 0, 0 },
                     },
-                    "SSP1", Package() // SS USB3 left
+                    "SSP1", Package() // SS USB3
                     {
                         "UsbConnector", 3,
-                        "port", Buffer() { 0x0a, 0, 0, 0 },
+                        "port", Buffer() { 10, 0, 0, 0 },
                     },
                 },
             },
