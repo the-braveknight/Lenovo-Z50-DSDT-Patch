@@ -412,11 +412,23 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
+				<string>AirPortBrcm4360 - fcvo, 10.12.x (credit the-darkvoid)</string>
+				<key>Find</key>
+				<data>gflSqgAAdSk=</data>
+				<key>MatchOS</key>
+				<string>10.12.x</string>
+				<key>Name</key>
+				<string>AirPortBrcm4360</string>
+				<key>Replace</key>
+				<data>gflSqgAAZpA=</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
 				<string>AppleHDA .xml.zlib to .zml.zlib</string>
-				<key>Disabled</key>
-				<false/>
 				<key>Find</key>
 				<data>LnhtbC56bA==</data>
+				<key>MatchOS</key>
+				<string>10.10.x,10.11.x,10.12.x</string>
 				<key>Name</key>
 				<string>AppleHDA</string>
 				<key>Replace</key>
@@ -447,6 +459,8 @@
 				<string>Boot graphics glitch, 10.10.x/10.11.x</string>
 				<key>Find</key>
 				<data>AQAAdRc=</data>
+				<key>MatchOS</key>
+				<string>10.10.x,10.11.x</string>
 				<key>Name</key>
 				<string>IOGraphicsFamily</string>
 				<key>Replace</key>
@@ -454,9 +468,23 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
+				<string>Boot graphics glitch, 10.12.dp1 (credit denskop)</string>
+				<key>Find</key>
+				<data>AQAAdSU=</data>
+				<key>MatchOS</key>
+				<string>10.12.x</string>
+				<key>Name</key>
+				<string>IOGraphicsFamily</string>
+				<key>Replace</key>
+				<data>AQAA6yU=</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
 				<string>10.10.2+ 5Ghz US FCC, the-darkvoid</string>
 				<key>Find</key>
 				<data>QYP8/3QsSA==</data>
+				<key>MatchOS</key>
+				<string>10.10.x,10.11.x,10.12.x</string>
 				<key>Name</key>
 				<string>AirPortBrcm4360</string>
 				<key>Replace</key>
@@ -464,9 +492,23 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
+				<string>10.10.2+ BT4LE-Handoff-Hotspot, Dokterdok</string>
+				<key>Find</key>
+				<data>SIXAdFwPt0g=</data>
+				<key>MatchOS</key>
+				<string>10.10.x</string>
+				<key>Name</key>
+				<string>IOBluetoothFamily</string>
+				<key>Replace</key>
+				<data>Qb4PAAAA61k=</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
 				<string>10.11.dp1+ BT4LE-Handoff-Hotspot, credit RehabMan based on Dokterdok original</string>
 				<key>Find</key>
 				<data>SIX/dEdIiwc=</data>
+				<key>MatchOS</key>
+				<string>10.11.x,10.12.x</string>
 				<key>Name</key>
 				<string>IOBluetoothFamily</string>
 				<key>Replace</key>
