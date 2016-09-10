@@ -8,7 +8,21 @@
 			<key>#AFGLowPowerState</key>
 			<data>AwAAAA==</data>
 			<key>Codec</key>
-			<string>Conexant - CX20751/2</string>
+			<string>the-braveknight - Conexant CX20751/2</string>
+			<key>CodecID</key>
+			<integer>351359247</integer>
+			<key>ConfigData</key>
+			<data>AWccQAFnHRABZx4hAWcfBAF3HBABdx0BAXceFwF3H5ABpxwgAacdAQGnHqABpx+Q</data>
+			<key>FuncGroup</key>
+			<integer>1</integer>
+			<key>LayoutID</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>#AFGLowPowerState</key>
+			<data>AwAAAA==</data>
+			<key>Codec</key>
+			<string>EmlyDinEsH - CX20751/2</string>
 			<key>CodecID</key>
 			<integer>351359247</integer>
 			<key>ConfigData</key>
@@ -16,7 +30,7 @@
 			<key>FuncGroup</key>
 			<integer>1</integer>
 			<key>LayoutID</key>
-			<integer>3</integer>
+			<integer>28</integer>
 		</dict>
 	</array>
 </dict>
