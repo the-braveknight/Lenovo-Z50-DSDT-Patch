@@ -22,7 +22,7 @@ function createAppleHDAInjector()
     rm -R AppleHDA_$1.kext/Contents/MacOS/AppleHDA
     rm AppleHDA_$1.kext/Contents/version.plist
     ln -s /System/Library/Extensions/AppleHDA.kext/Contents/MacOS/AppleHDA AppleHDA_$1.kext/Contents/MacOS/AppleHDA
-    layouts=$(basename `ls Resources_$1/layout*.plist`)
+    layouts=$(basename -a `ls Resources_$1/layout*.plist`)
     for layout in $layouts; do
         cp Resources_$1/$layout AppleHDA_$1.kext/Contents/Resources/${layout/.plist/.xml}
     done
@@ -84,7 +84,7 @@ fi
 function createAppleHDAResources_HDC()
 {
     rm -rf AppleHDA_$1_Resources && mkdir AppleHDA_$1_Resources
-    layouts=$(basename `ls Resources_$1/layout*.plist`)
+    layouts=$(basename -a `ls Resources_$1/layout*.plist`)
     for layout in $layouts; do
         cp Resources_$1/$layout AppleHDA_$1_Resources/${layout/.plist/.zml}
     done
