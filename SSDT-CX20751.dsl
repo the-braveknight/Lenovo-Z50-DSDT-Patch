@@ -28,6 +28,17 @@ DefinitionBlock ("", "SSDT", 2, "hack", "CX20751", 0)
                             Package(){},
                             0x16, 0x04211040,
                             0x17, 0x90170110,
+                            0x1a, 0x90a00120,
+                        },
+                    },
+                    Package()
+                    {
+                        "LayoutID", 28,
+                        "PinConfigs", Package()
+                        {
+                            Package(){},
+                            0x16, 0x04211040,
+                            0x17, 0x90170110,
                             0x19, 0x04811030,
                             0x1a, 0x90a00120,
                         },
