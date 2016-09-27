@@ -25,7 +25,7 @@ SLE=/System/Library/Extensions
 # set build products
 PRODUCTS=$(BUILDDIR)/SSDT-HACK.aml
 
-IASLFLAGS=-vw 2095 -vw 2146
+IASLFLAGS=-ve
 IASL=iasl
 
 .PHONY: all

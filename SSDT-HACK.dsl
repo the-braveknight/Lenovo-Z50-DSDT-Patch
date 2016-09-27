@@ -25,7 +25,7 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
     External(_SB.PCI0.RP05.PEGP.SGPO, MethodObj)
     External(_SB.PCI0.RP05.PEGP.HLRS, FieldUnitObj)
     External(_SB.PCI0.RP05.PEGP.PWEN, FieldUnitObj)
-    External(_SB.PCI0.EH01, DeviceObj)
+    External(_SB.PCI0.EHC1, DeviceObj)
     External(_SB.PCI0.LPCB.EC0.BAT0.PBIF, PkgObj)
     External(_SB.PCI0.LPCB.EC0.BAT0.PBST, PkgObj)
     External(_SB.PCI0.LPCB.EC0.BAT0.OBST, BuffObj)
@@ -193,7 +193,7 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
             Or(And (PR2, 0xFFFF8000), PR2M, PR2)
         }
         // registers needed for disabling EHC#1
-        Scope(EH01)
+        Scope(EHC1)
         {
             OperationRegion(PSTS, PCI_Config, 0x54, 2)
             Field(PSTS, WordAcc, NoLock, Preserve)
@@ -225,7 +225,7 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
             {
                 // disable EHCI#1
                 // put EHCI#1 in D3hot (sleep mode)
-                Store(3, ^^EH01.PSTE)
+                Store(3, ^^EHC1.PSTE)
                 // disable EHCI#1 PCI space
                 Store(1, ^^LPCB.FDE1)
             }

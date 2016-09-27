@@ -27,14 +27,6 @@
 				</dict>
 				<dict>
 					<key>Comment</key>
-					<string>change EHC1 to EH01</string>
-					<key>Find</key>
-					<data>RUhDMQ==</data>
-					<key>Replace</key>
-					<data>RUgwMQ==</data>
-				</dict>
-				<dict>
-					<key>Comment</key>
 					<string>change Method(GPRW,2,N) to XPRW</string>
 					<key>Find</key>
 					<data>R1BSVwI=</data>
@@ -266,51 +258,6 @@
 				</array>
 				<key>PciAddr</key>
 				<string>00:03.00</string>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>Intel EHCI #1</string>
-				<key>CustomProperties</key>
-				<array>
-					<dict>
-						<key>Key</key>
-						<string>subsystem-id</string>
-						<key>Value</key>
-						<data>cHIAAA==</data>
-					</dict>
-					<dict>
-						<key>Key</key>
-						<string>subsystem-vendor-id</string>
-						<key>Value</key>
-						<data>hoAAAA==</data>
-					</dict>
-					<dict>
-						<key>Key</key>
-						<string>AAPL,current-available</string>
-						<key>Value</key>
-						<integer>2100</integer>
-					</dict>
-					<dict>
-						<key>Key</key>
-						<string>AAPL,current-extra</string>
-						<key>Value</key>
-						<integer>2200</integer>
-					</dict>
-					<dict>
-						<key>Key</key>
-						<string>AAPL,current-extra-in-sleep</string>
-						<key>Value</key>
-						<integer>1600</integer>
-					</dict>
-					<dict>
-						<key>Key</key>
-						<string>AAPL,max-port-current-in-sleep</string>
-						<key>Value</key>
-						<integer>2100</integer>
-					</dict>
-				</array>
-				<key>PciAddr</key>
-				<string>00:1D.00</string>
 			</dict>
 			<dict>
 				<key>Comment</key>
