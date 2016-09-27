@@ -19,11 +19,11 @@ BUILDDIR=./build
 
 function install_kext
 {
-if [ "$1" != "" ]; then
-    echo installing $1 to $KEXTDEST
-    $SUDO rm -Rf $KEXTDEST/`basename $1`
-    $SUDO cp -Rf $1 $KEXTDEST
-fi
+    if [ "$1" != "" ]; then
+        echo installing $1 to $KEXTDEST
+        $SUDO rm -Rf $KEXTDEST/`basename $1`
+        $SUDO cp -Rf $1 $KEXTDEST
+    fi
 }
 
 # Install kexts in the repo
