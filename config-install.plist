@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ACPI</key>
+	<dict>
+		<key>DSDT</key>
+		<dict>
+			<key>Patches</key>
+			<array>
+				<dict>
+					<key>Comment</key>
+					<string>change GFX0 to IGPU</string>
+					<key>Find</key>
+					<data>R0ZYMA==</data>
+					<key>Replace</key>
+					<data>SUdQVQ==</data>
+				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>change Method(_OFF,0,S) to XOFF</string>
+					<key>Find</key>
+					<data>X09GRgg=</data>
+					<key>Replace</key>
+					<data>WE9GRgg=</data>
+				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>Change Method(_REG,2,N) to XREG</string>
+					<key>Find</key>
+					<data>X1JFRwI=</data>
+					<key>Replace</key>
+					<data>WFJFRwI=</data>
+				</dict>
+				<dict>
+					<key>Comment</key>
+					<string>change Method(XSEL,0,S) to XXEL</string>
+					<key>Find</key>
+					<data>WFNFTAg=</data>
+					<key>Replace</key>
+					<data>WFhFTAg=</data>
+				</dict>
+			</array>
+		</dict>
+		<key>SSDT</key>
+		<dict>
+			<key>DropOem</key>
+			<false/>
+			<key>Generate</key>
+			<false/>
+		</dict>
+	</dict>
+	<key>Devices</key>
+	<dict>
+		<key>FakeID</key>
+		<dict>
+			<key>IntelGFX</key>
+			<string>0x04128086</string>
+		</dict>
+	</dict>
+	<key>Graphics</key>
+	<dict>
+		<key>Inject</key>
+		<dict>
+			<key>Intel</key>
+			<true/>
+		</dict>
+		<key>ig-platform-id</key>
+		<string>0x0a260006</string>
+	</dict>
+</dict>
+</plist>
