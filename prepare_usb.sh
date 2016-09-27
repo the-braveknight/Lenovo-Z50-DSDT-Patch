@@ -56,4 +56,19 @@ echo removing HDA patch from config.plist/Devices/Arbitrary
 echo removing HDMI patch from config.plist/Devices/Arbitrary
 /usr/libexec/plistbuddy -c "Delete ':Devices:Arbitrary:1'" $config
 
+
+# Copying smbios.plist from EFI/CLOVER (if exists).
+diskutil unmount $EFI
+HDEFI=`$SUDO ./mount_efi.sh /`
+if [ -e $HDEFI/EFI/CLOVER/smbios.plist ]; then
+    echo smbios.plist exists, copying to $EFI/EFI/CLOVER
+    cp $HDEFI/EFI/CLOVER/smbios.plist /tmp/smbios.plist
+    diskutil unmount $HDEFI
+    EFI=`$SUDO ./mount_efi.sh /dev/disk1`
+    cp /tmp/smbios.plist $EFI/EFI/CLOVER
+else
+    diskutil unmount $HDEFI
+    EFI=`$SUDO ./mount_efi.sh /dev/disk1`
+fi
+
 echo Done.
