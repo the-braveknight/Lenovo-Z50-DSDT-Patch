@@ -1,3 +1,8 @@
 .DS_Store
 Z50.xcodeproj/xcuserdata/
 Z50.xcodeproj/project.xcworkspace/xcuserdata
+build/*
+downloads/*
+AppleHDA_ALC283.kext
+AppleHDAHCD_ALC283.kext
+AppleHDA_ALC283_Resources
