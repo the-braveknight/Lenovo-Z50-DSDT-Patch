@@ -3,6 +3,6 @@ Z50.xcodeproj/xcuserdata/
 Z50.xcodeproj/project.xcworkspace/xcuserdata
 build/*
 downloads/*
-AppleHDA_ALC283.kext
-AppleHDAHCD_ALC283.kext
-AppleHDA_ALC283_Resources
+AppleHDA_CX20751.kext
+AppleHDAHCD_CX20751.kext
+AppleHDA_CX20751_Resources
