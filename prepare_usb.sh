@@ -27,6 +27,12 @@ function install_kext
 ./download.sh usb_kexts
 
 
+# Remove Clover/kexts/10.* folders, keep 'Others' only.
+rm -Rf $CLOVER/kexts/10.*
+# Remove any kext(s) already present in 'Others' folder.
+rm -Rf $KEXTDEST/*.kext
+
+
 # Extract & install downloaded kexts
 cd ./downloads/kexts
 mkdir RehabMan-FakeSMC-USB && unzip -q RehabMan-FakeSMC-*.zip -d RehabMan-FakeSMC-USB
@@ -39,6 +45,9 @@ cd ..//..
 cd ./kexts
 install_kext USBXHC_*.kext
 install_kext ApplePS2SmartTouchPad.kext
+if [ "$1" != "native_wifi" ]; then
+    install_kext AirPortInjector.kext
+fi
 cd ..
 
 
@@ -49,12 +58,13 @@ echo copying $BUILDDIR/SSDT-Install.aml to $CLOVER/ACPI/patched
 cp $BUILDDIR/SSDT-Install.aml $CLOVER/ACPI/patched
 
 
-# Download & copy HFSPlus.efi from CloverGrowerPro repo to CLOVER/drivers64UEFI
-echo Downloading HFSPlus.efi...
-curl https://raw.githubusercontent.com/JrCs/CloverGrowerPro/master/Files/HFSPlus/X64/HFSPlus.efi -o ./downloads/HFSPlus.efi -s
-echo Copying HFSPlus.efi to $CLOVER/drivers64UEFI
-cp ./downloads/HFSPlus.efi $CLOVER/drivers64UEFI
-
+# Download & copy HFSPlus.efi from CloverGrowerPro repo to CLOVER/drivers64UEFI if it's not present
+if [ ! -e $CLOVER/drivers64UEFI/HFSPlus.efi ]; then
+    echo Downloading HFSPlus.efi...
+    curl https://raw.githubusercontent.com/JrCs/CloverGrowerPro/master/Files/HFSPlus/X64/HFSPlus.efi -o ./downloads/HFSPlus.efi -s
+    echo Copying HFSPlus.efi to $CLOVER/drivers64UEFI
+    cp ./downloads/HFSPlus.efi $CLOVER/drivers64UEFI
+fi
 
 # Copy config_install.plist from the repo to Clover folder
 echo Copying config.plist to $CLOVER

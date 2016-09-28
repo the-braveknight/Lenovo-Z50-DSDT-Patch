@@ -22,6 +22,12 @@ if [ "$1" == "usb_kexts" ]; then
     download os-x-fakesmc-kozlek RehabMan-FakeSMC
     download os-x-realtek-network RehabMan-Realtek-Network
     exit
+elif [ "$1" == "recovery_kexts" ]; then
+    mkdir ./kexts && cd ./kexts
+    download os-x-fakesmc-kozlek RehabMan-FakeSMC
+    download os-x-realtek-network RehabMan-Realtek-Network
+    download os-x-acpi-battery-driver RehabMan-Battery
+    exit
 fi
 
 # download kexts
