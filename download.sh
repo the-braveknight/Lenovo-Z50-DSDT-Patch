@@ -17,6 +17,13 @@ function download()
 
 if [ ! -d ./downloads ]; then mkdir ./downloads; fi && rm -Rf downloads/* && cd ./downloads
 
+if [ "$1" == "usb_kexts" ]; then
+    mkdir ./kexts && cd ./kexts
+    download os-x-fakesmc-kozlek RehabMan-FakeSMC
+    download os-x-realtek-network RehabMan-Realtek-Network
+    exit
+fi
+
 # download kexts
 mkdir ./kexts && cd ./kexts
 download os-x-fakesmc-kozlek RehabMan-FakeSMC
