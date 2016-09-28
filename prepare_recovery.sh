@@ -9,6 +9,12 @@ SUDO=sudo
 EFI=`$SUDO ./mount_efi.sh /`
 CLOVER=$EFI/EFI/CLOVER
 KEXTDEST=$CLOVER/kexts/Other
+MINOR_VER=$([[ "$(sw_vers -productVersion)" =~ [0-9]+\.([0-9]+) ]] && echo ${BASH_REMATCH[1]})
+if [[ $MINOR_VER -ge 11 ]]; then
+    HDKEXTDIR=/Library/Extensions
+else
+    HDKEXTDIR=/System/Library/Extensions
+fi
 
 function install_kext
 {
@@ -34,23 +40,29 @@ rm -Rf $KEXTDEST/*.kext
 # Extract & install downloaded kexts
 cd ./downloads/kexts
 rm -Rf */
-mkdir RehabMan-FakeSMC-REC && unzip -q RehabMan-FakeSMC-*.zip -d RehabMan-FakeSMC-REC
-mkdir RehabMan-Realtek-Network-v2-REC && unzip -q RehabMan-Realtek-Network-v2-*.zip -d RehabMan-Realtek-Network-v2-REC
-mkdir RehabMan-Battery-REC && unzip -q RehabMan-Battery-*.zip -d RehabMan-Battery-REC
-cd RehabMan-FakeSMC-REC && install_kext FakeSMC.kext && cd ..
-cd RehabMan-Realtek-Network-v2-REC/Release && install_kext RealtekRTL8111.kext && cd ..//..
-cd RehabMan-Battery-REC/Release && install_kext ACPIBatteryManager.kext && cd ..//..
-cd ..//..
+mkdir RehabMan-FakeSMC && unzip -q RehabMan-FakeSMC-*.zip -d RehabMan-FakeSMC
+mkdir RehabMan-Realtek-Network-v2 && unzip -q RehabMan-Realtek-Network-v2-*.zip -d RehabMan-Realtek-Network-v2
+mkdir RehabMan-Battery && unzip -q RehabMan-Battery-*.zip -d RehabMan-Battery
+cd RehabMan-FakeSMC && install_kext FakeSMC.kext && cd ..
+cd RehabMan-Realtek-Network-v2/Release && install_kext RealtekRTL8111.kext && cd ../..
+cd RehabMan-Battery/Release && install_kext ACPIBatteryManager.kext && cd ../..
+cd ../..
 
 # Install local kexts
 cd ./kexts
 install_kext USBXHC_*.kext
-install_kext ApplePS2SmartTouchPad.kext
-# Install AirPortInjector.kext by default
 if [ "$1" != "native_wifi" ]; then
     install_kext AirPortInjector.kext
 fi
 cd ..
+
+# Install proper PS2 driver
+if [ -d $HDKEXTDIR/VoodooPS2Controller.kext ]; then
+    cd ./downloads/kexts
+    install_kext $HDKEXTDIR/VoodooPS2Controller.kext && cd ..
+else
+    install_kext ./kexts/ApplePS2SmartTouchPad.kext
+fi
 
 # Download & copy HFSPlus.efi from CloverGrowerPro repo to CLOVER/drivers64UEFI if it's not present
 if [ ! -e $CLOVER/drivers64UEFI/HFSPlus.efi ]; then

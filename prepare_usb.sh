@@ -12,6 +12,12 @@ KEXTDEST=$CLOVER/kexts/Other
 CONFIG=$CLOVER/config.plist
 BUILDDIR=./build
 PlistBuddy=/usr/libexec/plistbuddy
+MINOR_VER=$([[ "$(sw_vers -productVersion)" =~ [0-9]+\.([0-9]+) ]] && echo ${BASH_REMATCH[1]})
+if [[ $MINOR_VER -ge 11 ]]; then
+    HDKEXTDIR=/Library/Extensions
+else
+    HDKEXTDIR=/System/Library/Extensions
+fi
 
 function install_kext
 {
@@ -35,11 +41,12 @@ rm -Rf $KEXTDEST/*.kext
 
 # Extract & install downloaded kexts
 cd ./downloads/kexts
-mkdir RehabMan-FakeSMC-USB && unzip -q RehabMan-FakeSMC-*.zip -d RehabMan-FakeSMC-USB
-mkdir RehabMan-Realtek-Network-v2-USB && unzip -q RehabMan-Realtek-Network-v2-*.zip -d RehabMan-Realtek-Network-v2-USB
-cd RehabMan-FakeSMC-USB && install_kext FakeSMC.kext && cd ..
-cd RehabMan-Realtek-Network-v2-USB/Release && install_kext RealtekRTL8111.kext && cd ..//..
-cd ..//..
+rm -Rf */
+mkdir RehabMan-FakeSMC && unzip -q RehabMan-FakeSMC-*.zip -d RehabMan-FakeSMC
+mkdir RehabMan-Realtek-Network-v2 && unzip -q RehabMan-Realtek-Network-v2-*.zip -d RehabMan-Realtek-Network-v2
+cd RehabMan-FakeSMC && install_kext FakeSMC.kext && cd ..
+cd RehabMan-Realtek-Network-v2/Release && install_kext RealtekRTL8111.kext && cd ../..
+cd ../..
 
 # Install local kexts
 cd ./kexts

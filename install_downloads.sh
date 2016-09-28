@@ -9,7 +9,7 @@ TAG=tag_file
 TAGCMD=`pwd`/tools/tag
 SLE=/System/Library/Extensions
 LE=/Library/Extensions
-EXCEPTIONS="Sensors|FakePCIID_BCM57XX|FakePCIID_Intel_GbX|FakePCIID_Intel_HDMI|FakePCIID_XHCIMux|FakePCIID_AR9280_as_AR946x|BrcmPatchRAM|BrcmBluetoothInjector|BrcmFirmwareData|BrcmNonPatchRAM|USBInjectAll"
+EXCEPTIONS="Sensors|FakePCIID_BCM57XX|FakePCIID_Intel_GbX|FakePCIID_Intel_HDMI|FakePCIID_XHCIMux|FakePCIID_AR9280_as_AR946x|BrcmPatchRAM|BrcmBluetoothInjector|BrcmFirmwareData|BrcmNonPatchRAM|USBInjectAll|VoodooPS2"
 
 # extract minor version (eg. 10.9 vs. 10.10 vs. 10.11)
 MINOR_VER=$([[ "$(sw_vers -productVersion)" =~ [0-9]+\.([0-9]+) ]] && echo ${BASH_REMATCH[1]})
@@ -189,7 +189,21 @@ if [ $? -ne 0 ]; then
     cd ../..
 fi
 
-# install kexts in the repo itself
+
+# Install PS2 trackpad/keyboard driver. Installs RehabMan's VoodooPS2 Synaptics
+# driver by default
+if [ "$1" == "elan" ]; then
+    # install ApplePS2SmartTouchPad.kext by EMlyDinEsH from OSXLatitude.com
+    cd ./kexts
+    install_kext ApplePS2SmartTouchPad.kext && cd ..
+    $SUDO rm -Rf $KEXTDEST/VoodooPS2Controller.kext
+else
+    # Install RehabMan's VoodooPS2Controller.kext
+    cd ./downloads/kexts/RehabMan-Voodoo*/Release
+    install_kext VoodooPS2Controller.kext && cd ../..
+    $SUDO rm -Rf $KEXTDEST/ApplePS2SmartTouchPad.kext
+    cd ../..
+fi
 
 # patching AppleHDA
 HDA=CX20751
@@ -209,8 +223,6 @@ else
     $TAG -a Gray $SLE/AppleHDA.kext
 fi
 
-# install ApplePS2SmartTouchPad.kext by EMlyDinEsH from OSXLatitude.com
-install_kext ./kexts/ApplePS2SmartTouchPad.kext
 
 #if [[ $MINOR_VER -ge 11 ]]; then
     # create custom AppleBacklightInjector.kext and install
