@@ -29,33 +29,30 @@ function install_kext
 }
 
 
-# Download required kexts
-./download.sh usb_kexts
-
-
 # Remove Clover/kexts/10.* folders, keep 'Others' only.
 rm -Rf $CLOVER/kexts/10.*
 # Remove any kext(s) already present in 'Others' folder.
 rm -Rf $KEXTDEST/*.kext
 
 
+# Download the required kexts for the installer
+./download.sh usb_kexts
+
+
 # Extract & install downloaded kexts
 cd ./downloads/kexts
-rm -Rf */
-mkdir RehabMan-FakeSMC && unzip -q RehabMan-FakeSMC-*.zip -d RehabMan-FakeSMC
-mkdir RehabMan-Realtek-Network-v2 && unzip -q RehabMan-Realtek-Network-v2-*.zip -d RehabMan-Realtek-Network-v2
-cd RehabMan-FakeSMC && install_kext FakeSMC.kext && cd ..
-cd RehabMan-Realtek-Network-v2/Release && install_kext RealtekRTL8111.kext && cd ../..
+unzip -q RehabMan-FakeSMC-*.zip -d RehabMan-FakeSMC
+unzip -q RehabMan-Realtek-Network-v2-*.zip -d RehabMan-Realtek-Network-v2
+install_kext RehabMan-FakeSMC/FakeSMC.kext
+install_kext RehabMan-Realtek-Network-v2/Release/RealtekRTL8111.kext
 cd ../..
 
 # Install local kexts
-cd ./kexts
-install_kext USBXHC_*.kext
-install_kext ApplePS2SmartTouchPad.kext
+install_kext ./kexts/USBXHC_*.kext
+install_kext ./kexts/ApplePS2SmartTouchPad.kext
 if [ "$1" != "native_wifi" ]; then
-    install_kext AirPortInjector.kext
+    install_kext ./kexts/AirPortInjector.kext
 fi
-cd ..
 
 
 # Compile SSDT-Install.dsl, copy AML to CLOVER/ACPI/patched
