@@ -18,20 +18,6 @@
 			<key>LayoutID</key>
 			<integer>3</integer>
 		</dict>
-		<dict>
-			<key>#AFGLowPowerState</key>
-			<data>AwAAAA==</data>
-			<key>Codec</key>
-			<string>EmlyDinEsH - CX20751/2</string>
-			<key>CodecID</key>
-			<integer>351359247</integer>
-			<key>ConfigData</key>
-			<data>AWccQAFnHRABZx4hAWcfBAF3HBABdx0BAXceFwF3H5ABlxwwAZcdEAGXHoEBlx8EAaccIAGnHQEBpx6gAacfkA==</data>
-			<key>FuncGroup</key>
-			<integer>1</integer>
-			<key>LayoutID</key>
-			<integer>28</integer>
-		</dict>
 	</array>
 </dict>
 </plist>
