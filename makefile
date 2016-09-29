@@ -43,13 +43,7 @@ clean:
 .PHONY: install
 install: $(PRODUCTS)
 	$(eval EFIDIR:=$(shell sudo ./mount_efi.sh /))
-	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-HACK.aml
-	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/DSDT.aml
-	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-2.aml
-	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-3.aml
-	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-4.aml
-	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-5.aml
-	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-7.aml
+	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-*.aml
 	cp $(BUILDDIR)/SSDT-HACK.aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-HACK.aml
 
 #$(HDAINJECT) $(HDAHCDINJECT): $(RESOURCES)/*.plist ./patch_hda.sh
