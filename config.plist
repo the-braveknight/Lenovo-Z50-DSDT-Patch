@@ -359,6 +359,16 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
+				<string>Conexant menubar fix (credit wern apfel)</string>
+				<key>Find</key>
+				<data>a3Bzaes=</data>
+				<key>Name</key>
+				<string>AppleHDA</string>
+				<key>Replace</key>
+				<data>Y2ltaes=</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
 				<string>AirPortBrcm4360 - fcvo, 10.12.x (credit the-darkvoid)</string>
 				<key>Find</key>
 				<data>gflSqgAAdSk=</data>
