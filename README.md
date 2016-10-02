@@ -2,11 +2,17 @@
 
 This set of patches/makefile can be used to patch your Haswell Lenovo Z50-70 DSDT/SSDTs.  It relies heavily on already existing laptop DSDT patches at github here: https://github.com/RehabMan/Laptop-DSDT-Patch.. There are also post install scripts that can be used to create and install the kexts the are required for this laptop series.
 
-The current repository actually uses only on-the-fly patches via config.plist and an additional SSDT, SSDT-HACK.aml.
+The current repository actually uses only on-the-fly patches via config.plist and additional SSDTs.
 
 Please refer to this guide thread on tonymacx86.com for a step-by-step process, feedback, and questions:
 
 http://www.tonymacx86.com/el-capitan-laptop-guides/179520-guide-lenovo-z50-70-using-clover-uefi-10-11-a.html
+
+2016-10-02
+
+- Split SSDT-HACK.dsl into multiple SSDTs
+- Injecting device properties via SSDTs instead of config.plist/Devices/Arbitrary
+
 
 2016-08-03
 
