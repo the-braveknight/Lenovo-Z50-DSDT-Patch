@@ -12,7 +12,6 @@ RESOURCES=./Resources_$(HDA)
 HDAINJECT=AppleHDA_$(HDA).kext
 HDAHCDINJECT=AppleHDAHCD_$(HDA).kext
 HDAZML=AppleHDA_$(HDA)_Resources
-BACKLIGHTINJECT=AppleBacklightInjector.kext
 
 VERSION_ERA=$(shell ./print_version.sh)
 ifeq "$(VERSION_ERA)" "10.10-"
@@ -22,16 +21,15 @@ else
 endif
 SLE=/System/Library/Extensions
 
-# set build products
-PRODUCTS=$(BUILDDIR)/SSDT-HACK.aml
-
 IASLFLAGS=-ve
 IASL=iasl
 
-.PHONY: all
-all: $(PRODUCTS) $(HDAHCDINJECT) #  $(HDAINJECT)
+PRODUCTS=$(BUILDDIR)/SSDT-XOSI.aml $(BUILDDIR)/SSDT-USB.aml $(BUILDDIR)/SSDT-GPRW.aml $(BUILDDIR)/SSDT-PNLF.aml $(BUILDDIR)/SSDT-IGPU.aml $(BUILDDIR)/SSDT-HDEF.aml $(BUILDDIR)/SSDT-HDAU.aml $(BUILDDIR)/SSDT-NVDA.aml $(BUILDDIR)/SSDT-BATT.aml
 
-$(BUILDDIR)/SSDT-HACK.aml: ./SSDT-HACK.dsl
+.PHONY: all
+all: $(PRODUCTS) $(HDAINJECT) $(HDAHCDINJECT)
+
+$(BUILDDIR)/%.aml : ./hotpatch/%.dsl
 	$(IASL) $(IASLFLAGS) -p $@ $<
 
 .PHONY: clean
@@ -44,15 +42,14 @@ clean:
 install: $(PRODUCTS)
 	$(eval EFIDIR:=$(shell sudo ./mount_efi.sh /))
 	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-*.aml
-	cp $(BUILDDIR)/SSDT-HACK.aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/SSDT-HACK.aml
+	cp $(PRODUCTS) $(EFIDIR)/EFI/CLOVER/ACPI/patched
 
-#$(HDAINJECT) $(HDAHCDINJECT): $(RESOURCES)/*.plist ./patch_hda.sh
-$(HDAHCDINJECT): $(RESOURCES)/*.plist ./patch_hda.sh
+$(HDAINJECT) $(HDAHCDINJECT): $(RESOURCES)/*.plist ./patch_hda.sh
 	./patch_hda.sh $(HDA)
 
 .PHONY: clean_hda
 clean_hda:
-	rm -rf $(HDAHCDINJECT) $(HDAZML) # $(HDAINJECT)
+	rm -rf $(HDAHCDINJECT) $(HDAZML) $(HDAINJECT)
 
 $(BACKLIGHTINJECT): ./backlight/Backlight.plist ./backlight/patch_backlight.sh
 	./backlight/patch_backlight.sh
@@ -76,26 +73,16 @@ install_hdadummy:
 install_hda:
 	sudo rm -Rf $(INSTDIR)/$(HDAINJECT)
 	sudo rm -Rf $(INSTDIR)/$(HDAHCDINJECT)
-	#sudo cp -R ./$(HDAHCDINJECT) $(INSTDIR)
-	#if [ "`which tag`" != "" ]; then sudo tag -a Blue $(INSTDIR)/$(HDAHCDINJECT); fi
 	sudo cp $(HDAZML)/*.zml* $(SLE)/AppleHDA.kext/Contents/Resources
 	if [ "`which tag`" != "" ]; then sudo tag -a Blue $(SLE)/AppleHDA.kext/Contents/Resources/*.zml*; fi
 	make update_kernelcache
 
-FORCED=/ForcedExtensions
-.PHONY: install_hdax
-install_hdax:
+.PHONY: install_hdahcd
+install_hdahcd:
 	sudo rm -Rf $(INSTDIR)/$(HDAINJECT)
 	sudo rm -Rf $(INSTDIR)/$(HDAHCDINJECT)
-	#sudo cp -R ./$(HDAHCDINJECT) $(FORCED)
-	#if [ "`which tag`" != "" ]; then sudo tag -a Blue $(FORCED)/$(HDAHCDINJECT); fi
-	sudo cp $(HDAZML)/*.zml* $(FORCED)/AppleHDA_Resources
-	if [ "`which tag`" != "" ]; then sudo tag -a Blue $(FORCED)/AppleHDA_Resources/*.zml*; fi
-
-.PHONY: install_backlight
-install_backlight:
-	sudo rm -Rf $(INSTDIR)/$(BACKLIGHTINJECT)
-	sudo cp -R ./$(BACKLIGHTINJECT) $(INSTDIR)
-	if [ "`which tag`" != "" ]; then sudo tag -a Blue $(INSTDIR)/$(BACKLIGHTINJECT); fi
+	sudo cp -R ./$(HDAHCDINJECT) $(INSTDIR)
+	if [ "`which tag`" != "" ]; then sudo tag -a Blue $(INSTDIR)/$(HDAHCDINJECT); fi
+	sudo cp $(HDAZML)/*.zml* $(SLE)/AppleHDA.kext/Contents/Resources
+	if [ "`which tag`" != "" ]; then sudo tag -a Blue $(SLE)/AppleHDA.kext/Contents/Resources/*.zml*; fi
 	make update_kernelcache
-
