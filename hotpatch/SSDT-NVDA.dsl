@@ -1,20 +1,20 @@
 // For disabling the discrete GPU
 
 DefinitionBlock("", "SSDT", 2, "hack", "NVDA", 0)
-{
-    Device(RMD1)
-    {
-        Name(_HID, "RMD10000")
-        Method(_INI)
-        {
-            // disable discrete graphics (Nvidia) if it is present
-            If (CondRefOf(\_SB.PCI0.RP05.PEGP._OFF)) { \_SB.PCI0.RP05.PEGP._OFF() }
-        }
-    }
-    
+{   
     External(_SB.PCI0, DeviceObj)
     Scope(_SB.PCI0)
     {
+        Device(RMD1)
+        {
+            Name(_HID, "RMD10000")
+            Method(_INI)
+            {
+                // disable discrete graphics (Nvidia) if it is present
+               If (CondRefOf(\_SB.PCI0.RP05.PEGP._OFF)) { \_SB.PCI0.RP05.PEGP._OFF() }
+            }
+        }
+        
         External(\P8XH, MethodObj)
         External(RP05.PEGP.LCTL, FieldUnitObj)
         External(RP05.PEGP.ELCT, IntObj)

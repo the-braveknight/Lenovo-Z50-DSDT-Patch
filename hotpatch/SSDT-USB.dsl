@@ -67,35 +67,6 @@ DefinitionBlock ("", "SSDT", 2, "hack", "USB", 0)
                 PSTE, 2  // bits 2:0 are power state
             }
         }
-        // registers needed for disabling EHC#1
-        Scope(LPCB)
-        {
-            OperationRegion(RMP1, PCI_Config, 0xF0, 4)
-            Field(RMP1, DWordAcc, NoLock, Preserve)
-            {
-                RCB1, 32, // Root Complex Base Address
-            }
-            // address is in bits 31:14
-            OperationRegion(FDM1, SystemMemory, (RCB1 & Not((1<<14)-1)) + 0x3418, 4)
-            Field(FDM1, DWordAcc, NoLock, Preserve)
-            {
-                ,15,
-                FDE1,1, // should be bit 15 (0-based) (FD EHCI#1)
-            }
-        }
-        Device(RMD2)
-        {
-            //Name(_ADR, 0)
-            Name(_HID, "RMD10000")
-            Method(_INI)
-            {
-                // disable EHCI#1
-                // put EHCI#1 in D3hot (sleep mode)
-                ^^EHC1.PSTE = 3
-                // disable EHCI#1 PCI space
-                ^^LPCB.FDE1 = 1
-            }
-        }
         
         External(\_SB.XUSB, FieldUnitObj)
         External(XHC.XRST, IntObj)
@@ -129,6 +100,37 @@ DefinitionBlock ("", "SSDT", 2, "hack", "USB", 0)
                     "AAPL,current-extra-in-sleep", Buffer() { 0x40, 0x06, 0, 0, },
                     "AAPL,max-port-current-in-sleep", Buffer() { 0x34, 0x08, 0, 0 },
                 })
+            }
+        }
+        
+        // registers needed for disabling EHC#1
+        Scope(LPCB)
+        {
+            OperationRegion(RMP1, PCI_Config, 0xF0, 4)
+            Field(RMP1, DWordAcc, NoLock, Preserve)
+            {
+                RCB1, 32, // Root Complex Base Address
+            }
+            // address is in bits 31:14
+            OperationRegion(FDM1, SystemMemory, (RCB1 & Not((1<<14)-1)) + 0x3418, 4)
+            Field(FDM1, DWordAcc, NoLock, Preserve)
+            {
+                ,15,
+                FDE1,1, // should be bit 15 (0-based) (FD EHCI#1)
+            }
+        }
+        
+        Device(RMD2)
+        {
+            //Name(_ADR, 0)
+            Name(_HID, "RMD10000")
+            Method(_INI)
+            {
+                // disable EHCI#1
+                // put EHCI#1 in D3hot (sleep mode)
+                ^^EHC1.PSTE = 3
+                // disable EHCI#1 PCI space
+                ^^LPCB.FDE1 = 1
             }
         }
     }

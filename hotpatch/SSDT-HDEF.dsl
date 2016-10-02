@@ -7,7 +7,6 @@ DefinitionBlock("", "SSDT", 2, "hack", "HDEF", 0)
     External(_SB.PCI0, DeviceObj)
     Scope(_SB.PCI0)
     {
-        External(\RMCF.AUDL, IntObj)
         External(HDEF, DeviceObj)
         Scope(HDEF)
         {
