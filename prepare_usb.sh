@@ -57,7 +57,7 @@ fi
 
 # Compile SSDT-Install.dsl, copy AML to CLOVER/ACPI/patched
 echo Compiling SSDT-Install.dsl
-iasl -ve -p $BUILDDIR/SSDT-Install.aml SSDT-Install.dsl
+iasl -ve -p $BUILDDIR/SSDT-Install.aml ./install_usb/SSDT-Install.dsl
 echo copying $BUILDDIR/SSDT-Install.aml to $CLOVER/ACPI/patched
 cp $BUILDDIR/SSDT-Install.aml $CLOVER/ACPI/patched
 
@@ -82,7 +82,7 @@ $PlistBuddy -c "Delete ':Devices'" $CONFIG
 $PlistBuddy -c "Delete ':Graphics'" $CONFIG
 $PlistBuddy -c "Delete ':ACPI'" $CONFIG
 $PlistBuddy -c "Delete ':KernelAndKextPatches:KextsToPatch'" $CONFIG
-$PlistBuddy -c "Merge 'config-install.plist'" $CONFIG
+$PlistBuddy -c "Merge './install_usb/config-usb.plist'" $CONFIG
 
 
 # Copy smbios.plist from EFI/CLOVER (if present).
