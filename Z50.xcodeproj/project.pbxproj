@@ -24,7 +24,6 @@
 		B83F12031DA17EA800CAE62A /* SSDT-USB.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-USB.dsl"; path = "hotpatch/SSDT-USB.dsl"; sourceTree = "<group>"; };
 		B83F12041DA17EA800CAE62A /* SSDT-XOSI.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-XOSI.dsl"; path = "hotpatch/SSDT-XOSI.dsl"; sourceTree = "<group>"; };
 		B83F12061DA17ECB00CAE62A /* config-usb.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "config-usb.plist"; path = "install_usb/config-usb.plist"; sourceTree = "<group>"; };
-		B83F12071DA17ECB00CAE62A /* SSDT-Install.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-Install.dsl"; path = "install_usb/SSDT-Install.dsl"; sourceTree = "<group>"; };
 		B8AAEC0B1D749D110096BC78 /* Backlight.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Backlight.plist; path = backlight/Backlight.plist; sourceTree = "<group>"; };
 		B8AAEC0C1D749D110096BC78 /* patch_backlight.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = patch_backlight.sh; path = backlight/patch_backlight.sh; sourceTree = "<group>"; };
 		B8F92A7B1D99EFDE004A0E72 /* prepare_usb.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = prepare_usb.sh; sourceTree = "<group>"; };
@@ -85,7 +84,6 @@
 			isa = PBXGroup;
 			children = (
 				B83F12061DA17ECB00CAE62A /* config-usb.plist */,
-				B83F12071DA17ECB00CAE62A /* SSDT-Install.dsl */,
 				B8F92A7B1D99EFDE004A0E72 /* prepare_usb.sh */,
 			);
 			name = install_usb;

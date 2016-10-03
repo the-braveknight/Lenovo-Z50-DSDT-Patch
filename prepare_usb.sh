@@ -29,15 +29,47 @@ function install_kext
 }
 
 
+# Copy config_install.plist from the repo to Clover folder
+echo Copying config.plist to $CLOVER
+cp ./config.plist $CLOVER
+
+# Cleanup config.plist
+echo Cleaning up config.plist
+$PlistBuddy -c "Delete ':Devices'" $CONFIG
+$PlistBuddy -c "Delete ':Graphics'" $CONFIG
+$PlistBuddy -c "Delete ':ACPI'" $CONFIG
+$PlistBuddy -c "Delete ':KernelAndKextPatches:KextsToPatch'" $CONFIG
+$PlistBuddy -c "Merge './install_usb/config-usb.plist'" $CONFIG
+
+
+# Delete already existing files from CLOVER/ACPI/patched
+rm -f $CLOVER/ACPI/patched/*
+
+# Compile SSDT-USB.dsl & SSDT-NVDA.dsl, copy AML to CLOVER/ACPI/patched
+echo "Compiling the SSDTs required for the installer..."
+iasl -ve -p $BUILDDIR/SSDT-USB.aml ./hotpatch/SSDT-USB.dsl
+iasl -ve -p $BUILDDIR/SSDT-NVDA.aml ./hotpatch/SSDT-NVDA.dsl
+echo "copying SSDT-USB.aml & SSDT-NVDA.aml to $CLOVER/ACPI/patched"
+cp $BUILDDIR/SSDT-USB.aml $CLOVER/ACPI/patched
+cp $BUILDDIR/SSDT-NVDA.aml $CLOVER/ACPI/patched
+
+
+# Download & copy HFSPlus.efi from CloverGrowerPro repo to CLOVER/drivers64UEFI if it's not present
+if [ ! -e $CLOVER/drivers64UEFI/HFSPlus.efi ]; then
+    echo Downloading HFSPlus.efi...
+    curl https://raw.githubusercontent.com/JrCs/CloverGrowerPro/master/Files/HFSPlus/X64/HFSPlus.efi -o ./downloads/HFSPlus.efi -s
+    echo Copying HFSPlus.efi to $CLOVER/drivers64UEFI
+    cp ./downloads/HFSPlus.efi $CLOVER/drivers64UEFI
+fi
+
+
 # Remove Clover/kexts/10.* folders, keep 'Others' only.
 rm -Rf $CLOVER/kexts/10.*
 # Remove any kext(s) already present in 'Others' folder.
 rm -Rf $KEXTDEST/*.kext
 
-
 # Download the required kexts for the installer
 ./download.sh usb_kexts
-
 
 # Extract & install downloaded kexts
 cd ./downloads/kexts
@@ -53,36 +85,6 @@ install_kext ./kexts/ApplePS2SmartTouchPad.kext
 if [ "$1" != "native_wifi" ]; then
     install_kext ./kexts/AirPortInjector.kext
 fi
-
-
-# Compile SSDT-Install.dsl, copy AML to CLOVER/ACPI/patched
-echo Compiling SSDT-Install.dsl
-iasl -ve -p $BUILDDIR/SSDT-Install.aml ./install_usb/SSDT-Install.dsl
-echo copying $BUILDDIR/SSDT-Install.aml to $CLOVER/ACPI/patched
-cp $BUILDDIR/SSDT-Install.aml $CLOVER/ACPI/patched
-
-
-# Download & copy HFSPlus.efi from CloverGrowerPro repo to CLOVER/drivers64UEFI if it's not present
-if [ ! -e $CLOVER/drivers64UEFI/HFSPlus.efi ]; then
-    echo Downloading HFSPlus.efi...
-    curl https://raw.githubusercontent.com/JrCs/CloverGrowerPro/master/Files/HFSPlus/X64/HFSPlus.efi -o ./downloads/HFSPlus.efi -s
-    echo Copying HFSPlus.efi to $CLOVER/drivers64UEFI
-    cp ./downloads/HFSPlus.efi $CLOVER/drivers64UEFI
-fi
-
-# Copy config_install.plist from the repo to Clover folder
-echo Copying config.plist to $CLOVER
-cp config.plist $CLOVER
-
-
-# Cleanup config.plist
-
-echo Cleaning up config.plist
-$PlistBuddy -c "Delete ':Devices'" $CONFIG
-$PlistBuddy -c "Delete ':Graphics'" $CONFIG
-$PlistBuddy -c "Delete ':ACPI'" $CONFIG
-$PlistBuddy -c "Delete ':KernelAndKextPatches:KextsToPatch'" $CONFIG
-$PlistBuddy -c "Merge './install_usb/config-usb.plist'" $CONFIG
 
 
 # Copy smbios.plist from EFI/CLOVER (if present).
