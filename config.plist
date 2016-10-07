@@ -27,14 +27,6 @@
 				</dict>
 				<dict>
 					<key>Comment</key>
-					<string>change Method(GPRW,2,N) to XPRW</string>
-					<key>Find</key>
-					<data>R1BSVwI=</data>
-					<key>Replace</key>
-					<data>WFBSVwI=</data>
-				</dict>
-				<dict>
-					<key>Comment</key>
 					<string>change GFX0 to IGPU</string>
 					<key>Find</key>
 					<data>R0ZYMA==</data>
@@ -141,9 +133,9 @@
 					<key>Comment</key>
 					<string>change _PRW in LID to XPRW (disabling it)</string>
 					<key>Find</key>
-					<data>CF9QUlcSBgIKDgoD</data>
+					<data>CF9QUlc=</data>
 					<key>Replace</key>
-					<data>CFhQUlcSBgIKDgoD</data>
+					<data>CFhQUlc=</data>
 				</dict>
 				<dict>
 					<key>Comment</key>

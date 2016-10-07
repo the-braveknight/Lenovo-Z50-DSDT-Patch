@@ -15,7 +15,6 @@
 		B818FE251D5BD7A500489224 /* install_tools.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = install_tools.sh; sourceTree = "<group>"; };
 		B818FE261D5BD7B000489224 /* update_config.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = update_config.sh; sourceTree = "<group>"; };
 		B83F11FC1DA17EA800CAE62A /* SSDT-BATT.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-BATT.dsl"; path = "hotpatch/SSDT-BATT.dsl"; sourceTree = "<group>"; };
-		B83F11FD1DA17EA800CAE62A /* SSDT-GPRW.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-GPRW.dsl"; path = "hotpatch/SSDT-GPRW.dsl"; sourceTree = "<group>"; };
 		B83F11FE1DA17EA800CAE62A /* SSDT-HDAU.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-HDAU.dsl"; path = "hotpatch/SSDT-HDAU.dsl"; sourceTree = "<group>"; };
 		B83F11FF1DA17EA800CAE62A /* SSDT-HDEF.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-HDEF.dsl"; path = "hotpatch/SSDT-HDEF.dsl"; sourceTree = "<group>"; };
 		B83F12001DA17EA800CAE62A /* SSDT-IGPU.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-IGPU.dsl"; path = "hotpatch/SSDT-IGPU.dsl"; sourceTree = "<group>"; };
@@ -68,7 +67,6 @@
 			isa = PBXGroup;
 			children = (
 				B83F11FC1DA17EA800CAE62A /* SSDT-BATT.dsl */,
-				B83F11FD1DA17EA800CAE62A /* SSDT-GPRW.dsl */,
 				B83F11FE1DA17EA800CAE62A /* SSDT-HDAU.dsl */,
 				B83F11FF1DA17EA800CAE62A /* SSDT-HDEF.dsl */,
 				B83F12001DA17EA800CAE62A /* SSDT-IGPU.dsl */,
