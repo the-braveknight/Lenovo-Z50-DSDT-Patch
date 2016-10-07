@@ -47,7 +47,6 @@ DefinitionBlock ("", "SSDT", 2, "hack", "USB", 0)
                     },
                 },
             },
-    
         })
     }
 

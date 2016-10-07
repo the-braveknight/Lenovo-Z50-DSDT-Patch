@@ -1,4 +1,4 @@
-// Automatic injection of HDEF properties
+// HDEF injection
 
 DefinitionBlock("", "SSDT", 2, "hack", "HDEF", 0)
 {

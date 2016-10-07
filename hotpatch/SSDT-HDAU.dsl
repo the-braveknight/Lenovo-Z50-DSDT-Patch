@@ -1,8 +1,7 @@
-// Automatic injection of HDAU (HDMI Audio) properties
+// HDAU (HDMI Audio) injection
 
 DefinitionBlock("", "SSDT", 2, "hack", "HDAU", 0)
 {
-    External(RMCF.AUDL, IntObj)
     
     External(_SB.PCI0, DeviceObj)
     Scope(_SB.PCI0)
