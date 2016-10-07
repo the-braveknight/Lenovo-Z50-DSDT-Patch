@@ -10,12 +10,8 @@ SUDO=sudo
 EFI=`$SUDO ./mount_efi.sh /`
 CLOVER=$EFI/EFI/CLOVER
 KEXTDEST=$CLOVER/kexts/Other
-MINOR_VER=$([[ "$(sw_vers -productVersion)" =~ [0-9]+\.([0-9]+) ]] && echo ${BASH_REMATCH[1]})
-if [[ $MINOR_VER -ge 11 ]]; then
-    HDKEXTDIR=/Library/Extensions
-else
-    HDKEXTDIR=/System/Library/Extensions
-fi
+SLE=/System/Library/Extensions
+LE=/Library/Extensions
 
 function install_kext
 {
@@ -50,9 +46,8 @@ fi
 cd ..
 
 # Install PS2 driver that's currently in use.
-if [ -d $HDKEXTDIR/VoodooPS2Controller.kext ]; then
-    cd ./downloads/kexts
-    install_kext ./downloads/kexts/Release/VoodooPS2Controller.kext && cd ..
+if [ -e $SLE/VoodooPS2Controller.kext ] || [ -e $LE/VoodooPS2Controller.kext ]; then
+    install_kext ./downloads/kexts/RehabMan-Voodoo*/Release/VoodooPS2Controller.kext
 else
     install_kext ./kexts/ApplePS2SmartTouchPad.kext
 fi
