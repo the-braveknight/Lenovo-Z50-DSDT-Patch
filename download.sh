@@ -17,18 +17,13 @@ function download()
 
 if [ ! -d ./downloads ]; then mkdir ./downloads; fi && rm -Rf downloads/* && cd ./downloads
 
-if [ "$1" == "usb_kexts" ]; then
-    mkdir ./kexts && cd ./kexts
-    download os-x-fakesmc-kozlek RehabMan-FakeSMC
-    download os-x-realtek-network RehabMan-Realtek-Network
-    exit
-fi
-
 # download kexts
 mkdir ./kexts && cd ./kexts
 download os-x-fakesmc-kozlek RehabMan-FakeSMC
-download os-x-voodoo-ps2-controller RehabMan-Voodoo
 download os-x-realtek-network RehabMan-Realtek-Network
+
+if [ "$1" != "usb_kexts" ]; then
+download os-x-voodoo-ps2-controller RehabMan-Voodoo
 download os-x-acpi-battery-driver RehabMan-Battery
 download os-x-fake-pci-id RehabMan-FakePCIID
 download os-x-brcmpatchram RehabMan-BrcmPatchRAM
@@ -42,4 +37,4 @@ download os-x-maciasl-patchmatic RehabMan-patchmatic
 download os-x-maciasl-patchmatic RehabMan-MaciASL
 download acpica iasl iasl.zip
 cd ..
-
+fi # "usb_kexts"
