@@ -1,4 +1,4 @@
-// HDAU (HDMI Audio) injection
+// HDAU (HDMI audio) injection
 
 DefinitionBlock("", "SSDT", 2, "hack", "HDAU", 0)
 {
@@ -15,6 +15,20 @@ DefinitionBlock("", "SSDT", 2, "hack", "HDAU", 0)
                 Return(Package()
                 {
                     "layout-id", Buffer() { 3, 0, 0, 0 },
+                    "hda-gfx", Buffer() { "onboard-1" },
+                })
+            }
+        }
+        
+        External(IGPU, DeviceObj)
+        Scope(IGPU)
+        {
+            // inject "hda-gfx"="onboard-1" in IGPU for HDMI audio
+            Method(_DSM, 4)
+            {
+                If (!Arg2) { Return (Buffer() { 0x03 } ) }
+                Return(Package()
+                {
                     "hda-gfx", Buffer() { "onboard-1" },
                 })
             }
