@@ -17,7 +17,6 @@
 		B83F11FC1DA17EA800CAE62A /* SSDT-BATT.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-BATT.dsl"; path = "hotpatch/SSDT-BATT.dsl"; sourceTree = "<group>"; };
 		B83F11FE1DA17EA800CAE62A /* SSDT-HDAU.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-HDAU.dsl"; path = "hotpatch/SSDT-HDAU.dsl"; sourceTree = "<group>"; };
 		B83F11FF1DA17EA800CAE62A /* SSDT-HDEF.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-HDEF.dsl"; path = "hotpatch/SSDT-HDEF.dsl"; sourceTree = "<group>"; };
-		B83F12001DA17EA800CAE62A /* SSDT-IGPU.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-IGPU.dsl"; path = "hotpatch/SSDT-IGPU.dsl"; sourceTree = "<group>"; };
 		B83F12011DA17EA800CAE62A /* SSDT-NVDA.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-NVDA.dsl"; path = "hotpatch/SSDT-NVDA.dsl"; sourceTree = "<group>"; };
 		B83F12021DA17EA800CAE62A /* SSDT-PNLF.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-PNLF.dsl"; path = "hotpatch/SSDT-PNLF.dsl"; sourceTree = "<group>"; };
 		B83F12031DA17EA800CAE62A /* SSDT-USB.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-USB.dsl"; path = "hotpatch/SSDT-USB.dsl"; sourceTree = "<group>"; };
@@ -69,7 +68,6 @@
 				B83F11FC1DA17EA800CAE62A /* SSDT-BATT.dsl */,
 				B83F11FE1DA17EA800CAE62A /* SSDT-HDAU.dsl */,
 				B83F11FF1DA17EA800CAE62A /* SSDT-HDEF.dsl */,
-				B83F12001DA17EA800CAE62A /* SSDT-IGPU.dsl */,
 				B83F12011DA17EA800CAE62A /* SSDT-NVDA.dsl */,
 				B83F12021DA17EA800CAE62A /* SSDT-PNLF.dsl */,
 				B83F12031DA17EA800CAE62A /* SSDT-USB.dsl */,

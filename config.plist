@@ -8,11 +8,9 @@
 		<dict>
 			<key>Fixes</key>
 			<dict>
-				<key>FIX_RTC_20000</key>
+				<key>NewWay_80000000</key>
 				<true/>
 				<key>FixHPET_0010</key>
-				<true/>
-				<key>NewWay_80000000</key>
 				<true/>
 			</dict>
 			<key>Patches</key>
@@ -43,7 +41,7 @@
 				</dict>
 				<dict>
 					<key>Comment</key>
-					<string>change Method( _Q11,0,N) to XQ11</string>
+					<string>change Method(_Q11,0,N) to XQ11</string>
 					<key>Find</key>
 					<data>X1ExMQA=</data>
 					<key>Replace</key>
@@ -169,7 +167,7 @@
 	</dict>
 	<key>Devices</key>
 	<dict>
-		<key>#FakeID</key>
+		<key>FakeID</key>
 		<dict>
 			<key>IntelGFX</key>
 			<string>0x04128086</string>
@@ -192,11 +190,13 @@
 	</dict>
 	<key>Graphics</key>
 	<dict>
-		<key>#Inject</key>
+		<key>Inject</key>
 		<dict>
 			<key>Intel</key>
-			<false/>
+			<true/>
 		</dict>
+		<key>ig-platform-id</key>
+		<string>0x0a260006</string>
 	</dict>
 	<key>KernelAndKextPatches</key>
 	<dict>
