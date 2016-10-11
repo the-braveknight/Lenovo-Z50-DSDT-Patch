@@ -12,6 +12,8 @@
 				<true/>
 				<key>FixHPET_0010</key>
 				<true/>
+				<key>FIX_RTC_20000</key>
+				<true/>
 			</dict>
 			<key>Patches</key>
 			<array>
