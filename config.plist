@@ -167,7 +167,7 @@
 	</dict>
 	<key>Devices</key>
 	<dict>
-		<key>FakeID</key>
+		<key>#FakeID</key>
 		<dict>
 			<key>IntelGFX</key>
 			<string>0x04128086</string>
