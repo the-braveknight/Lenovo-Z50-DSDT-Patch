@@ -44,8 +44,6 @@
 		</dict>
 		<key>SSDT</key>
 		<dict>
-			<key>DropOem</key>
-			<false/>
 			<key>Generate</key>
 			<false/>
 		</dict>
@@ -57,16 +55,6 @@
 			<key>IntelGFX</key>
 			<string>0x04128086</string>
 		</dict>
-	</dict>
-	<key>Graphics</key>
-	<dict>
-		<key>Inject</key>
-		<dict>
-			<key>Intel</key>
-			<true/>
-		</dict>
-		<key>ig-platform-id</key>
-		<string>0x0a260006</string>
 	</dict>
 </dict>
 </plist>

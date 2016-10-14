@@ -149,8 +149,6 @@
 		</dict>
 		<key>SSDT</key>
 		<dict>
-			<key>DropOem</key>
-			<false/>
 			<key>Generate</key>
 			<false/>
 		</dict>

@@ -49,7 +49,7 @@ DefinitionBlock("", "SSDT", 2, "hack", "NVDA", 0)
         Method (LPCB.EC0._REG, 2, NotSerialized) // disable nVidia from method _REG
         {
             \_SB.PCI0.LPCB.EC0.XREG(Arg0, Arg1)
-            If (ECON) { Store (Zero, \_SB.PCI0.LPCB.EC0.GATY) }
+            If (ECON) { \_SB.PCI0.LPCB.EC0.GATY = Zero }
         }
     }
 }
