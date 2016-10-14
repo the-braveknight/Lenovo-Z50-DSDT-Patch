@@ -200,8 +200,6 @@
 	</dict>
 	<key>KernelAndKextPatches</key>
 	<dict>
-		<key>AppleRTC</key>
-		<true/>
 		<key>KernelPm</key>
 		<true/>
 		<key>KextsToPatch</key>
