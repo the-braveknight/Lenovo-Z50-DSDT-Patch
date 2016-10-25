@@ -338,6 +338,42 @@
 				<key>Replace</key>
 				<data>Qb4PAAAA60Q=</data>
 			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>Brcm4352 Patch 1</string>
+				<key>Find</key>
+				<data>QTnEdRs=</data>
+				<key>MatchOS</key>
+				<string>10.12.x</string>
+				<key>Name</key>
+				<string>AirPortBrcm4360</string>
+				<key>Replace</key>
+				<data>QTnEZpA=</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>Brcm4352 Patch 2</string>
+				<key>Find</key>
+				<data>QQ+3zTnBdQw=</data>
+				<key>MatchOS</key>
+				<string>10.12.x</string>
+				<key>Name</key>
+				<string>AirPortBrcm4360</string>
+				<key>Replace</key>
+				<data>QQ+3zTnBZpA=</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>Brcm4352 Patch 3</string>
+				<key>Find</key>
+				<data>g33EBHQG</data>
+				<key>MatchOS</key>
+				<string>10.12.x</string>
+				<key>Name</key>
+				<string>AirPortBrcm4360</string>
+				<key>Replace</key>
+				<data>g33EBGaQ</data>
+			</dict>
 		</array>
 	</dict>
 	<key>RtVariables</key>
