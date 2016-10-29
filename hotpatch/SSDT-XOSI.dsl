@@ -1,6 +1,6 @@
-// _OSI Windows Simulation
+// Override for host defined _OSI to handle "Darwin"...
 
-DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
+DefinitionBlock("", "SSDT", 2, "hack", "XOSI", 0)
 {
     // All _OSI calls in DSDT are routed to XOSI...
     // XOSI simulates "Windows 2015" (which is Windows 10)
@@ -11,7 +11,7 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
         // simulation targets
         // source: (google 'Microsoft Windows _OSI')
         //  http://download.microsoft.com/download/7/E/7/7E7662CF-CBEA-470B-A97E-CE7CE0D98DC2/WinACPI_OSI.docx
-        Store(Package()
+        Local0 = Package()
         {
             "Windows",              // generic Windows query
             "Windows 2001",         // Windows XP
@@ -25,7 +25,7 @@ DefinitionBlock ("", "SSDT", 2, "hack", "hack", 0)
             "Windows 2012",         // Windows 8/Windows Server 2012
             "Windows 2013",         // Windows 8.1/Windows Server 2012 R2
             "Windows 2015",         // Windows 10/Windows Server TP
-        }, Local0)
+        }
         Return (Ones != Match(Local0, MEQ, Arg0, MTR, 0, 0))
     }
 }
