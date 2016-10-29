@@ -10,7 +10,7 @@ DefinitionBlock("", "SSDT", 2, "hack", "PS2K", 0)
     {
         Method (_Q11) // Brightness down
         {
-            If (LEqual (PS2V, 2)) // If the touchpad is Synaptics & using RehabMan's VoodooPS2 driver...
+            If (PS2V == 2) // If the touchpad is Synaptics & using RehabMan's VoodooPS2 driver...
             {
                 Notify (PS2K, 0x0405)
             }
@@ -22,7 +22,7 @@ DefinitionBlock("", "SSDT", 2, "hack", "PS2K", 0)
         
         Method (_Q12) // Btightness up
         {
-            If (LEqual (PS2V, 2)) // If the touchpad is Synaptics & using RehabMan's VoodooPS2 driver...
+            If (PS2V == 2) // If the touchpad is Synaptics & using RehabMan's VoodooPS2 driver...
             {
                 Notify (PS2K, 0x0406)
             }
