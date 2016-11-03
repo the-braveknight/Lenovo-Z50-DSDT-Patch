@@ -261,7 +261,7 @@ DefinitionBlock ("", "SSDT", 2, "hack", "BATT", 0)
             }
         }
         
-        External(CMFP, MethodObj)
+        External(CMFP, PkgObj)
         External(CFMX, MutexObj)
         External(\SMID, FieldUnitObj)
         External(\SFNO, FieldUnitObj)
