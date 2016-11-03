@@ -1,4 +1,4 @@
-// For solving instant wake by hooking GPRW or UPRW
+// For solving instant wake by hooking GPRW
 
 DefinitionBlock("", "SSDT", 2, "hack", "GPRW", 0)
 {

@@ -211,17 +211,8 @@ $SUDO rm -Rf $KEXTDEST/AppleHDA_$HDA.kext
 $SUDO rm -Rf $KEXTDEST/AppleHDAHCD_$HDA.kext
 $SUDO rm -f $SLE/AppleHDA.kext/Contents/Resources/*.zml*
 ./patch_hda.sh "$HDA"
-if [[ $MINOR_VER -le 9 ]]; then
-    # dummyHDA configuration
-    make AppleHDA_$HDA.kext
-    install_kext AppleHDA_$HDA.kext
-else
-    # alternate configuration (requires .xml.zlib .zml.zlib AppleHDA patch)
-    #make AppleHDAHCD_$HDA.kext
-    install_kext AppleHDAHCD_$HDA.kext
-    $SUDO cp AppleHDA_${HDA}_Resources/*.zml* $SLE/AppleHDA.kext/Contents/Resources
-fi
-
+# install dummy kext
+install_kext AppleHDA_$HDA.kext
 
 #if [[ $MINOR_VER -ge 11 ]]; then
     # create custom AppleBacklightInjector.kext and install

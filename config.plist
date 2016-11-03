@@ -256,18 +256,6 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>AppleHDA .xml.zlib to .zml.zlib</string>
-				<key>Find</key>
-				<data>LnhtbC56bA==</data>
-				<key>MatchOS</key>
-				<string>10.10.x,10.11.x,10.12.x</string>
-				<key>Name</key>
-				<string>AppleHDA</string>
-				<key>Replace</key>
-				<data>LnptbC56bA==</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
 				<string>0x0a260006 9MB cursor bytes, vbo</string>
 				<key>Find</key>
 				<data>BgAmCgEDAwMAAAACAAAwAQAAYAA=</data>
@@ -348,7 +336,7 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>Brcm4352 Patch 1</string>
+				<string>Brcm4352 10.12.1 Patch 1</string>
 				<key>Find</key>
 				<data>QTnEdRs=</data>
 				<key>MatchOS</key>
@@ -360,7 +348,7 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>Brcm4352 Patch 2</string>
+				<string>Brcm4352 10.12.1 Patch 2</string>
 				<key>Find</key>
 				<data>QQ+3zTnBdQw=</data>
 				<key>MatchOS</key>
@@ -372,7 +360,7 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>Brcm4352 Patch 3</string>
+				<string>Brcm4352 10.12.1 Patch 3</string>
 				<key>Find</key>
 				<data>g33EBHQG</data>
 				<key>MatchOS</key>
