@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>BuildMachineOSBuild</key>
-	<string>14F27</string>
+	<string>14F2009</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -17,11 +17,11 @@
 	<key>CFBundlePackageType</key>
 	<string>KEXT</string>
 	<key>CFBundleShortVersionString</key>
-	<string>4.6.5</string>
+	<string>4.6.8</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>4.6.5</string>
+	<string>4.6.8</string>
 	<key>DTCompiler</key>
 	<string>com.apple.compilers.llvm.clang.1_0</string>
 	<key>DTPlatformBuild</key>
@@ -153,6 +153,8 @@
 				<false/>
 				<key>Enable Extended Functions</key>
 				<true/>
+				<key>Enable Sierra Caps Lock Fix</key>
+				<true/>
 				<key>FinerFnBrightnessControl</key>
 				<false/>
 				<key>FinerFnVolumeControl</key>
@@ -189,7 +191,7 @@
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © EMlyDinEsH (mg-dinesh@live.com) 2012-2016. All rights reserved.</string>
 	<key>OSBundleCompatibleVersion</key>
-	<string>4.6.5</string>
+	<string>4.6.8</string>
 	<key>OSBundleLibraries</key>
 	<dict>
 		<key>com.apple.iokit.IOHIDSystem</key>
@@ -203,7 +205,7 @@
 		<key>com.apple.kpi.unsupported</key>
 		<string>8.0.0</string>
 		<key>org.emlydinesh.driver.ApplePS2Controller</key>
-		<string>4.6.5</string>
+		<string>4.6.8</string>
 	</dict>
 	<key>OSBundleRequired</key>
 	<string>Console</string>
