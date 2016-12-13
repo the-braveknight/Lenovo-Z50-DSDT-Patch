@@ -6,17 +6,6 @@
 	<dict>
 		<key>DSDT</key>
 		<dict>
-			<key>Patches</key>
-			<array>
-				<dict>
-					<key>Comment</key>
-					<string>change EHC1 to EH01</string>
-					<key>Find</key>
-					<data>RUhDMQ==</data>
-					<key>Replace</key>
-					<data>RUgwMQ==</data>
-				</dict>
-			</array>
 			<key>Fixes</key>
 			<dict>
 				<key>FIX_RTC_20000</key>
@@ -29,8 +18,6 @@
 		</dict>
 		<key>SSDT</key>
 		<dict>
-			<key>DropOem</key>
-			<false/>
 			<key>Generate</key>
 			<false/>
 		</dict>
@@ -89,7 +76,7 @@
 	<key>Graphics</key>
 	<dict>
 		<key>ig-platform-id</key>
-		<string>0x0a260006</string>
+		<string>0x0a2e0008</string>
 		<key>Inject</key>
 		<dict>
 			<key>ATI</key>
@@ -114,35 +101,11 @@
 				<key>Disabled</key>
 				<true/>
 				<key>Name</key>
-				<string>IOAHCIBlockStorage</string>
+				<string>com.apple.iokit.IOAHCIBlockStorage</string>
 				<key>Find</key>
 				<data>AEFQUExFIFNTRAA=</data>
 				<key>Replace</key>
 				<data>AAAAAAAAAAAAAAA=</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>Enable 9MB cursor bytes, 0x0a260006</string>
-				<key>Disabled</key>
-				<false/>
-				<key>Name</key>
-				<string>AppleIntelFramebufferAzul</string>
-				<key>Find</key>
-				<data>BgAmCgEDAwMAAAACAAAwAQAAYAA=</data>
-				<key>Replace</key>
-				<data>BgAmCgEDAwMAAAACAAAwAQAAkAA=</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>HDMI-audio, port 0105, 0x0a260005 0x0a260006, 0x0d220003, 0x0a2e000a, 0x0a26000a</string>
-				<key>Disabled</key>
-				<true/>
-				<key>Name</key>
-				<string>AppleIntelFramebufferAzul</string>
-				<key>Find</key>
-				<data>AQUJAAAEAACHAAAA</data>
-				<key>Replace</key>
-				<data>AQUJAAAIAACHAAAA</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
@@ -152,9 +115,21 @@
 				<key>Find</key>
 				<data>AQAAdRc=</data>
 				<key>Name</key>
-				<string>IOGraphicsFamily</string>
+				<string>com.apple.iokit.IOGraphicsFamily</string>
 				<key>Replace</key>
 				<data>AQAA6xc=</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>Boot graphics glitch, 10.12.dp1 (credit denskop)</string>
+				<key>Find</key>
+				<data>AQAAdSU=</data>
+				<key>MatchOS</key>
+				<string>10.12.x</string>
+				<key>Name</key>
+				<string>com.apple.iokit.IOGraphicsFamily</string>
+				<key>Replace</key>
+				<data>AQAA6yU=</data>
 			</dict>
 		</array>
 	</dict>
