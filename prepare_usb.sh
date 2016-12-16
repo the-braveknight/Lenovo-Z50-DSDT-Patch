@@ -36,7 +36,6 @@ cp ./config.plist $CLOVER
 # Cleanup config.plist
 echo Cleaning up config.plist
 $PlistBuddy -c "Delete ':ACPI'" $CONFIG
-$PlistBuddy -c "Delete ':Devices'" $CONFIG
 $PlistBuddy -c "Delete ':KernelAndKextPatches:KextsToPatch'" $CONFIG
 $PlistBuddy -c "Merge './install_usb/config-usb.plist'" $CONFIG
 

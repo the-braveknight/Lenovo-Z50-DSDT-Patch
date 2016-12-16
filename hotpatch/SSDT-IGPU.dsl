@@ -14,7 +14,6 @@ DefinitionBlock ("", "SSDT", 2, "hack", "IGPU", 0)
                 If (!Arg2) { Return (Buffer() { 0x03 } ) }
                 Return(Package()
                 {
-                    "device-id", Buffer() { 0x12, 0x04, 0x00, 0x00 },
                     "hda-gfx", Buffer() { "onboard-1" },
                 })
             }
