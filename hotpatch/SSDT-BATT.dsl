@@ -46,33 +46,24 @@ DefinitionBlock ("", "SSDT", 2, "hack", "BATT", 0)
                         {
                             Store (And (Local1, 0xF8), OBST)
                         }
-                        Else
+                        ElseIf (LEqual (_T_0, One))
                         {
-                            If (LEqual (_T_0, One))
-                            {
-                                Store (Or (One, And (Local1, 0xF8)), OBST)
-                            }
-                            Else
-                            {
-                                If (LEqual (_T_0, 0x02))
-                                {
-                                    Store (Or (0x02, And (Local1, 0xF8)), OBST)
-                                }
-                                Else
-                                {
-                                    If (LEqual (_T_0, 0x04))
-                                    {
-                                        Store (Or (0x04, And (Local1, 0xF8)), OBST)
-                                    }
-                                }
-                            }
+                            Store (Or (One, And (Local1, 0xF8)), OBST)
+                        }
+                        ElseIf (LEqual (_T_0, 0x02))
+                        {
+                            Store (Or (0x02, And (Local1, 0xF8)), OBST)
+                        }
+                        ElseIf (LEqual (_T_0, 0x04))
+                        {
+                            Store (Or (0x04, And (Local1, 0xF8)), OBST)
                         }
 
                         Break
                     }
 
                     Sleep (0x10)
-                    Store (B1B2 (AC00 ,AC01), OBAC)
+                    Store (B1B2 (AC00, AC01), OBAC)
                     If (And (OBST, One))
                     {
                         Store (And (Not (OBAC), 0x7FFF), OBAC)
@@ -90,6 +81,7 @@ DefinitionBlock ("", "SSDT", 2, "hack", "BATT", 0)
                     Store (OBRC, Index (PBST, 0x02))
                     Store (OBPV, Index (PBST, 0x03))
                 }
+
                 Return (PBST)
             }
             
@@ -108,6 +100,7 @@ DefinitionBlock ("", "SSDT", 2, "hack", "BATT", 0)
                     Store ("", Index (PBIF, 0x09))
                     Store ("", Index (PBIF, 0x0B))
                 }
+
                 Return (PBIF)
             }
         }
@@ -147,7 +140,7 @@ DefinitionBlock ("", "SSDT", 2, "hack", "BATT", 0)
                         Store (FB0, Local0)
                         If (LEqual (And (Local0, One), Zero))
                         {
-                            WECB (0x64, 0x0100, FB4)
+                            WECB (0x64, 256, FB4)
                         }
 
                         Store (Zero, SMST)
@@ -162,11 +155,11 @@ DefinitionBlock ("", "SSDT", 2, "hack", "BATT", 0)
                                 Break
                             }
                         }
-    
+
                         Store (FB0, Local0)
                         If (LNotEqual (And (Local0, One), Zero))
                         {
-                            Store (RECB (0x64, 0x0100), FB4)
+                            Store (RECB (0x64, 256), FB4)
                         }
 
                         Store (SMST, FB1)
@@ -189,7 +182,7 @@ DefinitionBlock ("", "SSDT", 2, "hack", "BATT", 0)
                 {
                     Name (RETB, Buffer (0x0A) {})
                     Name (BUF1, Buffer (0x08) {})
-                    Store (RECB (0x14, 0x40), BUF1)
+                    Store (RECB (0x14, 64), BUF1)
                     CreateByteField (BUF1, Zero, FW0)
                     CreateByteField (BUF1, One, FW1)
                     CreateByteField (BUF1, 0x02, FW2)
@@ -239,7 +232,7 @@ DefinitionBlock ("", "SSDT", 2, "hack", "BATT", 0)
                 Store (B1CT, Index (DerefOf (Index (GBUF, Zero)), Zero))
                 Store (Zero, Index (DerefOf (Index (GBUF, One)), Zero))
                 Name (BUF1, Buffer (0x08) {})
-                Store (RECB (0x14, 0x40), BUF1)
+                Store (RECB (0x14, 64), BUF1)
                 CreateByteField (BUF1, Zero, FW0)
                 CreateByteField (BUF1, One, FW1)
                 CreateByteField (BUF1, 0x02, FW2)
@@ -272,8 +265,7 @@ DefinitionBlock ("", "SSDT", 2, "hack", "BATT", 0)
         Method (CFUN, 4, Serialized)
         {
             Name (ESRC, 0x05)
-            If (LNotEqual (Match (CMFP, MEQ, DerefOf (Index (Arg0, Zero)), MTR, 
-                Zero, Zero), Ones))
+            If (LNotEqual (Match (CMFP, MEQ, DerefOf (Index (Arg0, Zero)), MTR, Zero, Zero), Ones))
             {
                 Acquire (CFMX, 0xFFFF)
                 Store (Arg0, SMID)
@@ -282,116 +274,106 @@ DefinitionBlock ("", "SSDT", 2, "hack", "BATT", 0)
                 Store (0xCE, SMIC)
                 Release (CFMX)
             }
-            Else
+            ElseIf (LEqual (DerefOf (Index (Arg0, Zero)), 0x10))
             {
-                If (LEqual (DerefOf (Index (Arg0, Zero)), 0x10))
+                If (LEqual (DerefOf (Index (Arg1, Zero)), One))
                 {
-                    If (LEqual (DerefOf (Index (Arg1, Zero)), One))
+                    CreateByteField (Arg2, Zero, CAPV)
+                    Store (CAPV, CAVR)
+                    Store (One, STDT)
+                }
+                ElseIf (LEqual (DerefOf (Index (Arg1, Zero)), 0x02))
+                {
+                    Store (Buffer (0x80) {}, Local0)
+                    CreateByteField (Local0, Zero, BFD0)
+                    Store (0x08, BFD0)
+                    Store (One, STDT)
+                    Store (Local0, BFDT)
+                }
+                Else
+                {
+                    Store (Zero, STDT)
+                }
+            }
+            ElseIf (LEqual (DerefOf (Index (Arg0, Zero)), 0x18))
+            {
+                Acquire (CFMX, 0xFFFF)
+                If (LEqual (DerefOf (Index (Arg1, Zero)), 0x02))
+                {
+                    WECB (0x64, 256, Zero)
+                    Store (DerefOf (Index (Arg2, One)), SMAD)
+                    Store (DerefOf (Index (Arg2, 0x02)), SMCM)
+                    Store (DerefOf (Index (Arg2, Zero)), SMPR)
+                    While (LAnd (Not (LEqual (ESRC, Zero)), Not (LEqual (And (SMST, 0x80), 0x80))))
                     {
-                        CreateByteField (Arg2, Zero, CAPV)
-                        Store (CAPV, CAVR)
+                        Sleep (0x14)
+                        Subtract (ESRC, One, ESRC)
+                    }
+
+                    Store (SMST, Local2)
+                    If (LEqual (And (Local2, 0x80), 0x80))
+                    {
+                        Store (Buffer (0x80) {}, Local1)
+                        Store (Local2, Index (Local1, Zero))
+                        If (LEqual (Local2, 0x80))
+                        {
+                            Store (0xC4, P80H)
+                            Store (BCNT, Index (Local1, One))
+                            Store (RECB (0x64, 256), Local3)
+                            Store (DerefOf (Index (Local3, Zero)), Index (Local1, 0x02))
+                            Store (DerefOf (Index (Local3, One)), Index (Local1, 0x03))
+                            Store (DerefOf (Index (Local3, 0x02)), Index (Local1, 0x04))
+                            Store (DerefOf (Index (Local3, 0x03)), Index (Local1, 0x05))
+                            Store (DerefOf (Index (Local3, 0x04)), Index (Local1, 0x06))
+                            Store (DerefOf (Index (Local3, 0x05)), Index (Local1, 0x07))
+                            Store (DerefOf (Index (Local3, 0x06)), Index (Local1, 0x08))
+                            Store (DerefOf (Index (Local3, 0x07)), Index (Local1, 0x09))
+                            Store (DerefOf (Index (Local3, 0x08)), Index (Local1, 0x0A))
+                            Store (DerefOf (Index (Local3, 0x09)), Index (Local1, 0x0B))
+                            Store (DerefOf (Index (Local3, 0x0A)), Index (Local1, 0x0C))
+                            Store (DerefOf (Index (Local3, 0x0B)), Index (Local1, 0x0D))
+                            Store (DerefOf (Index (Local3, 0x0C)), Index (Local1, 0x0E))
+                            Store (DerefOf (Index (Local3, 0x0D)), Index (Local1, 0x0F))
+                            Store (DerefOf (Index (Local3, 0x0E)), Index (Local1, 0x10))
+                            Store (DerefOf (Index (Local3, 0x0F)), Index (Local1, 0x11))
+                            Store (DerefOf (Index (Local3, 0x10)), Index (Local1, 0x12))
+                            Store (DerefOf (Index (Local3, 0x11)), Index (Local1, 0x13))
+                            Store (DerefOf (Index (Local3, 0x12)), Index (Local1, 0x14))
+                            Store (DerefOf (Index (Local3, 0x13)), Index (Local1, 0x15))
+                            Store (DerefOf (Index (Local3, 0x14)), Index (Local1, 0x16))
+                            Store (DerefOf (Index (Local3, 0x15)), Index (Local1, 0x17))
+                            Store (DerefOf (Index (Local3, 0x16)), Index (Local1, 0x18))
+                            Store (DerefOf (Index (Local3, 0x17)), Index (Local1, 0x19))
+                            Store (DerefOf (Index (Local3, 0x18)), Index (Local1, 0x1A))
+                            Store (DerefOf (Index (Local3, 0x19)), Index (Local1, 0x1B))
+                            Store (DerefOf (Index (Local3, 0x1A)), Index (Local1, 0x1C))
+                            Store (DerefOf (Index (Local3, 0x1B)), Index (Local1, 0x1D))
+                            Store (DerefOf (Index (Local3, 0x1C)), Index (Local1, 0x1E))
+                            Store (DerefOf (Index (Local3, 0x1D)), Index (Local1, 0x1F))
+                            Store (DerefOf (Index (Local3, 0x1E)), Index (Local1, 0x20))
+                            Store (DerefOf (Index (Local3, 0x1F)), Index (Local1, 0x21))
+                        }
+
+                        Store (Local1, BFDT)
                         Store (One, STDT)
                     }
                     Else
                     {
-                        If (LEqual (DerefOf (Index (Arg1, Zero)), 0x02))
-                        {
-                            Store (Buffer (0x80) {}, Local0)
-                            CreateByteField (Local0, Zero, BFD0)
-                            Store (0x08, BFD0)
-                            Store (One, STDT)
-                            Store (Local0, BFDT)
-                        }
-                        Else
-                        {
-                            Store (Zero, STDT)
-                        }
+                        Store (0xC5, P80H)
+                        Store (Zero, STDT)
                     }
                 }
                 Else
                 {
-                    If (LEqual (DerefOf (Index (Arg0, Zero)), 0x18))
-                    {
-                        Acquire (CFMX, 0xFFFF)
-                        If (LEqual (DerefOf (Index (Arg1, Zero)), 0x02))
-                        {
-                            WECB (0x64, 0x0100, Zero)
-                            Store (DerefOf (Index (Arg2, One)), SMAD)
-                            Store (DerefOf (Index (Arg2, 0x02)), SMCM)
-                            Store (DerefOf (Index (Arg2, Zero)), SMPR)
-                            While (LAnd (Not (LEqual (ESRC, Zero)), Not (LEqual (And (SMST, 0x80
-                                ), 0x80))))
-                            {
-                                Sleep (0x14)
-                                Subtract (ESRC, One, ESRC)
-                            }
-
-                            Store (SMST, Local2)
-                            If (LEqual (And (Local2, 0x80), 0x80))
-                            {
-                                Store (Buffer (0x80) {}, Local1)
-                                Store (Local2, Index (Local1, Zero))
-                                If (LEqual (Local2, 0x80))
-                                {
-                                    Store (0xC4, P80H)
-                                    Store (BCNT, Index (Local1, One))
-                                    Store (RECB (0x64, 0x0100), Local3)
-                                    Store (DerefOf (Index (Local3, Zero)), Index (Local1, 0x02))
-                                    Store (DerefOf (Index (Local3, One)), Index (Local1, 0x03))
-                                    Store (DerefOf (Index (Local3, 0x02)), Index (Local1, 0x04))
-                                    Store (DerefOf (Index (Local3, 0x03)), Index (Local1, 0x05))
-                                    Store (DerefOf (Index (Local3, 0x04)), Index (Local1, 0x06))
-                                    Store (DerefOf (Index (Local3, 0x05)), Index (Local1, 0x07))
-                                    Store (DerefOf (Index (Local3, 0x06)), Index (Local1, 0x08))
-                                    Store (DerefOf (Index (Local3, 0x07)), Index (Local1, 0x09))
-                                    Store (DerefOf (Index (Local3, 0x08)), Index (Local1, 0x0A))
-                                    Store (DerefOf (Index (Local3, 0x09)), Index (Local1, 0x0B))
-                                    Store (DerefOf (Index (Local3, 0x0A)), Index (Local1, 0x0C))
-                                    Store (DerefOf (Index (Local3, 0x0B)), Index (Local1, 0x0D))
-                                    Store (DerefOf (Index (Local3, 0x0C)), Index (Local1, 0x0E))
-                                    Store (DerefOf (Index (Local3, 0x0D)), Index (Local1, 0x0F))
-                                    Store (DerefOf (Index (Local3, 0x0E)), Index (Local1, 0x10))
-                                    Store (DerefOf (Index (Local3, 0x0F)), Index (Local1, 0x11))
-                                    Store (DerefOf (Index (Local3, 0x10)), Index (Local1, 0x12))
-                                    Store (DerefOf (Index (Local3, 0x11)), Index (Local1, 0x13))
-                                    Store (DerefOf (Index (Local3, 0x12)), Index (Local1, 0x14))
-                                    Store (DerefOf (Index (Local3, 0x13)), Index (Local1, 0x15))
-                                    Store (DerefOf (Index (Local3, 0x14)), Index (Local1, 0x16))
-                                    Store (DerefOf (Index (Local3, 0x15)), Index (Local1, 0x17))
-                                    Store (DerefOf (Index (Local3, 0x16)), Index (Local1, 0x18))
-                                    Store (DerefOf (Index (Local3, 0x17)), Index (Local1, 0x19))
-                                    Store (DerefOf (Index (Local3, 0x18)), Index (Local1, 0x1A))
-                                    Store (DerefOf (Index (Local3, 0x19)), Index (Local1, 0x1B))
-                                    Store (DerefOf (Index (Local3, 0x1A)), Index (Local1, 0x1C))
-                                    Store (DerefOf (Index (Local3, 0x1B)), Index (Local1, 0x1D))
-                                    Store (DerefOf (Index (Local3, 0x1C)), Index (Local1, 0x1E))
-                                    Store (DerefOf (Index (Local3, 0x1D)), Index (Local1, 0x1F))
-                                    Store (DerefOf (Index (Local3, 0x1E)), Index (Local1, 0x20))
-                                    Store (DerefOf (Index (Local3, 0x1F)), Index (Local1, 0x21))
-                                }
-
-                                Store (Local1, BFDT)
-                                Store (One, STDT)
-                            }
-                            Else
-                            {
-                                Store (0xC5, P80H)
-                                Store (Zero, STDT)
-                            }
-                        }
-                        Else
-                        {
-                            Store (0xC6, P80H)
-                            Store (Zero, STDT)
-                        }
-
-                        Release (CFMX)
-                    }
-                    Else
-                    {
-                        Store (Zero, STDT)
-                    }
+                    Store (0xC6, P80H)
+                    Store (Zero, STDT)
                 }
+
+                Release (CFMX)
+            }
+            Else
+            {
+                Store (Zero, STDT)
             }
         }
         
@@ -440,7 +422,7 @@ DefinitionBlock ("", "SSDT", 2, "hack", "BATT", 0)
                 Increment (Local0)
             }
         }
-        Method (B1B2, 2, NotSerialized) { Return (Or(Arg0, ShiftLeft(Arg1, 8))) }
+        Method (\B1B2, 2, NotSerialized) { Return(Or(Arg0, ShiftLeft(Arg1, 8))) }
     }
 }
 //EOF
