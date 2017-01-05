@@ -253,4 +253,4 @@ fi
 createAppleHDAInjector "$1"
 createAppleHDAInjector_HCD "$1"
 createAppleHDAResources_HDC "$1"
-createPatchedAppleHDA "$1"
+#createPatchedAppleHDA "$1"
