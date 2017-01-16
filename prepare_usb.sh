@@ -67,22 +67,23 @@ rm -Rf $CLOVER/kexts/10.*
 rm -Rf $KEXTDEST/*.kext
 
 # Download the required kexts for the installer
-./download.sh usb_kexts
+./download.sh --usb-kexts
 
 # Extract & install downloaded kexts
 cd ./downloads/kexts
 unzip -q RehabMan-FakeSMC-*.zip -d RehabMan-FakeSMC
 unzip -q RehabMan-Realtek-Network-v2-*.zip -d RehabMan-Realtek-Network-v2
+unzip -q RehabMan-FakePCIID-*.zip -d RehabMan-FakePCIID
 install_kext RehabMan-FakeSMC/FakeSMC.kext
 install_kext RehabMan-Realtek-Network-v2/Release/RealtekRTL8111.kext
+install_kext RehabMan-FakePCIID/Release/FakePCIID.kext
+install_kext RehabMan-FakePCIID/Release/FakePCIID_Broadcom_WiFi.kext
+install_kext RehabMan-FakePCIID/Release/FakePCIID_Intel_HD_Graphics.kext
 cd ../..
 
 # Install local kexts
-install_kext ./kexts/USBXHC_*.kext
+install_kext ./kexts/USBXHC_z50.kext
 install_kext ./kexts/ApplePS2SmartTouchPad.kext
-if [ "$1" != "native_wifi" ]; then
-    install_kext ./kexts/AirPortInjector.kext
-fi
 
 
 # Copy smbios.plist from EFI/CLOVER (if present).

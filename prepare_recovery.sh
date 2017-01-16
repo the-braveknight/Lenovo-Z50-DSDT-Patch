@@ -10,8 +10,6 @@ SUDO=sudo
 EFI=`$SUDO ./mount_efi.sh /`
 CLOVER=$EFI/EFI/CLOVER
 KEXTDEST=$CLOVER/kexts/Other
-SLE=/System/Library/Extensions
-LE=/Library/Extensions
 
 function install_kext
 {
@@ -34,19 +32,16 @@ cd ./downloads/kexts
 install_kext RehabMan-FakeSMC*/FakeSMC.kext
 install_kext RehabMan-Realtek-Network-v2*/Release/RealtekRTL8111.kext
 install_kext RehabMan-Battery*/Release/ACPIBatteryManager.kext
+install_kext RehabMan-FakePCIID/Release/FakePCIID.kext
+install_kext RehabMan-FakePCIID/Release/FakePCIID_Broadcom_WiFi.kext
 cd ../..
 
 # Install local kexts
-cd ./kexts
-install_kext USBXHC_*.kext
-# Installs the Wifi injector by default
-if [ "$1" != "native_wifi" ]; then
-    install_kext AirPortInjector.kext
-fi
-cd ..
+install_kext ./kexts/USBXHC_z50.kext
+
 
 # Install PS2 driver that's currently in use.
-if [ -e $SLE/VoodooPS2Controller.kext ] || [ -e $LE/VoodooPS2Controller.kext ]; then
+if [ -e /System/Library/Extensions/VoodooPS2Controller.kext ] || [ -e /Library/Extensions/VoodooPS2Controller.kext ]; then
     install_kext ./downloads/kexts/RehabMan-Voodoo*/Release/VoodooPS2Controller.kext
 else
     install_kext ./kexts/ApplePS2SmartTouchPad.kext
