@@ -22,6 +22,7 @@ if [ "$1" == "--usb-kexts" ]; then
     download os-x-fakesmc-kozlek RehabMan-FakeSMC
     download os-x-realtek-network RehabMan-Realtek-Network
     download os-x-fake-pci-id RehabMan-FakePCIID
+    download os-x-usb-inject-all RehabMan-USBInjectAll
     exit
 fi
 

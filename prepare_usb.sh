@@ -46,9 +46,11 @@ rm -f $CLOVER/ACPI/patched/*
 # Compile SSDT-USB.dsl & SSDT-NVDA.dsl, copy AML to CLOVER/ACPI/patched
 echo "Compiling the SSDTs required for the installer..."
 iasl -ve -p $BUILDDIR/SSDT-USB.aml ./hotpatch/SSDT-USB.dsl
+iasl -ve -p $BUILDDIR/SSDT-UIAC.aml ./hotpatch/SSDT-UIAC.dsl
 iasl -ve -p $BUILDDIR/SSDT-NVDA.aml ./hotpatch/SSDT-NVDA.dsl
 echo "copying SSDT-USB.aml & SSDT-NVDA.aml to $CLOVER/ACPI/patched"
 cp $BUILDDIR/SSDT-USB.aml $CLOVER/ACPI/patched
+cp $BUILDDIR/SSDT-UIAC.aml $CLOVER/ACPI/patched
 cp $BUILDDIR/SSDT-NVDA.aml $CLOVER/ACPI/patched
 
 
@@ -71,20 +73,21 @@ rm -Rf $KEXTDEST/*.kext
 
 # Extract & install downloaded kexts
 cd ./downloads/kexts
-unzip -q RehabMan-FakeSMC-*.zip -d RehabMan-FakeSMC
-unzip -q RehabMan-Realtek-Network-v2-*.zip -d RehabMan-Realtek-Network-v2
-unzip -q RehabMan-FakePCIID-*.zip -d RehabMan-FakePCIID
-install_kext RehabMan-FakeSMC/FakeSMC.kext
-install_kext RehabMan-Realtek-Network-v2/Release/RealtekRTL8111.kext
-install_kext RehabMan-FakePCIID/Release/FakePCIID.kext
-install_kext RehabMan-FakePCIID/Release/FakePCIID_Broadcom_WiFi.kext
-install_kext RehabMan-FakePCIID/Release/FakePCIID_Intel_HD_Graphics.kext
+
+for ZIP in `basename *.zip`; do
+    unzip -q $ZIP -d `basename $ZIP .zip`
+done
+
+install_kext RehabMan-FakeSMC-*/FakeSMC.kext
+install_kext RehabMan-Realtek-Network-v2-*/Release/RealtekRTL8111.kext
+install_kext RehabMan-FakePCIID-*/Release/FakePCIID.kext
+install_kext RehabMan-FakePCIID-*/Release/FakePCIID_Broadcom_WiFi.kext
+install_kext RehabMan-FakePCIID-*/Release/FakePCIID_Intel_HD_Graphics.kext
+install_kext RehabMan-USBInjectAll-*/Release/USBInjectAll.kexts
 cd ../..
 
-# Install local kexts
-install_kext ./kexts/USBXHC_z50.kext
+# Install ApplePS2SmartTouchPad.kext
 install_kext ./kexts/ApplePS2SmartTouchPad.kext
-
 
 # Copy smbios.plist from EFI/CLOVER (if present).
 diskutil unmount $USBEFI

@@ -34,11 +34,8 @@ install_kext RehabMan-Realtek-Network-v2*/Release/RealtekRTL8111.kext
 install_kext RehabMan-Battery*/Release/ACPIBatteryManager.kext
 install_kext RehabMan-FakePCIID/Release/FakePCIID.kext
 install_kext RehabMan-FakePCIID/Release/FakePCIID_Broadcom_WiFi.kext
+install_kext RehabMan-USBInjectAll-*/Release/USBInjectAll.kexts
 cd ../..
-
-# Install local kexts
-install_kext ./kexts/USBXHC_z50.kext
-
 
 # Install PS2 driver that's currently in use.
 if [ -e /System/Library/Extensions/VoodooPS2Controller.kext ] || [ -e /Library/Extensions/VoodooPS2Controller.kext ]; then
