@@ -48,7 +48,7 @@ echo "Compiling the SSDTs required for the installer..."
 iasl -ve -p $BUILDDIR/SSDT-USB.aml ./hotpatch/SSDT-USB.dsl
 iasl -ve -p $BUILDDIR/SSDT-UIAC.aml ./hotpatch/SSDT-UIAC.dsl
 iasl -ve -p $BUILDDIR/SSDT-NVDA.aml ./hotpatch/SSDT-NVDA.dsl
-echo "copying SSDT-USB.aml & SSDT-NVDA.aml to $CLOVER/ACPI/patched"
+echo "copying the required SSDTs to $CLOVER/ACPI/patched"
 cp $BUILDDIR/SSDT-USB.aml $CLOVER/ACPI/patched
 cp $BUILDDIR/SSDT-UIAC.aml $CLOVER/ACPI/patched
 cp $BUILDDIR/SSDT-NVDA.aml $CLOVER/ACPI/patched
@@ -74,7 +74,7 @@ rm -Rf $KEXTDEST/*.kext
 # Extract & install downloaded kexts
 cd ./downloads/kexts
 
-for ZIP in `basename *.zip`; do
+for ZIP in *.zip; do
     unzip -q $ZIP -d `basename $ZIP .zip`
 done
 
