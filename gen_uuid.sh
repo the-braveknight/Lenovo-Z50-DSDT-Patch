@@ -21,4 +21,4 @@ fi
 
 /usr/libexec/PlistBuddy -c "Set ':SMBIOS:SmUUID' '$UUID'" $PLIST
 
-echo $CONFIG/SMBIOS/SmUUID=$UUID.
+echo $PLIST/SMBIOS/SmUUID=$UUID.
