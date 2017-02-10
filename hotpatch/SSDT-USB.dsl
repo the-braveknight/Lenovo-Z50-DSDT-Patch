@@ -4,12 +4,11 @@ DefinitionBlock ("", "SSDT", 2, "hack", "USB", 0)
 {
     // Disabling EHCI #1
     External(_SB.PCI0, DeviceObj)
-    External(_SB.PCI0.LPCB, DeviceObj)
-    External(_SB.PCI0.EHC1, DeviceObj)
-    External(_SB.PCI0.XHC, DeviceObj)
+
     Scope(_SB.PCI0)
     {
         // registers needed for disabling EHC#1
+        External(EHC1, DeviceObj)
         Scope(EHC1)
         {
             OperationRegion(RMP1, PCI_Config, 0x54, 2)
@@ -19,14 +18,15 @@ DefinitionBlock ("", "SSDT", 2, "hack", "USB", 0)
             }
         }
         
-        External(\_SB.XUSB, FieldUnitObj)
-        External(XHC.XRST, IntObj)
-        External(XHC.PR3, FieldUnitObj)
-        External(XHC.PR3M, FieldUnitObj)
-        External(XHC.PR2, FieldUnitObj)
-        External(XHC.PR2M, FieldUnitObj)
+        External(XHC, DeviceObj)
         Scope(XHC)
         {
+            External(\_SB.XUSB, FieldUnitObj)
+            External(XRST, IntObj)
+            External(PR3, FieldUnitObj)
+            External(PR3M, FieldUnitObj)
+            External(PR2, FieldUnitObj)
+            External(PR2M, FieldUnitObj)
             Method(XSEL)
             {
                 // This code is based on original XSEL, but without all the conditionals
@@ -37,6 +37,7 @@ DefinitionBlock ("", "SSDT", 2, "hack", "USB", 0)
                 Or(And (PR3, 0xFFFFFFC0), PR3M, PR3)
                 Or(And (PR2, 0xFFFF8000), PR2M, PR2)
             }
+            
             // Injecting XHC properties
             Method(_DSM, 4) 
             {
@@ -55,6 +56,7 @@ DefinitionBlock ("", "SSDT", 2, "hack", "USB", 0)
         }
         
         // registers needed for disabling EHC#1
+        External(LPCB, DeviceObj)
         Scope(LPCB)
         {
             OperationRegion(RMP1, PCI_Config, 0xF0, 4)

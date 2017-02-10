@@ -26,11 +26,11 @@ DefinitionBlock ("", "SSDT", 2, "hack", "BATT", 0)
         Scope(BAT0)
         {
             External(PBST, PkgObj)
-            External(OBST, BuffObj)
-            External(OBAC, BuffObj)
-            External(OBPR, BuffObj)
-            External(OBRC, BuffObj)
-            External(OBPV, BuffObj)
+            External(OBST, IntObj)
+            External(OBAC, IntObj)
+            External(OBPR, IntObj)
+            External(OBRC, IntObj)
+            External(OBPV, IntObj)
             Method (_BST, 0, Serialized)  // _BST: Battery Status
             {
                 Name (_T_0, Zero)  // _T_x: Emitted by ASL Compiler
