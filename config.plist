@@ -316,13 +316,13 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>HDMI-audio, port 0105(12), 0x0a2e0008, 0x0a16000c, 0x0a2e000d, 0x0a26000d</string>
+				<string>HDMI-audio, port 0105, 0x0a2e0008, 0x0a16000c, 0x0a2e000d, 0x0a26000d</string>
 				<key>Name</key>
 				<string>com.apple.driver.AppleIntelFramebufferAzul</string>
 				<key>Find</key>
 				<data>AQUJAAAEAAAHAQAA</data>
 				<key>Replace</key>
-				<data>AQUSAAAIAAAHAQAA</data>
+				<data>AQUJAAAIAAAHAQAA</data>
 			</dict>
 		</array>
 	</dict>
