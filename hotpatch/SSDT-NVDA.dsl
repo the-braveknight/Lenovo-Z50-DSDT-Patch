@@ -1,16 +1,15 @@
-// For disabling the discrete GPU
+// SSDT-NVDA: Disable nVidia
 
-DefinitionBlock("", "SSDT", 2, "hack", "NVDA", 0)
-{   
+DefinitionBlock ("", "SSDT", 2, "hack", "NVDA", 0)
+{
     External(_SB.PCI0, DeviceObj)
     Scope(_SB.PCI0)
     {
         Device(RMD1)
         {
-            Name(_HID, "RMD10000")
+            Name(_HID, "RMD50000")
             Method(_INI)
             {
-               // disable discrete graphics (Nvidia) if it is present
                If (CondRefOf(\_SB.PCI0.RP05.PEGP._OFF)) { \_SB.PCI0.RP05.PEGP._OFF() }
             }
         }
@@ -18,9 +17,9 @@ DefinitionBlock("", "SSDT", 2, "hack", "NVDA", 0)
         External(RP05, DeviceObj)
         Scope(RP05)
         {
-            External(PEGP, DeviceObj)
             External(LNKD, FieldUnitObj)
             External(LNKS, FieldUnitObj)
+            External(PEGP, DeviceObj)
             Scope(PEGP)
             {
                 External(\P8XH, MethodObj)
@@ -36,7 +35,7 @@ DefinitionBlock("", "SSDT", 2, "hack", "NVDA", 0)
                     P8XH (Zero, 0xD6, One)
                     P8XH (One, 0xF0, One)
                     Debug = "_SB.PCI0.RP05.PEGP._OFF"
-
+                    
                     ELCT = LCTL
                     VGAB = VREG
                     LNKD = One
@@ -51,19 +50,5 @@ DefinitionBlock("", "SSDT", 2, "hack", "NVDA", 0)
                 }
             }
         }
-
-        External(LPCB.EC0, DeviceObj)
-        Scope(LPCB.EC0)
-        {
-            External(\ECON, FieldUnitObj)
-            External(XREG, MethodObj)
-            External(GATY, FieldUnitObj)
-            Method (_REG, 2, NotSerialized)
-            {
-                \_SB.PCI0.LPCB.EC0.XREG(Arg0, Arg1)
-                If (ECON) { \_SB.PCI0.LPCB.EC0.GATY = Zero }
-            }
-        }              
-    }
+    }  
 }
-//EOF
