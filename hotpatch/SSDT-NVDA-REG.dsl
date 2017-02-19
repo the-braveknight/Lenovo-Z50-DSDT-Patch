@@ -1,4 +1,4 @@
-// SSDT-_REG: Experimental
+// SDT-NVDA-REG: Add removed code from _OFF to _REG
 
 DefinitionBlock ("", "SSDT", 2, "hack", "NVDA-REG", 0)
 {

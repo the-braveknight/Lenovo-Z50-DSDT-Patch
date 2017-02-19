@@ -1,13 +1,13 @@
-// SSDT-NVDA: Disable nVidia
+// SSDT-NVDA-OFF: Add modified _OFF method to disable nVidia
 
 DefinitionBlock ("", "SSDT", 2, "hack", "NVDA-OFF", 0)
 {
     External(_SB.PCI0, DeviceObj)
     Scope(_SB.PCI0)
     {
-        Device(RMD1)
+        Device(RMD2)
         {
-            Name(_HID, "RMD50000")
+            Name(_HID, "RMD20000")
             Method(_INI)
             {
                If (CondRefOf(\_SB.PCI0.RP05.PEGP._OFF)) { \_SB.PCI0.RP05.PEGP._OFF() }

@@ -73,7 +73,7 @@ DefinitionBlock ("", "SSDT", 2, "hack", "USB", 0)
             }
         }
         
-        Device(RMD2)
+        Device(RMD1)
         {
             //Name(_ADR, 0)
             Name(_HID, "RMD10000")
