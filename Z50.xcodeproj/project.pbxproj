@@ -18,17 +18,16 @@
 		B83F11FC1DA17EA800CAE62A /* SSDT-BATT.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-BATT.dsl"; path = "hotpatch/SSDT-BATT.dsl"; sourceTree = "<group>"; };
 		B83F11FE1DA17EA800CAE62A /* SSDT-HDAU.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-HDAU.dsl"; path = "hotpatch/SSDT-HDAU.dsl"; sourceTree = "<group>"; };
 		B83F11FF1DA17EA800CAE62A /* SSDT-HDEF.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-HDEF.dsl"; path = "hotpatch/SSDT-HDEF.dsl"; sourceTree = "<group>"; };
-		B83F12011DA17EA800CAE62A /* SSDT-NVDA-OFF.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-NVDA-OFF.dsl"; path = "hotpatch/SSDT-NVDA-OFF.dsl"; sourceTree = "<group>"; };
 		B83F12021DA17EA800CAE62A /* SSDT-PNLF.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-PNLF.dsl"; path = "hotpatch/SSDT-PNLF.dsl"; sourceTree = "<group>"; };
 		B83F12031DA17EA800CAE62A /* SSDT-USB.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-USB.dsl"; path = "hotpatch/SSDT-USB.dsl"; sourceTree = "<group>"; };
 		B83F12041DA17EA800CAE62A /* SSDT-XOSI.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-XOSI.dsl"; path = "hotpatch/SSDT-XOSI.dsl"; sourceTree = "<group>"; };
 		B83F12061DA17ECB00CAE62A /* config-usb.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "config-usb.plist"; path = "install_usb/config-usb.plist"; sourceTree = "<group>"; };
 		B871C3871DC488A900C86534 /* SSDT-PS2K.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-PS2K.dsl"; path = "hotpatch/SSDT-PS2K.dsl"; sourceTree = "<group>"; };
+		B897A3581E5A013100030FB9 /* SSDT-NVDA.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-NVDA.dsl"; path = "hotpatch/SSDT-NVDA.dsl"; sourceTree = "<group>"; };
 		B8AAEC0B1D749D110096BC78 /* Backlight.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Backlight.plist; path = backlight/Backlight.plist; sourceTree = "<group>"; };
 		B8AAEC0C1D749D110096BC78 /* patch_backlight.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = patch_backlight.sh; path = backlight/patch_backlight.sh; sourceTree = "<group>"; };
 		B8AF85041E03E8FF006076A7 /* SSDT-UIAC.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-UIAC.dsl"; path = "hotpatch/SSDT-UIAC.dsl"; sourceTree = "<group>"; };
 		B8B0B0DB1DC4FCDD000FC6AE /* SSDT-GPRW.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-GPRW.dsl"; path = "hotpatch/SSDT-GPRW.dsl"; sourceTree = "<group>"; };
-		B8F433CB1E59BC320034D936 /* SSDT-NVDA-REG.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-NVDA-REG.dsl"; path = "hotpatch/SSDT-NVDA-REG.dsl"; sourceTree = "<group>"; };
 		B8F92A7B1D99EFDE004A0E72 /* prepare_usb.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = prepare_usb.sh; sourceTree = "<group>"; };
 		ED3F518A1A2029DE0060691A /* install_downloads.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = install_downloads.sh; sourceTree = "<group>"; };
 		ED3F518B1A2029DE0060691A /* download.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = download.sh; sourceTree = "<group>"; };
@@ -77,10 +76,9 @@
 				B83F12021DA17EA800CAE62A /* SSDT-PNLF.dsl */,
 				B871C3871DC488A900C86534 /* SSDT-PS2K.dsl */,
 				B8037A461DAD27BC0000EA48 /* SSDT-IGPU.dsl */,
+				B897A3581E5A013100030FB9 /* SSDT-NVDA.dsl */,
 				B83F11FF1DA17EA800CAE62A /* SSDT-HDEF.dsl */,
 				B83F11FE1DA17EA800CAE62A /* SSDT-HDAU.dsl */,
-				B83F12011DA17EA800CAE62A /* SSDT-NVDA-OFF.dsl */,
-				B8F433CB1E59BC320034D936 /* SSDT-NVDA-REG.dsl */,
 				B83F11FC1DA17EA800CAE62A /* SSDT-BATT.dsl */,
 			);
 			name = hotpatch;

@@ -1,6 +1,6 @@
-// SSDT-NVDA-OFF: Add modified _OFF method to disable nVidia
+// SSDT-NVDA: Disable nVidia
 
-DefinitionBlock ("", "SSDT", 2, "hack", "NVDA-OFF", 0)
+DefinitionBlock ("", "SSDT", 2, "hack", "NVDA", 0)
 {
     External(_SB.PCI0, DeviceObj)
     Scope(_SB.PCI0)
@@ -50,5 +50,24 @@ DefinitionBlock ("", "SSDT", 2, "hack", "NVDA-OFF", 0)
                 }
             }
         }
-    }  
+        
+        External(LPCB.EC0, DeviceObj)
+        Scope(LPCB.EC0)
+        {
+            External(XREG, MethodObj)
+            External(GATY, FieldUnitObj)
+            External(\ECON, FieldUnitObj)
+            Method (_REG, 2, NotSerialized)  // _REG: Region Availability
+            {
+                XREG(Arg0, Arg1)
+                If(Arg0 == 3 && Arg1 == 1)
+                {
+                    If(ECON)
+                    {
+                        GATY = Zero
+                    }
+                }
+            }
+        }
+    }
 }
