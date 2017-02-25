@@ -5,15 +5,6 @@ DefinitionBlock ("", "SSDT", 2, "hack", "NVDA", 0)
     External(_SB.PCI0, DeviceObj)
     Scope(_SB.PCI0)
     {
-        Device(RMD2)
-        {
-            Name(_HID, "RMD20000")
-            Method(_INI)
-            {
-               If (CondRefOf(\_SB.PCI0.RP05.PEGP._OFF)) { \_SB.PCI0.RP05.PEGP._OFF() }
-            }
-        }
-        
         External(RP05, DeviceObj)
         Scope(RP05)
         {
@@ -56,18 +47,23 @@ DefinitionBlock ("", "SSDT", 2, "hack", "NVDA", 0)
         {
             External(XREG, MethodObj)
             External(GATY, FieldUnitObj)
-            External(\ECON, FieldUnitObj)
-            Method (_REG, 2, NotSerialized)  // _REG: Region Availability
+            Method (_REG, 2, NotSerialized)
             {
                 XREG(Arg0, Arg1)
                 If(Arg0 == 3 && Arg1 == 1)
                 {
-                    If(ECON)
-                    {
-                        GATY = Zero
-                    }
+                    GATY = Zero
                 }
             }
+        }
+    }
+    
+    Device(RMD2)
+    {
+        Name(_HID, "RMD20000")
+        Method(_INI)
+        {
+            If (CondRefOf(\_SB.PCI0.RP05.PEGP._OFF)) { \_SB.PCI0.RP05.PEGP._OFF() }
         }
     }
 }
