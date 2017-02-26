@@ -11,95 +11,159 @@ CLOVER=$USBEFI/EFI/CLOVER
 KEXTDEST=$CLOVER/kexts/Other
 CONFIG=$CLOVER/config.plist
 BUILDDIR=./build
-PlistBuddy=/usr/libexec/plistbuddy
-MINOR_VER=$([[ "$(sw_vers -productVersion)" =~ [0-9]+\.([0-9]+) ]] && echo ${BASH_REMATCH[1]})
-if [[ $MINOR_VER -ge 11 ]]; then
-    HDKEXTDIR=/Library/Extensions
-else
-    HDKEXTDIR=/System/Library/Extensions
-fi
+
+KextsToInstall=(FakeSMC.kext RealtekRTL8111.kext FakePCIID.kext FakePCIID_Broadcom_WiFi.kext FakePCIID_Intel_HD_Graphics.kext USBInjectAll.kext)
+SSDTsToInstall=(SSDT-USB.dsl SSDT-UIAC.dsl SSDT-NVDA.dsl)
+EFINeededDrivers=(OsxAptioFixDrv-64.efi FSInject-64.efi OsxFatBinaryDrv-64.efi HFSPlus.efi)
 
 function install_kext
 {
     if [ "$1" != "" ]; then
-        echo Installing $1 to $KEXTDEST
+        echo Installing `basename $1` to $KEXTDEST
         rm -Rf $KEXTDEST/`basename $1`
         cp -Rf $1 $KEXTDEST
     fi
 }
 
+function copy
+{
+    if [ "$1" != "" ] && [ "$2" != "" ]; then
+        if [ -e $1 ] && [ -e $2 ]; then
+            echo Copying `basename $1` to $2
+            cp $1 $2
+        fi
+    fi
+}
+
+function clean_dir
+{
+    if [ "$1" != "" ]; then
+        if [ -d $1 ]; then
+            rm -Rf $1/*
+        fi
+    fi
+}
+
+function compile_dsl
+{
+    if [ "$1" != "" ]; then
+        echo Compiling `basename $1`...
+        iasl -ve -p $BUILDDIR/`basename $1 .dsl`.aml $1 > /dev/null
+    fi
+}
+
+function download_file
+{
+    # $1: Remote link
+    # $2: Folder
+    echo Downloading `basename $1`...
+    curl $1 -o $2/`basename $1` -s
+}
+
+function copy_smbios
+{
+    diskutil unmount $USBEFI > /dev/null
+    HDEFI=`$SUDO ./mount_efi.sh /`
+    if [ -e $HDEFI/EFI/CLOVER/smbios.plist ]; then
+        cp $HDEFI/EFI/CLOVER/smbios.plist /tmp/smbios.plist
+        diskutil unmount $HDEFI > /dev/null
+        USBEFI=`$SUDO ./mount_efi.sh /dev/disk1`
+        copy /tmp/smbios.plist $CLOVER
+    else
+        diskutil unmount $HDEFI > /dev/null
+        USBEFI=`$SUDO ./mount_efi.sh /dev/disk1`
+    fi
+}
+
+function unzip_all_indir
+{
+    if [ "$1" != "" ]; then
+        if [ -d $1 ] && [ "`basename $1/*.zip`" != "*.zip" ]; then
+            for ZIP in $1/*.zip; do
+                unzip -q $ZIP -d $1/`basename $ZIP .zip`
+            done
+        fi
+    fi
+}
+
+function install_kexts_indir
+{
+    if [ "$1" != "" ] && [ -d $1 ]; then
+        for DownloadedKext in $1/*/*.kext $1/*/Release/*.kext; do
+            for KextToInstall in ${KextsToInstall[@]}; do
+                if [ "`basename $DownloadedKext`" == "$KextToInstall" ]; then
+                    install_kext $DownloadedKext
+                fi
+            done
+        done
+    fi
+}
 
 # Copy config_install.plist from the repo to Clover folder
-echo Copying config.plist to $CLOVER
-cp ./config.plist $CLOVER
+copy config.plist $CLOVER
 
 # Cleanup config.plist
 echo Cleaning up config.plist
-$PlistBuddy -c "Delete ':ACPI'" $CONFIG
-$PlistBuddy -c "Delete ':KernelAndKextPatches:KextsToPatch'" $CONFIG
-$PlistBuddy -c "Merge './install_usb/config-usb.plist'" $CONFIG
-
+/usr/libexec/PlistBuddy -c "Delete ':ACPI'" $CONFIG
+/usr/libexec/PlistBuddy -c "Delete ':KernelAndKextPatches:KextsToPatch'" $CONFIG
+/usr/libexec/PlistBuddy -c "Merge './install_usb/config-usb.plist'" $CONFIG
 
 # Delete already existing files from CLOVER/ACPI/patched
-rm -f $CLOVER/ACPI/patched/*
+clean_dir $CLOVER/ACPI/patched
 
-# Compile SSDT-USB.dsl & SSDT-NVDA.dsl, copy AML to CLOVER/ACPI/patched
-echo "Compiling the SSDTs required for the installer..."
-iasl -ve -p $BUILDDIR/SSDT-USB.aml ./hotpatch/SSDT-USB.dsl
-iasl -ve -p $BUILDDIR/SSDT-UIAC.aml ./hotpatch/SSDT-UIAC.dsl
-iasl -ve -p $BUILDDIR/SSDT-NVDA.aml ./hotpatch/SSDT-NVDA.dsl
-echo "copying the required SSDTs to $CLOVER/ACPI/patched"
-cp $BUILDDIR/SSDT-USB.aml $CLOVER/ACPI/patched
-cp $BUILDDIR/SSDT-UIAC.aml $CLOVER/ACPI/patched
-cp $BUILDDIR/SSDT-NVDA.aml $CLOVER/ACPI/patched
+# Delete files in ./build
+clean_dir build
 
+# Compile SSDTs
+for DSL in ${SSDTsToInstall[@]}; do
+    compile_dsl ./hotpatch/$DSL
+done
 
-# Download & copy HFSPlus.efi from CloverGrowerPro repo to CLOVER/drivers64UEFI if it's not present
-if [ ! -e $CLOVER/drivers64UEFI/HFSPlus.efi ]; then
-    echo Downloading HFSPlus.efi...
-    curl https://raw.githubusercontent.com/JrCs/CloverGrowerPro/master/Files/HFSPlus/X64/HFSPlus.efi -o ./downloads/HFSPlus.efi -s
-    echo Copying HFSPlus.efi to $CLOVER/drivers64UEFI
-    cp ./downloads/HFSPlus.efi $CLOVER/drivers64UEFI
-fi
-
-
-# Remove Clover/kexts/10.* folders, keep 'Others' only.
-rm -Rf $CLOVER/kexts/10.*
-# Remove any kext(s) already present in 'Others' folder.
-rm -Rf $KEXTDEST/*.kext
+# Install SSDTs
+for AML in $BUILDDIR/*.aml; do
+    copy $AML $CLOVER/ACPI/patched
+done
 
 # Download the required kexts for the installer
 ./download.sh --usb-kexts
 
-# Extract & install downloaded kexts
-cd ./downloads/kexts
+unzip_all_indir ./downloads/kexts
 
-for ZIP in *.zip; do
-    unzip -q $ZIP -d `basename $ZIP .zip`
+# Remove Clover/kexts/* folders.
+clean_dir $CLOVER/kexts
+# Recreate 'Others' directory.
+mkdir $KEXTDEST
+
+# Install kexts
+install_kexts_indir ./downloads/kexts
+
+# Delete unneeded drivers
+if [ ! -d /tmp/Clover ]; then mkdir /tmp/Clover; else clean_dir /tmp/Clover; fi
+for EFINeededDriver in ${EFINeededDrivers[@]}; do
+    cp $CLOVER/drivers64UEFI/$EFINeededDriver /tmp/Clover
 done
+clean_dir $CLOVER/drivers64UEFI && cp /tmp/Clover/*.efi $CLOVER/drivers64UEFI
 
-install_kext RehabMan-FakeSMC-*/FakeSMC.kext
-install_kext RehabMan-Realtek-Network-v2-*/Release/RealtekRTL8111.kext
-install_kext RehabMan-FakePCIID-*/Release/FakePCIID.kext
-install_kext RehabMan-FakePCIID-*/Release/FakePCIID_Broadcom_WiFi.kext
-install_kext RehabMan-FakePCIID-*/Release/FakePCIID_Intel_HD_Graphics.kext
-install_kext RehabMan-USBInjectAll-*/Release/USBInjectAll.kexts
-cd ../..
+# Special script arguments
+for arg in $@; do
+    if [ "$arg" == "--elan-kext" ]; then
+        install_kext ./kexts/ApplePS2SmartTouchPad.kext
+    fi
 
-# Install ApplePS2SmartTouchPad.kext
-install_kext ./kexts/ApplePS2SmartTouchPad.kext
+    if [ "$arg" == "--voodoo-kext" ]; then
+        cd ./downloads/kexts/RehabMan-Voodoo-*
+        install_kext ./Release/VoodooPS2Controller.kext
+        cd ../../..
+    fi
 
-# Copy smbios.plist from EFI/CLOVER (if present).
-diskutil unmount $USBEFI
-HDEFI=`$SUDO ./mount_efi.sh /`
-if [ -e $HDEFI/EFI/CLOVER/smbios.plist ]; then
-    cp $HDEFI/EFI/CLOVER/smbios.plist /tmp/smbios.plist
-    diskutil unmount $HDEFI
-    USBEFI=`$SUDO ./mount_efi.sh /dev/disk1`
-    cp /tmp/smbios.plist $CLOVER
-else
-    diskutil unmount $HDEFI
-    USBEFI=`$SUDO ./mount_efi.sh /dev/disk1`
-fi
+    if [ "$arg" == "--download-hfsplus" ]; then
+        download_file https://raw.githubusercontent.com/JrCs/CloverGrowerPro/master/Files/HFSPlus/X64/HFSPlus.efi ./downloads
+        copy ./downloads/HFSPlus.efi $CLOVER/drivers64UEFI
+    fi
+
+    if [ "$arg" == "--copy-smbios" ]; then
+        copy_smbios
+    fi
+done
 
 echo Done.

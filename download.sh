@@ -23,6 +23,7 @@ if [ "$1" == "--usb-kexts" ]; then
     download os-x-realtek-network RehabMan-Realtek-Network
     download os-x-fake-pci-id RehabMan-FakePCIID
     download os-x-usb-inject-all RehabMan-USBInjectAll
+    download os-x-voodoo-ps2-controller RehabMan-Voodoo
     exit
 fi
 
