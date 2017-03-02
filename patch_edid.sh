@@ -1,69 +1,74 @@
 #!/bin/bash
 
-EFI=`sudo ./mount_efi.sh`
-config=$EFI/EFI/CLOVER/config.plist
+# Extract display parameters to a plist.
+ioreg -n AppleBacklightDisplay -arxw0 > /tmp/org.the-braveknight.display.plist
+
+RepByte1=0x1d
+RepByte2=0x10
+
+# Define EDID array
+NativeEDID=(`/usr/libexec/PlistBuddy -c "Print ':0:IODisplayEDID'" /tmp/org.the-braveknight.display.plist|xxd -i`)
+
+function patch_edid
+{
+    for ((i=0; i < 127; i++)); do
+        HexByte=${NativeEDID[$i]/,/}
+        if [ $i == 21 ]; then
+            PatchedEDID[$i]=${RepByte1/0x/}
+            Sum=$(($Sum+$RepByte1))
+        elif [ $i == 22 ]; then
+            PatchedEDID[$i]=${RepByte2/0x/}
+            Sum=$(($Sum+$RepByte2))
+        else
+            PatchedEDID[$i]=${HexByte/0x/}
+            Sum=$(($Sum+$HexByte))
+        fi
+    done
+
+    RepChksm=`printf "0x%02x\n" $(( 256 -  ($Sum % 256) ))`
+    PatchedEDID[127]=${RepChksm/0x/}
+
+    echo "Offset 0x16 patched: ($OrigByte1 -> $RepByte1)"
+    echo "Offset 0x17 patched: ($OrigByte2 -> $RepByte2)"
+    echo "Offset 0x80 patched: ($OrigChksm -> $RepChksm)"
+
+    EDIDStr=`echo ${PatchedEDID[@]} | tr -d ' '`
+}
+
+function mount_efi
+{
+    EFI=`sudo ./mount_efi.sh`
+    config=$EFI/EFI/CLOVER/config.plist
+}
 
 function inject_edid
 {
 # $1 is the EDID string
-    comment=`/usr/libexec/PlistBuddy -c "Print :Graphics:CustomEDID" $config 2>&1`
+# $2 is the config.plist to patch
+    comment=`/usr/libexec/PlistBuddy -c "Print :Graphics:CustomEDID" $2 2>&1`
     if [[ "$comment" == *"Does Not Exist"* ]]; then
-        /usr/libexec/PlistBuddy -c "Add ':Graphics:CustomEDID' String" $config
+        /usr/libexec/PlistBuddy -c "Add ':Graphics:CustomEDID' String" $2
     fi
-    /usr/libexec/PlistBuddy -c "Set ':Graphics:CustomEDID' \"$1\"" $config
+    /usr/libexec/PlistBuddy -c "Set ':Graphics:CustomEDID' \"$1\"" $2
 
-    comment=`/usr/libexec/PlistBuddy -c "Print :Graphics:InjectEDID" $config 2>&1`
+    comment=`/usr/libexec/PlistBuddy -c "Print :Graphics:InjectEDID" $2 2>&1`
     if [[ "$comment" == *"Does Not Exist"* ]]; then
-        /usr/libexec/PlistBuddy -c "Add ':Graphics:InjectEDID' Bool" $config
+        /usr/libexec/PlistBuddy -c "Add ':Graphics:InjectEDID' Bool" $2
     fi
-    /usr/libexec/PlistBuddy -c "Set ':Graphics:InjectEDID' true" $config
+    /usr/libexec/PlistBuddy -c "Set ':Graphics:InjectEDID' true" $2
+
+    echo config.plist/Graphics/CustomEDID updated.
 }
 
-Byte1RepValue=1d; Byte1RepValueWhithPrefix=0x$Byte1RepValue
-Byte2RepValue=10; Byte2RepValueWhithPrefix=0x$Byte2RepValue
 
-# Extract display parameters to a plist.
-ioreg -n AppleBacklightDisplay -arxw0 > /tmp/org.the-braveknight.display.plist
+OrigByte1=${NativeEDID[21]/,/}
+OrigByte2=${NativeEDID[22]/,/}
+OrigChksm=${NativeEDID[127]/,/}
 
-# Define EDID arrays
-NativeEDID=(`/usr/libexec/PlistBuddy -c "Print ':0:IODisplayEDID'" /tmp/org.the-braveknight.display.plist|xxd -i`)
-PatchedEDID=()
-
-for ((i=0; i < 127; i++)); do
-    HexElement=${NativeEDID[$i]}
-    HexByte=`echo $HexElement|sed 's/0x\([^,]*\),/\1/'`
-    PatchedEDID[$i]=$HexByte
-done
-
-Byte1OrigValueWhithPrefix=`echo "${NativeEDID[21]}"|sed 's/,//'`
-Byte2OrigValueWhithPrefix=`echo "${NativeEDID[22]}"|sed 's/,//'`
-ChecksumOrigValueWhithPrefix=`echo "${NativeEDID[127]}"|sed 's/,//'`
-
-# Replace original bytes with the new values
-PatchedEDID[21]=$Byte1RepValue
-PatchedEDID[22]=$Byte2RepValue
-
-# Calculate byte #3 (checksum) replacement value
-for ((i=0; i < 127; i++)); do
-    HexByte=${PatchedEDID[$i]}
-    sum=$(($sum+0x$HexByte))
-done
-ChecksumRepValue=`printf "%02x\n" $(( 256 -  (($sum) % 256) ))`; ChecksumRepValueWhithPrefix=0x$ChecksumRepValue
-
-# Patch checksum
-PatchedEDID[127]=$ChecksumRepValue
-
-
-echo Patched Byte "#1": "$Byte1OrigValueWhithPrefix -> $Byte1RepValueWhithPrefix"
-echo Patched Byte "#2": "$Byte2OrigValueWhithPrefix -> $Byte2RepValueWhithPrefix"
-echo Patched Checksum Byte: "$ChecksumOrigValueWhithPrefix -> $ChecksumRepValueWhithPrefix"
-
-# Print the new/patched EDID
-echo Patched EDID: "<${PatchedEDID[@]}>"
-
-# Construct an EDID string for config.plist
-EDIDString=`echo ${PatchedEDID[@]}|sed 's/ //g'`
-
-# Copy EDID string to config.plist
-inject_edid "$EDIDString"
-
+if [ $OrigByte1 == $RepByte1 ] && [ $OrigByte2 == $RepByte2 ]; then
+    echo "EDID correct or already patched, aborting..."
+else
+    patch_edid
+    mount_efi
+    inject_edid $EDIDStr $config
+fi
