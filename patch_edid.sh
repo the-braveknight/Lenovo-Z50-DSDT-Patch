@@ -3,34 +3,52 @@
 # Extract display parameters to a plist.
 ioreg -n AppleBacklightDisplay -arxw0 > /tmp/org.the-braveknight.display.plist
 
-RepByte1=0x1d
-RepByte2=0x10
+# Define vendor/product-ids
+RepVendId1=0x06; VendId1Index=8  # Offset (0x08)
+RepVendId2=0x10; VendId2Index=9  # Offset (0x09)
+RepProdId1=0xf2; ProdId1Index=10 # Offset (0x0a)
+RepProdId2=0x9c; ProdId2Index=11 # Offset (0x0b)
 
 # Define EDID array
 NativeEDID=(`/usr/libexec/PlistBuddy -c "Print ':0:IODisplayEDID'" /tmp/org.the-braveknight.display.plist|xxd -i`)
 
+function replace_byte
+{
+# $1 = Index (Offset)
+# $2 = Value
+    PatchedEDID[$1]=${2/0x/}
+    echo "Offset `printf \"0x%02x\n\" $1` patched: (${NativeEDID[$1]/,/} -> $2)"
+}
+
 function patch_edid
 {
     for ((i=0; i < 127; i++)); do
-        HexByte=${NativeEDID[$i]/,/}
-        if [ $i == 21 ]; then
-            PatchedEDID[$i]=${RepByte1/0x/}
-            Sum=$(($Sum+$RepByte1))
-        elif [ $i == 22 ]; then
-            PatchedEDID[$i]=${RepByte2/0x/}
-            Sum=$(($Sum+$RepByte2))
+        Byte=${NativeEDID[$i]/,/}
+
+        if [ $i == $VendId1Index ]; then
+            replace_byte $i $RepVendId1
+            Sum=$(($Sum+$RepVendId1))
+
+        elif [ $i == $VendId2Index ]; then
+            replace_byte $i $RepVendId2
+            Sum=$(($Sum+$RepVendId2))
+
+        elif [ $i == $ProdId1Index ]; then
+            replace_byte $i $RepProdId1
+            Sum=$(($Sum+$RepProdId1))
+
+        elif [ $i == $ProdId2Index ]; then
+            replace_byte $i $RepProdId2
+            Sum=$(($Sum+$RepProdId2))
+
         else
-            PatchedEDID[$i]=${HexByte/0x/}
-            Sum=$(($Sum+$HexByte))
+            PatchedEDID[$i]=${Byte/0x/}
+            Sum=$(($Sum+$Byte))
         fi
     done
 
     RepChksm=`printf "0x%02x\n" $(( 256 -  ($Sum % 256) ))`
-    PatchedEDID[127]=${RepChksm/0x/}
-
-    echo "Offset 0x16 patched: ($OrigByte1 -> $RepByte1)"
-    echo "Offset 0x17 patched: ($OrigByte2 -> $RepByte2)"
-    echo "Offset 0x80 patched: ($OrigChksm -> $RepChksm)"
+    replace_byte 127 $RepChksm
 
     EDIDStr=`echo ${PatchedEDID[@]} | tr -d ' '`
 }
@@ -61,11 +79,13 @@ function inject_edid
 }
 
 
-OrigByte1=${NativeEDID[21]/,/}
-OrigByte2=${NativeEDID[22]/,/}
-OrigChksm=${NativeEDID[127]/,/}
+OrigVendId1=${NativeEDID[$VendId1Index]/,/}
+OrigVendId2=${NativeEDID[$VendId2Index]/,/}
+OrigProdId1=${NativeEDID[$ProdId1Index]/,/}
+OrigProdId2=${NativeEDID[$ProdId2Index]/,/}
 
-if [ $OrigByte1 == $RepByte1 ] && [ $OrigByte2 == $RepByte2 ]; then
+
+if [ $OrigVendId1 == $RepVendId1 ] && [ $OrigVendId2 == $RepVendId2 ] && [ $OrigProdId1 == $RepProdId1 ] && [ $OrigProdId2 == $RepProdId2 ]; then
     echo "EDID correct or already patched, aborting..."
 else
     patch_edid
