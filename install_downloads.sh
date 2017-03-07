@@ -3,8 +3,6 @@
 #set -x
 
 SUDO=sudo
-#SUDO='echo #'
-#SUDO=nothing
 TAG=tag_file
 TAGCMD=`pwd`/tools/tag
 SLE=/System/Library/Extensions
@@ -38,11 +36,6 @@ function check_directory
             return 0
         fi
     done
-}
-
-function nothing
-{
-    :
 }
 
 function install_kext
@@ -211,23 +204,6 @@ $SUDO rm -f $SLE/AppleHDA.kext/Contents/Resources/*.zml*
 ./patch_hda.sh "$HDA"
 # install dummy kext
 install_kext AppleHDA_$HDA.kext
-
-#if [[ $MINOR_VER -ge 11 ]]; then
-    # create custom AppleBacklightInjector.kext and install
-    #./patch_backlight.sh
-    #install_kext AppleBacklightInjector.kext
-    # remove ACPIBacklight.kext if it is installed (doesn't work with 10.11)
-    #if [ -d $SLE/ACPIBacklight.kext ]; then
-    #    $SUDO rm -Rf $SLE/ACPIBacklight.kext
-    #fi
-#fi
-
-#check_directory *.kext
-#if [ $? -ne 0 ]; then
-#    for kext in *.kext; do
-#        install_kext $kext
-#    done
-#fi
 
 # force cache rebuild with output
 $SUDO touch $SLE && $SUDO kextcache -u /

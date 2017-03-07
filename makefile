@@ -7,6 +7,7 @@
 #
 
 BUILDDIR=./build
+SLE=/System/Library/Extensions
 HDA=CX20751
 RESOURCES=./Resources_$(HDA)
 HDAINJECT=AppleHDA_$(HDA).kext
@@ -15,11 +16,11 @@ HDAZML=AppleHDA_$(HDA)_Resources
 
 VERSION_ERA=$(shell ./print_version.sh)
 ifeq "$(VERSION_ERA)" "10.10-"
-	INSTDIR=/System/Library/Extensions
+	INSTDIR=$(SLE)
 else
 	INSTDIR=/Library/Extensions
 endif
-SLE=/System/Library/Extensions
+
 
 IASLFLAGS=-ve
 IASL=iasl
@@ -50,10 +51,6 @@ $(HDAINJECT) $(HDAHCDINJECT): $(RESOURCES)/*.plist ./patch_hda.sh
 .PHONY: clean_hda
 clean_hda:
 	rm -rf $(HDAHCDINJECT) $(HDAZML) $(HDAINJECT)
-
-$(BACKLIGHTINJECT): ./backlight/Backlight.plist ./backlight/patch_backlight.sh
-	./backlight/patch_backlight.sh
-	touch $@
 
 .PHONY: update_kernelcache
 update_kernelcache:

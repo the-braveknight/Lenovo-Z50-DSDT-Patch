@@ -78,9 +78,9 @@ function copy_smbios
 function unzip_all_indir
 {
     if [ "$1" != "" ]; then
-        if [ -d $1 ] && [ "`basename $1/*.zip`" != "*.zip" ]; then
+        if [ -d $1 ]; then
             for ZIP in $1/*.zip; do
-                unzip -q $ZIP -d $1/`basename $ZIP .zip`
+                unzip -q $ZIP -d $1/${ZIP/.zip/}
             done
         fi
     fi
