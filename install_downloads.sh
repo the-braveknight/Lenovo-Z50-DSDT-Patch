@@ -41,7 +41,7 @@ function check_directory
 function install_kext
 {
     if [ "$1" != "" ]; then
-        echo installing $1 to $KEXTDEST
+        echo installing `basename $1` to $KEXTDEST
         $SUDO rm -Rf $SLE/`basename $1` $KEXTDEST/`basename $1`
         $SUDO cp -Rf $1 $KEXTDEST
         $TAG -a Gray $KEXTDEST/`basename $1`
@@ -51,7 +51,7 @@ function install_kext
 function install_app
 {
     if [ "$1" != "" ]; then
-        echo installing $1 to /Applications
+        echo installing `basename $1` to /Applications
         $SUDO rm -Rf /Applications/`basename $1`
         cp -Rf $1 /Applications
         $TAG -a Gray /Applications/`basename $1`
@@ -164,8 +164,8 @@ if [ $? -ne 0 ]; then
     fi
     # this guide does not use BrcmFirmwareData.kext
     $SUDO rm -Rf $SLE/BrcmFirmwareData.kext $KEXTDEST/BrcmFirmwareData.kext
-    # now using IntelBacklight.kext instead of ACPIBacklight.kext
-    $SUDO rm -Rf $SLE/ACPIBacklight.kext $KEXTDEST/ACPIBacklight.kext
+    # remove IntelBacklight.kext, IntelBacklight.kext is broken in 10.12.4+, now using AppleBacklight.kext instead
+    $SUDO rm -Rf $SLE/IntelBacklight.kext $KEXTDEST/IntelBacklight.kext
     # since EHCI #1 is disabled, FakePCIID_XHCIMux.kext cannot be used
     $SUDO rm -Rf $KEXTDEST/FakePCIID_XHCIMux.kext
     # deal with some renames
@@ -204,6 +204,12 @@ $SUDO rm -f $SLE/AppleHDA.kext/Contents/Resources/*.zml*
 ./patch_hda.sh "$HDA"
 # install dummy kext
 install_kext AppleHDA_$HDA.kext
+
+# create & install AppleBacklightInjector.kext
+cd ./backlight
+./patch_backlight.sh
+install_kext AppleBacklightInjector.kext
+cd ..
 
 # force cache rebuild with output
 $SUDO touch $SLE && $SUDO kextcache -u /

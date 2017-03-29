@@ -2,10 +2,10 @@
 
 #set -x
 
-uid=15
-vanilla=/System/Library/Extensions/AppleBacklight.kext
+uid=10
 
 ioreg -n AppleBacklightDisplay -arxw0>/tmp/org.rehabman.display.plist
+
 if [ ! -s /tmp/org.rehabman.display.plist ]; then
     ioreg -n AppleDisplay -arxw0>/tmp/org.rehabman.display.plist
 fi
@@ -13,12 +13,15 @@ if [ ! -s /tmp/org.rehabman.display.plist ]; then
     echo Error generating AppleBaclightInjector.kext; not able to determine display-id!
     exit 1
 fi
+
 id=`/usr/libexec/PlistBuddy -c "Print :0:DisplayProductID" /tmp/org.rehabman.display.plist`
 id=`printf "F%02dT%04x" $uid $id`
 sed "s/F99T1234/$id/g" Backlight.plist >/tmp/org.rehabman.merge.plist
 
 if [ -d AppleBacklightInjector.kext ]; then rm -Rf AppleBacklightInjector.kext; fi
-cp -R /System/Library/Extensions/AppleBacklight.kext AppleBacklightInjector.kext
+mkdir AppleBacklightInjector.kext && mkdir AppleBacklightInjector.kext/Contents
+
+cp /System/Library/Extensions/AppleBacklight.kext/Contents/Info.plist AppleBacklightInjector.kext/Contents/Info.plist
 plist=AppleBacklightInjector.kext/Contents/Info.plist
 #/usr/libexec/PlistBuddy -c "Copy ':IOKitPersonalities:AppleIntelPanelA:ApplePanels' ':ApplePanelsBackup'" $plist
 /usr/libexec/PlistBuddy -c "Delete ':IOKitPersonalities:AppleIntelPanelA:ApplePanels'" $plist
@@ -41,8 +44,5 @@ plist=AppleBacklightInjector.kext/Contents/Info.plist
 /usr/libexec/PlistBuddy -c "Set ':CFBundleShortVersionString' '0.9.0'" $plist
 /usr/libexec/PlistBuddy -c "Set ':CFBundleVersion' '0.9.0'" $plist
 /usr/libexec/PlistBuddy -c "Set ':IOKitPersonalities:AppleIntelPanelA:IOProbeScore' 2500" $plist
-rm -R AppleBacklightInjector.kext/Contents/_CodeSignature
-rm -R AppleBacklightInjector.kext/Contents/MacOS
-rm AppleBacklightInjector.kext/Contents/version.plist
 
 echo "Patched AppleBacklight.kext for DisplayID: " $id
