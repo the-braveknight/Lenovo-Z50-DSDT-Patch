@@ -14,7 +14,7 @@ BUILDDIR=./build
 
 KextsToInstall=(FakeSMC.kext RealtekRTL8111.kext FakePCIID.kext FakePCIID_Broadcom_WiFi.kext FakePCIID_Intel_HD_Graphics.kext USBInjectAll.kext)
 SSDTsToInstall=(SSDT-USB.dsl SSDT-UIAC.dsl SSDT-NVDA.dsl)
-EFINeededDrivers=(OsxAptioFixDrv-64.efi FSInject-64.efi OsxFatBinaryDrv-64.efi HFSPlus.efi)
+EFINeededDrivers=(OsxAptioFixDrv-64.efi FSInject-64.efi OsxFatBinaryDrv-64.efi)
 
 function install_kext
 {
@@ -80,7 +80,7 @@ function unzip_all_indir
     if [ "$1" != "" ]; then
         if [ -d $1 ]; then
             for ZIP in $1/*.zip; do
-                unzip -q $ZIP -d $1/${ZIP/.zip/}
+                unzip -q $ZIP -d ${ZIP/.zip/}
             done
         fi
     fi
@@ -142,6 +142,10 @@ if [ ! -d /tmp/Clover ]; then mkdir /tmp/Clover; else clean_dir /tmp/Clover; fi
 for EFINeededDriver in ${EFINeededDrivers[@]}; do
     cp $CLOVER/drivers64UEFI/$EFINeededDriver /tmp/Clover
 done
+
+download_file https://raw.githubusercontent.com/JrCs/CloverGrowerPro/master/Files/HFSPlus/X64/HFSPlus.efi ./downloads
+copy ./downloads/HFSPlus.efi $CLOVER/drivers64UEFI
+
 clean_dir $CLOVER/drivers64UEFI && cp /tmp/Clover/*.efi $CLOVER/drivers64UEFI
 
 # Special script arguments
@@ -154,11 +158,6 @@ for arg in $@; do
         cd ./downloads/kexts/RehabMan-Voodoo-*
         install_kext ./Release/VoodooPS2Controller.kext
         cd ../../..
-    fi
-
-    if [ "$arg" == "--download-hfsplus" ]; then
-        download_file https://raw.githubusercontent.com/JrCs/CloverGrowerPro/master/Files/HFSPlus/X64/HFSPlus.efi ./downloads
-        copy ./downloads/HFSPlus.efi $CLOVER/drivers64UEFI
     fi
 
     if [ "$arg" == "--copy-smbios" ]; then
