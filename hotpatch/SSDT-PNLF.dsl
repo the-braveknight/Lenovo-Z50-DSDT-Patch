@@ -8,8 +8,8 @@ DefinitionBlock("", "SSDT", 2, "hack", "PNLF", 0)
         External(IGPU, DeviceObj)
         Scope(IGPU)
         {
-            OperationRegion(RMP1, PCI_Config, 0, 0x14)
-            Field(RMP1, AnyAcc, NoLock, Preserve)
+            OperationRegion(IGD5, PCI_Config, 0, 0x14)
+            Field(IGD5, AnyAcc, NoLock, Preserve)
             {
                 Offset(0x10),
                 BAR1, 32,
@@ -20,7 +20,7 @@ DefinitionBlock("", "SSDT", 2, "hack", "PNLF", 0)
                 Name(_ADR, Zero)
                 Name(_HID, EisaId ("APP0002"))
                 Name(_CID, "backlight")
-                Name(_UID, 0x0A)
+                Name(_UID, 0x0C)
                 Name(_STA, 0x0B)
                 
                 OperationRegion(RMB1, SystemMemory, ^BAR1 & ~0xF, 0xe1184)
@@ -51,8 +51,6 @@ DefinitionBlock("", "SSDT", 2, "hack", "PNLF", 0)
                     {
                         // set new backlight PWMAX but retain current backlight level by scaling
                         Local0 = (((LEVX & 0xFFFF) * Local2) / Local1) | (Local2 << 16)
-                        //REVIEW: wait for vblank before setting new PWM config
-                        //For (Local7 = P0BL, P0BL == Local7, ) { }
                         LEVX = Local0
                     }
                 }

@@ -2,7 +2,7 @@
 
 #set -x
 
-uid=10
+uid=12
 
 ioreg -n AppleBacklightDisplay -arxw0>/tmp/org.rehabman.display.plist
 
