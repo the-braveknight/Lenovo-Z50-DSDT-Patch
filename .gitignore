@@ -1,7 +1,7 @@
 .DS_Store
 Z50.xcodeproj/xcuserdata/
 Z50.xcodeproj/project.xcworkspace/xcuserdata
-build/*
+build/*.aml
 downloads/*
 AppleHDA_CX20751.kext
 AppleHDAHCD_CX20751.kext
