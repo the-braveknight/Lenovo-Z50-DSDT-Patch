@@ -29,6 +29,7 @@
 		B8AF85041E03E8FF006076A7 /* SSDT-UIAC.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-UIAC.dsl"; path = "hotpatch/SSDT-UIAC.dsl"; sourceTree = "<group>"; };
 		B8B0B0DB1DC4FCDD000FC6AE /* SSDT-GPRW.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-GPRW.dsl"; path = "hotpatch/SSDT-GPRW.dsl"; sourceTree = "<group>"; };
 		B8C6D3211E688DF000D292CA /* patch_edid.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = patch_edid.sh; sourceTree = "<group>"; };
+		B8E4E3461EC309E7008EAB79 /* SSDT-PM.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-PM.dsl"; path = "hotpatch/SSDT-PM.dsl"; sourceTree = "<group>"; };
 		B8F92A7B1D99EFDE004A0E72 /* prepare_usb.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = prepare_usb.sh; sourceTree = "<group>"; };
 		ED3F518A1A2029DE0060691A /* install_downloads.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = install_downloads.sh; sourceTree = "<group>"; };
 		ED3F518B1A2029DE0060691A /* download.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = download.sh; sourceTree = "<group>"; };
@@ -72,6 +73,7 @@
 			isa = PBXGroup;
 			children = (
 				B83F12041DA17EA800CAE62A /* SSDT-XOSI.dsl */,
+				B8E4E3461EC309E7008EAB79 /* SSDT-PM.dsl */,
 				B83F12031DA17EA800CAE62A /* SSDT-USB.dsl */,
 				B8AF85041E03E8FF006076A7 /* SSDT-UIAC.dsl */,
 				B8B0B0DB1DC4FCDD000FC6AE /* SSDT-GPRW.dsl */,
