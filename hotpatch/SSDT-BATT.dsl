@@ -3,8 +3,8 @@
 DefinitionBlock ("", "SSDT", 2, "hack", "BATT", 0)
 {
     
-    External(_SB.PCI0.LPCB.EC0, DeviceObj)
-    Scope (_SB.PCI0.LPCB.EC0)
+    External(_SB.PCI0.LPCB.EC, DeviceObj)
+    Scope (_SB.PCI0.LPCB.EC)
     {
         OperationRegion (ERM2, EmbeddedControl, Zero, 0xFF)
         Field (ERM2, ByteAcc, Lock, Preserve)

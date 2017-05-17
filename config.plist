@@ -27,6 +27,14 @@
 				</dict>
 				<dict>
 					<key>Comment</key>
+					<string>change EC0 to EC</string>
+					<key>Find</key>
+					<data>RUMwXw==</data>
+					<key>Replace</key>
+					<data>RUNfXw==</data>
+				</dict>
+				<dict>
+					<key>Comment</key>
 					<string>change GFX0 to IGPU</string>
 					<key>Find</key>
 					<data>R0ZYMA==</data>
@@ -329,6 +337,8 @@
 				<string>Use 2 ports only 0x0a2e0008, credit RehabMan</string>
 				<key>Find</key>
 				<data>CAAuCgEDAwM=</data>
+				<key>Disabled</key>
+				<true/>
 				<key>Name</key>
 				<string>com.apple.driver.AppleIntelFramebufferAzul</string>
 				<key>Replace</key>
@@ -339,6 +349,8 @@
 				<string>Disable 0204 port, credit RehabMan</string>
 				<key>Find</key>
 				<data>AgQKAAAEAAAHAQAA</data>
+				<key>Disabled</key>
+				<true/>
 				<key>Name</key>
 				<string>com.apple.driver.AppleIntelFramebufferAzul</string>
 				<key>Replace</key>

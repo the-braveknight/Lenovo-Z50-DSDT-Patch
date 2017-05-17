@@ -3,10 +3,10 @@
 DefinitionBlock("", "SSDT", 2, "hack", "PS2K", 0)
 {   
     // Enabling brightness keys
-    External(_SB.PCI0.LPCB.EC0, DeviceObj)
+    External(_SB.PCI0.LPCB.EC, DeviceObj)
     External(PS2V, FieldUnitObj)
     External(_SB.PCI0.LPCB.PS2K, DeviceObj)
-    Scope(_SB.PCI0.LPCB.EC0) // brightness buttons
+    Scope(_SB.PCI0.LPCB.EC) // brightness buttons
     {
         Method (_Q11) // Brightness down
         {
