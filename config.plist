@@ -235,6 +235,8 @@
 				<string>Conexant menubar fix (credit wern apfel)</string>
 				<key>Find</key>
 				<data>a3Bzaes=</data>
+				<key>MatchOS</key>
+				<string>10.10.x,10.11.x,10.12.x</string>
 				<key>Name</key>
 				<string>com.apple.driver.AppleHDA</string>
 				<key>Replace</key>
@@ -316,7 +318,7 @@
 				<key>Find</key>
 				<data>SIX/dEdIiwc=</data>
 				<key>MatchOS</key>
-				<string>10.11.x,10.12.x</string>
+				<string>10.11.x</string>
 				<key>Name</key>
 				<string>com.apple.iokit.IOBluetoothFamily</string>
 				<key>Replace</key>
@@ -331,30 +333,6 @@
 				<data>AQUJAAAEAAAHAQAA</data>
 				<key>Replace</key>
 				<data>AQUJAAAIAAAHAQAA</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>Use 2 ports only 0x0a2e0008, credit RehabMan</string>
-				<key>Find</key>
-				<data>CAAuCgEDAwM=</data>
-				<key>Disabled</key>
-				<true/>
-				<key>Name</key>
-				<string>com.apple.driver.AppleIntelFramebufferAzul</string>
-				<key>Replace</key>
-				<data>CAAuCgEDAgI=</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>Disable 0204 port, credit RehabMan</string>
-				<key>Find</key>
-				<data>AgQKAAAEAAAHAQAA</data>
-				<key>Disabled</key>
-				<true/>
-				<key>Name</key>
-				<string>com.apple.driver.AppleIntelFramebufferAzul</string>
-				<key>Replace</key>
-				<data>/wAAAAEAAABAAAAA</data>
 			</dict>
 		</array>
 	</dict>

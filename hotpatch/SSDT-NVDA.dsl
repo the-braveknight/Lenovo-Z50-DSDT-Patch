@@ -69,3 +69,4 @@ DefinitionBlock ("", "SSDT", 2, "hack", "NVDA", 0)
         }
     }
 }
+//EOF
