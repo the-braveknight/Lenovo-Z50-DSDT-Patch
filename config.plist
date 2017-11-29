@@ -171,6 +171,8 @@
 	</dict>
 	<key>Boot</key>
 	<dict>
+		<key>Arguments</key>
+		<string>-ath9565</string>
 		<key>Secure</key>
 		<false/>
 		<key>Timeout</key>

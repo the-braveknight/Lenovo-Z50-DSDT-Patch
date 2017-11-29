@@ -24,6 +24,7 @@ if [ "$1" == "--usb-kexts" ]; then
     download os-x-fake-pci-id RehabMan-FakePCIID
     download os-x-usb-inject-all RehabMan-USBInjectAll
     download os-x-voodoo-ps2-controller RehabMan-Voodoo
+    download ath9kfixup RehabMan-ATH9KFixup
     exit
 fi
 
@@ -40,6 +41,7 @@ download os-x-usb-inject-all RehabMan-USBInjectAll
 download os-x-eapd-codec-commander RehabMan-CodecCommander
 download lilu RehabMan-Lilu
 download intelgraphicsfixup RehabMan-IntelGraphicsFixup
+download ath9kfixup RehabMan-ATH9KFixup
 cd ..
 
 # download tools
