@@ -17,17 +17,6 @@ function download()
 
 if [ ! -d ./downloads ]; then mkdir ./downloads; fi && rm -Rf downloads/* && cd ./downloads
 
-if [ "$1" == "--usb-kexts" ]; then
-    mkdir ./kexts && cd ./kexts
-    download os-x-fakesmc-kozlek RehabMan-FakeSMC
-    download os-x-realtek-network RehabMan-Realtek-Network
-    download os-x-fake-pci-id RehabMan-FakePCIID
-    download os-x-usb-inject-all RehabMan-USBInjectAll
-    download os-x-voodoo-ps2-controller RehabMan-Voodoo
-    download ath9kfixup RehabMan-ATH9KFixup
-    exit
-fi
-
 # download kexts
 mkdir ./kexts && cd ./kexts
 download os-x-fakesmc-kozlek RehabMan-FakeSMC

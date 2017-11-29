@@ -8,6 +8,12 @@ Please refer to this guide thread on tonymacx86.com for a step-by-step process, 
 
 http://www.tonymacx86.com/el-capitan-laptop-guides/179520-guide-lenovo-z50-70-using-clover-uefi-10-11-a.html
 
+2017-11-29
+
+- Added support for Atheros AR9565 Wi-Fi card (using ATH9KFixup.kext).
+- Auto determine trackpad & Wi-Fi models and install apropriate kexts.
+
+
 2016-10-02
 
 - Split SSDT-HACK.dsl into multiple SSDTs

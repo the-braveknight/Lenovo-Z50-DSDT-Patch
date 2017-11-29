@@ -7,7 +7,10 @@ TAG=tag_file
 TAGCMD=`pwd`/tools/tag
 SLE=/System/Library/Extensions
 LE=/Library/Extensions
-EXCEPTIONS="Sensors|FakePCIID_BCM57XX|FakePCIID_Intel_GbX|FakePCIID_Intel_HDMI|FakePCIID_XHCIMux|FakePCIID_AR9280_as_AR946x|BrcmPatchRAM|BrcmFirmwareData|BrcmNonPatchRAM|USBInjectAll|VoodooPS2Controller|Lilu|IntelGraphicsFixup"
+EXCEPTIONS="Sensors|FakePCIID_BCM57XX|FakePCIID_Intel_GbX|FakePCIID_Intel_HDMI|FakePCIID_XHCIMux|FakePCIID_AR9280_as_AR946x|BrcmPatchRAM|BrcmFirmwareData|BrcmNonPatchRAM|USBInjectAll|VoodooPS2Controller|Lilu|IntelGraphicsFixup|FakePCIID_Broadcom_WiFi|ATH9K"
+
+trackpadVer="`./check_trackpad.sh`"
+wifiVer="`./check_wifi.sh`"
 
 # extract minor version (eg. 10.9 vs. 10.10 vs. 10.11)
 MINOR_VER=$([[ "$(sw_vers -productVersion)" =~ [0-9]+\.([0-9]+) ]] && echo ${BASH_REMATCH[1]})
@@ -167,6 +170,17 @@ if [ $? -ne 0 ]; then
         cd RehabMan-Lilu*/Release && install_kext Lilu.kext && cd ../..
         cd RehabMan-IntelGraphicsFixup*/Release && install_kext IntelGraphicsFixup.kext && cd ../..
     fi
+    # if WiFi card is Broadcom, install FakePCIID_Broadcom_WiFi.kext
+    if [[ "$wifiVer" == "pci14e4"* ]]; then
+        cd RehabMan-FakePCIID*/Release && install_kext FakePCIID_Broadcom_WiFi.kext && cd ../..
+        # remove ATH9KFixup.kext & ATH9KInjector.kext just in case
+        sudo rm -Rf $KEXTDEST/ATH9K*.kext
+    # if WiFi card is Atheros, install ATH9KFixup.kext & ATH9KInjector.kext
+    elif [[ "$wifiVer" == "pci168c"* ]]; then
+        cd RehabMan-ATH9KFixup*/Release && install_kext ATH9KFixup.kext && install_kext ATH9KInjector.kext && cd ../..
+        # remove FakePCIID_Broadcom_WiFi.kext just in case
+        sudo rm -Rf $KEXTDEST/FakePCIID_Broadcom_WiFi.kext
+    fi
     # this guide does not use BrcmFirmwareData.kext
     $SUDO rm -Rf $SLE/BrcmFirmwareData.kext $KEXTDEST/BrcmFirmwareData.kext
     # remove IntelBacklight.kext, IntelBacklight.kext is broken in 10.12.4+, now using AppleBacklight.kext instead
@@ -186,19 +200,16 @@ if [ $? -ne 0 ]; then
 fi
 
 
-# Install PS2 trackpad/keyboard driver. Installs RehabMan's VoodooPS2 Synaptics
-# driver by default
-if [ "$1" == "elan" ]; then
-    # install ApplePS2SmartTouchPad.kext by EMlyDinEsH from OSXLatitude.com
+# if trackpad is Synaptics, install RehabMan's VoodooPS2 driver
+if [[ "$trackpadVer" == "SYN"* ]]; then
+    cd ./downloads/kexts/RehabMan-Voodoo*/Release
+    install_kext VoodooPS2Controller.kext && cd ../../../..
+    $SUDO rm -Rf $KEXTDEST/ApplePS2SmartTouchPad.kext
+# otherwise, install ApplePS2SmartTouchPad.kext by EMlyDinEsH from OSXLatitude.com
+else
     cd ./kexts
     install_kext ApplePS2SmartTouchPad.kext && cd ..
     $SUDO rm -Rf $KEXTDEST/VoodooPS2Controller.kext
-else
-    # Install RehabMan's VoodooPS2Controller.kext
-    cd ./downloads/kexts/RehabMan-Voodoo*/Release
-    install_kext VoodooPS2Controller.kext && cd ../..
-    $SUDO rm -Rf $KEXTDEST/ApplePS2SmartTouchPad.kext
-    cd ../..
 fi
 
 # patching AppleHDA
@@ -219,8 +230,8 @@ cd ..
 # force cache rebuild with output
 $SUDO touch $SLE && $SUDO kextcache -u /
 
-# install VoodooPS2Daemon
-if [ "$1" != "elan" ]; then
+# install VoodooPS2Daemon (if trackpad is Synaptics)
+if [[ "$trackpadVer" == "SYN"* ]]; then
     echo Installing VoodooPS2Daemon to /usr/bin and /Library/LaunchDaemons...
     cd ./downloads/kexts/RehabMan-Voodoo-*
     $SUDO cp ./Release/VoodooPS2Daemon /usr/bin
