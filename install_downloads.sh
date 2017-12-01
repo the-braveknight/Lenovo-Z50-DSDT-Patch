@@ -142,5 +142,6 @@ installKext AppleHDA_$HDA.kext
 ./patch_backlight.sh
 installKext AppleBacklightInjector.kext
 
-# Repair permissions
-sudo kextcache -i /
+# Repair permissions & update kernel cahce
+echo Updating kernel cahce...
+sudo kextcache -i / 2>/dev/null

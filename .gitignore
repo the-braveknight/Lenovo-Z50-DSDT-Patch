@@ -3,7 +3,5 @@ Z50.xcodeproj/xcuserdata/
 Z50.xcodeproj/project.xcworkspace/xcuserdata
 build/*.aml
 downloads/*
-AppleHDA_CX20751.kext
-AppleHDAHCD_CX20751.kext
-AppleHDA_CX20751_Resources
-backlight/AppleBacklightInjector.kext
+AppleHDA*
+AppleBacklightInjector.kext
