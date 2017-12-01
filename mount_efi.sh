@@ -45,7 +45,6 @@ fi
 if [[ "$(echo $(LC_ALL=C diskutil list "$DiskDevice" | grep -i 'APFS Container Scheme' | awk '{print tolower($0)}'))" == *"apfs container scheme"* ]]; then
     # ok, this disk is an APFS partition, extract physical store device
     realDisk=$(LC_ALL=C diskutil list "$DiskDevice" 2>/dev/null | sed -n 's/.*Physical Store *//p')
-    echo Target volume "$1" on "$DiskDevice" is APFS on physical store "$realDisk"
     DiskDevice=$(LC_ALL=C diskutil info "$realDisk" 2>/dev/null | sed -n 's/.*Part [oO]f Whole: *//p')
 fi
 
