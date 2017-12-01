@@ -12,10 +12,12 @@
 		84490D5D1A14945B000E1BFB /* patch_hda.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = patch_hda.sh; sourceTree = "<group>"; };
 		8455352818E65265001ADBFD /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
 		8467C38E1A23A9FC00FCF396 /* mount_efi.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = mount_efi.sh; sourceTree = "<group>"; };
+		B80162AD1FD1D0EC00F9638F /* wifi_version.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = wifi_version.sh; sourceTree = "<group>"; };
+		B80162AE1FD1D0ED00F9638F /* trackpad_version.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = trackpad_version.sh; sourceTree = "<group>"; };
+		B80162B01FD1D11500F9638F /* Backlight.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Backlight.plist; sourceTree = "<group>"; };
+		B80162B11FD1D11500F9638F /* patch_backlight.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = patch_backlight.sh; sourceTree = "<group>"; };
+		B80162B21FD1D14900F9638F /* os_version.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = os_version.sh; sourceTree = "<group>"; };
 		B8037A461DAD27BC0000EA48 /* SSDT-IGPU.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-IGPU.dsl"; path = "hotpatch/SSDT-IGPU.dsl"; sourceTree = "<group>"; };
-		B80D07CE1FCEEE0300F62C15 /* check_trackpad.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = check_trackpad.sh; sourceTree = "<group>"; };
-		B80D07CF1FCEEE0300F62C15 /* check_wifi.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = check_wifi.sh; sourceTree = "<group>"; };
-		B818FE251D5BD7A500489224 /* install_tools.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = install_tools.sh; sourceTree = "<group>"; };
 		B818FE261D5BD7B000489224 /* update_config.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = update_config.sh; sourceTree = "<group>"; };
 		B83F11FC1DA17EA800CAE62A /* SSDT-BATT.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-BATT.dsl"; path = "hotpatch/SSDT-BATT.dsl"; sourceTree = "<group>"; };
 		B83F11FE1DA17EA800CAE62A /* SSDT-HDAU.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-HDAU.dsl"; path = "hotpatch/SSDT-HDAU.dsl"; sourceTree = "<group>"; };
@@ -25,8 +27,6 @@
 		B83F12041DA17EA800CAE62A /* SSDT-XOSI.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-XOSI.dsl"; path = "hotpatch/SSDT-XOSI.dsl"; sourceTree = "<group>"; };
 		B871C3871DC488A900C86534 /* SSDT-PS2K.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-PS2K.dsl"; path = "hotpatch/SSDT-PS2K.dsl"; sourceTree = "<group>"; };
 		B897A3581E5A013100030FB9 /* SSDT-NVDA.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-NVDA.dsl"; path = "hotpatch/SSDT-NVDA.dsl"; sourceTree = "<group>"; };
-		B8AAEC0B1D749D110096BC78 /* Backlight.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Backlight.plist; path = backlight/Backlight.plist; sourceTree = "<group>"; };
-		B8AAEC0C1D749D110096BC78 /* patch_backlight.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = patch_backlight.sh; path = backlight/patch_backlight.sh; sourceTree = "<group>"; };
 		B8AF85041E03E8FF006076A7 /* SSDT-UIAC.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-UIAC.dsl"; path = "hotpatch/SSDT-UIAC.dsl"; sourceTree = "<group>"; };
 		B8B0B0DB1DC4FCDD000FC6AE /* SSDT-GPRW.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-GPRW.dsl"; path = "hotpatch/SSDT-GPRW.dsl"; sourceTree = "<group>"; };
 		B8E4E3461EC309E7008EAB79 /* SSDT-PM.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-PM.dsl"; path = "hotpatch/SSDT-PM.dsl"; sourceTree = "<group>"; };
@@ -44,16 +44,16 @@
 				8406FCD6188627B8006D8DB7 /* README.md */,
 				8455352818E65265001ADBFD /* config.plist */,
 				840152EF182AE45E00D58B0A /* makefile */,
-				8467C38E1A23A9FC00FCF396 /* mount_efi.sh */,
 				ED3F518B1A2029DE0060691A /* download.sh */,
-				B818FE251D5BD7A500489224 /* install_tools.sh */,
 				ED3F518A1A2029DE0060691A /* install_downloads.sh */,
+				8467C38E1A23A9FC00FCF396 /* mount_efi.sh */,
 				B818FE261D5BD7B000489224 /* update_config.sh */,
-				B80D07CE1FCEEE0300F62C15 /* check_trackpad.sh */,
-				B80D07CF1FCEEE0300F62C15 /* check_wifi.sh */,
+				B80162B21FD1D14900F9638F /* os_version.sh */,
+				B80162AE1FD1D0ED00F9638F /* trackpad_version.sh */,
+				B80162AD1FD1D0EC00F9638F /* wifi_version.sh */,
 				B83F12051DA17EAF00CAE62A /* hotpatch */,
 				84B540381ACB34B600D8ABAE /* audio */,
-				B8AAEC0D1D749D150096BC78 /* backlight */,
+				B80162AF1FD1D0FC00F9638F /* backlight */,
 			);
 			sourceTree = "<group>";
 		};
@@ -66,6 +66,15 @@
 				EDC7F9431B4C64FA00B49451 /* Platforms.plist */,
 			);
 			name = audio;
+			sourceTree = "<group>";
+		};
+		B80162AF1FD1D0FC00F9638F /* backlight */ = {
+			isa = PBXGroup;
+			children = (
+				B80162B01FD1D11500F9638F /* Backlight.plist */,
+				B80162B11FD1D11500F9638F /* patch_backlight.sh */,
+			);
+			name = backlight;
 			sourceTree = "<group>";
 		};
 		B83F12051DA17EAF00CAE62A /* hotpatch */ = {
@@ -85,15 +94,6 @@
 				B83F11FC1DA17EA800CAE62A /* SSDT-BATT.dsl */,
 			);
 			name = hotpatch;
-			sourceTree = "<group>";
-		};
-		B8AAEC0D1D749D150096BC78 /* backlight */ = {
-			isa = PBXGroup;
-			children = (
-				B8AAEC0B1D749D110096BC78 /* Backlight.plist */,
-				B8AAEC0C1D749D110096BC78 /* patch_backlight.sh */,
-			);
-			name = backlight;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
