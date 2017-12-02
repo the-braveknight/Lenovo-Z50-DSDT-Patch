@@ -12,16 +12,6 @@ fi
 
 exceptions="Sensors|FakePCIID_BCM57XX|FakePCIID_Intel_GbX|FakePCIID_Intel_HDMI|FakePCIID_XHCIMux|FakePCIID_AR9280_as_AR946x|BrcmFirmwareData|PatchRAM.kext|VoodooPS2Controller|Lilu|IntelGraphicsFixup"
 
-function checkDirectory() {
-    for x in $1; do
-        if [ -e $x ]; then
-            return 1
-        else
-            return 0
-        fi
-    done
-}
-
 function extract() {
     filePath=${1/.zip/}
     rm -Rf $filePath
@@ -39,13 +29,7 @@ function install() {
 }
 
 function findKext() {
-    find $1 -path */$2 -prune -not -path */Debug/*
-}
-
-function filterKext() {
-    if [[ $(echo $(basename $1) | grep -vE $exceptions) != "" ]]; then
-        installKext $1
-    fi
+    find $1 -path */$2 -not -path */PlugIns/* -not -path */Debug/*
 }
 
 function installKext() {
@@ -58,10 +42,6 @@ function installApp() {
 
 function installBinary() {
     install $1 /usr/bin
-}
-
-function installDaemon() {
-    install $1 /Library/LaunchDaemons
 }
 
 function extractAll() {
@@ -78,12 +58,13 @@ function installApps() {
 
 function installKexts() {
     for kext in $(findKext $1 *.kext); do
-        filterKext $kext
+        if [[ $(echo $(basename $kext) | grep -vE $exceptions) != "" ]]; then
+            installKext $kext
+        fi
     done
 }
 
-checkDirectory ./downloads
-if [ $? -ne 0 ]; then
+if [ -d ./downloads ]; then
     cd ./downloads
 
     # Extract all zip files within ./downloads
@@ -110,8 +91,8 @@ if [ $? -ne 0 ]; then
     if [[ $trackpad_model == "SYN"* ]]; then
         sudo rm -Rf /Library/Extensions/ApplePS2SmartTouchPad.kext
         installKext $(findKext ./ VoodooPS2Controller.kext)
-        installBinary $(find ./ -path */Release/VoodooPS2Daemon -prune)
-        installDaemon $(find ./ -name org.rehabman.voodoo.driver.Daemon.plist)
+        installBinary $(find ./ -path */Release/VoodooPS2Daemon)
+        install $(find ./ -name org.rehabman.voodoo.driver.Daemon.plist) /Library/LaunchDaemons
     # Otherwise, install EMlyDinEsH's ApplePS2SmartTouchPad.kext
     else
         sudo rm -Rf /Library/Extensions/VoodooPS2Controller.kext
