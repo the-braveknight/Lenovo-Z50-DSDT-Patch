@@ -6,7 +6,7 @@ The current repository actually uses only on-the-fly patches via config.plist an
 
 Please refer to this guide thread on tonymacx86.com for a step-by-step process, feedback, and questions:
 
-http://www.tonymacx86.com/el-capitan-laptop-guides/179520-guide-lenovo-z50-70-using-clover-uefi-10-11-a.html
+https://www.tonymacx86.com/threads/guide-lenovo-z50-70-z40-70-using-clover-uefi.232823/
 
 ### 2017-12-1
 
@@ -29,7 +29,7 @@ http://www.tonymacx86.com/el-capitan-laptop-guides/179520-guide-lenovo-z50-70-us
 
 ### 2015-12-24
 
-- Added link to the-braveknight guide/thread on tonymacx86
+- Added link to the guide/thread on tonymacx86
 
 
 ### 2015-11-04

@@ -8,11 +8,9 @@
 		<dict>
 			<key>Fixes</key>
 			<dict>
-				<key>NewWay_80000000</key>
+				<key>FixRTC</key>
 				<true/>
-				<key>FixHPET_0010</key>
-				<true/>
-				<key>FIX_RTC_20000</key>
+				<key>FixHPET</key>
 				<true/>
 			</dict>
 			<key>Patches</key>

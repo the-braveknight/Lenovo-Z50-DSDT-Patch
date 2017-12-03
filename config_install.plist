@@ -8,11 +8,9 @@
 		<dict>
 			<key>Fixes</key>
 			<dict>
-				<key>FIX_RTC_20000</key>
+				<key>FixRTC</key>
 				<true/>
-				<key>FixHPET_0010</key>
-				<true/>
-				<key>NewWay_80000000</key>
+				<key>FixHPET</key>
 				<true/>
 			</dict>
 		</dict>
@@ -25,7 +23,7 @@
 	<key>Boot</key>
 	<dict>
 		<key>Arguments</key>
-		<string>kext-dev-mode=1 dart=0 -gux_defer_usb2 nv_disable=1</string>
+		<string>nv_disable=1</string>
 		<key>Secure</key>
 		<false/>
 		<key>Timeout</key>
@@ -40,20 +38,7 @@
 			<key>IntelGFX</key>
 			<string>0x04128086</string>
 		</dict>
-		<key>USB</key>
-		<dict>
-			<key>FixOwnership</key>
-			<true/>
-			<key>AddClockID</key>
-			<true/>
-			<key>Inject</key>
-			<true/>
-		</dict>
 	</dict>
-	<key>DisableDrivers</key>
-	<array>
-		<string>VBoxHfs</string>
-	</array>
 	<key>GUI</key>
 	<dict>
 		<key>Mouse</key>
@@ -79,18 +64,12 @@
 		<string>0x0a2e0008</string>
 		<key>Inject</key>
 		<dict>
-			<key>ATI</key>
-			<false/>
 			<key>Intel</key>
 			<true/>
-			<key>NVidia</key>
-			<false/>
 		</dict>
 	</dict>
 	<key>KernelAndKextPatches</key>
 	<dict>
-		<key>AppleRTC</key>
-		<true/>
 		<key>KernelPm</key>
 		<true/>
 		<key>KextsToPatch</key>
