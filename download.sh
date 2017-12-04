@@ -1,5 +1,4 @@
-function download
-{
+function download() {
     curl --location --silent --output /tmp/org.rehabman.download.txt https://bitbucket.org/RehabMan/$1/downloads/
     scrape=$(grep -o -m 1 "RehabMan/$1/downloads/$2.*\.zip" /tmp/org.rehabman.download.txt|perl -ne 'print $1 if /(.*)\"/')
     echo Downloading $(basename $scrape)

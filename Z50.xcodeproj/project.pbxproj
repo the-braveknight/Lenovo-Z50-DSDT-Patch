@@ -12,8 +12,6 @@
 		84490D5D1A14945B000E1BFB /* patch_hda.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = patch_hda.sh; sourceTree = "<group>"; };
 		8455352818E65265001ADBFD /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
 		8467C38E1A23A9FC00FCF396 /* mount_efi.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = mount_efi.sh; sourceTree = "<group>"; };
-		B80162AD1FD1D0EC00F9638F /* wifi_version.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = wifi_version.sh; sourceTree = "<group>"; };
-		B80162AE1FD1D0ED00F9638F /* trackpad_version.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = trackpad_version.sh; sourceTree = "<group>"; };
 		B80162B01FD1D11500F9638F /* Backlight.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Backlight.plist; sourceTree = "<group>"; };
 		B80162B11FD1D11500F9638F /* patch_backlight.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = patch_backlight.sh; sourceTree = "<group>"; };
 		B80162B21FD1D14900F9638F /* os_version.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = os_version.sh; sourceTree = "<group>"; };
@@ -49,8 +47,6 @@
 				8467C38E1A23A9FC00FCF396 /* mount_efi.sh */,
 				B818FE261D5BD7B000489224 /* update_config.sh */,
 				B80162B21FD1D14900F9638F /* os_version.sh */,
-				B80162AE1FD1D0ED00F9638F /* trackpad_version.sh */,
-				B80162AD1FD1D0EC00F9638F /* wifi_version.sh */,
 				B83F12051DA17EAF00CAE62A /* hotpatch */,
 				84B540381ACB34B600D8ABAE /* audio */,
 				B80162AF1FD1D0FC00F9638F /* backlight */,

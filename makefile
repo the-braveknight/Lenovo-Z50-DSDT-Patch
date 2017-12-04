@@ -26,6 +26,6 @@ clean:
 # Clover Install
 .PHONY: install
 install: $(PRODUCTS)
-	$(eval EFIDIR:=$(shell sudo ./mount_efi.sh /))
+	$(eval EFIDIR:=$(shell ./mount_efi.sh /))
 	rm -f $(EFIDIR)/EFI/CLOVER/ACPI/patched/*.aml
 	cp $(PRODUCTS) $(EFIDIR)/EFI/CLOVER/ACPI/patched
