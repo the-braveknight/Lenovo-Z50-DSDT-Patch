@@ -111,5 +111,5 @@ HDA=CX20751
 installKext AppleHDA_$HDA.kext
 
 # Repair permissions & update kernel cahce
-echo Updating kernel cahce...
+echo Updating kernel cache...
 sudo kextcache -i / 2>/dev/null

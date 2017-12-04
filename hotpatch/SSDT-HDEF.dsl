@@ -40,6 +40,29 @@ DefinitionBlock("", "SSDT", 2, "hack", "HDEF", 0)
                     "Perform Reset", ">n",
                     "Perform Reset on External Wake", ">n",
                 },
+                "CodecCommanderProbeInit", Package()
+                {
+                    "Version", 0x020600,
+                    "14f1_510f", Package()
+                    {
+                        "PinConfigDefault", Package()
+                        {
+                            Package(){},
+                            Package()
+                            {
+                                "LayoutID", 3,
+                                "PinConfigs", Package()
+                                {
+                                    Package(){},
+                                    0x16, 0x04211040,
+                                    0x17, 0x90170110,
+                                    0x19, 0x04811030,
+                                    0x1a, 0x90a00120,
+                                }
+                            }
+                        }
+                    }
+                }
             })
         }
     }
