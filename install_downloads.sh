@@ -81,6 +81,9 @@ if [ -d ./downloads ]; then
     # Install all the kexts within ./downloads that are not in the 'exceptions'
     installKexts ./
 
+    # Install AppleBacklightInjector.kext
+    installKext ../kexts/AppleBacklightInjector.kext
+
     # Intel HD 4400 needs Lilu.kext+IntelGraphicsFixup.kext on macOS 10.12
     if [[ $os_version -ge 12 ]]; then
         installKext $(findKext ./ Lilu.kext)
@@ -96,7 +99,7 @@ if [ -d ./downloads ]; then
     # Otherwise, install EMlyDinEsH's ApplePS2SmartTouchPad.kext
     else
         sudo rm -Rf /Library/Extensions/VoodooPS2Controller.kext
-        installKext $(findKext ../ ApplePS2SmartTouchPad.kext)
+        installKext ../kexts/ApplePS2SmartTouchPad.kext
     fi
 
     cd ..
@@ -106,10 +109,6 @@ fi
 HDA=CX20751
 ./patch_hda.sh $HDA
 installKext AppleHDA_$HDA.kext
-
-# Create & install AppleBacklight injector kext
-./patch_backlight.sh
-installKext AppleBacklightInjector.kext
 
 # Repair permissions & update kernel cahce
 echo Updating kernel cahce...
