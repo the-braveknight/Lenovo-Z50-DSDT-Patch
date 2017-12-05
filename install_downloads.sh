@@ -10,7 +10,7 @@ if [ $os_version -lt 11 ]; then
     exit 1
 fi
 
-exceptions="Sensors|FakePCIID_BCM57XX|FakePCIID_Intel_GbX|FakePCIID_Intel_HDMI|FakePCIID_XHCIMux|FakePCIID_AR9280_as_AR946x|BrcmFirmwareData|PatchRAM.kext|VoodooPS2Controller|Lilu|IntelGraphicsFixup"
+exceptions="Sensors|FakePCIID_BCM57XX|FakePCIID_Intel_GbX|FakePCIID_Intel_HDMI|FakePCIID_XHCIMux|FakePCIID_AR9280_as_AR946x|BrcmFirmwareData|PatchRAM.kext|PS2|Lilu|IntelGraphicsFixup"
 
 function extract() {
     filePath=${1/.zip/}
@@ -29,80 +29,87 @@ function install() {
 }
 
 function findKext() {
-    find $1 -path */$2 -not -path */PlugIns/* -not -path */Debug/*
+    if [[ "${@:2}" == "" ]]; then
+        find ./ -path \*/$1 -not -path \*/PlugIns/* -not -path \*/Debug/*
+    else
+        find ${@:2} -path \*/$1 -not -path \*/PlugIns/* -not -path \*/Debug/*
+    fi
 }
 
 function installKext() {
-    install $1 /Library/Extensions
-}
-
-function installApp() {
-    install $1 /Applications
+    if [ -e $1 ]; then
+        install $1 /Library/Extensions
+    else
+        install $(findKext $1) /Library/Extensions
+    fi
 }
 
 function installBinary() {
     install $1 /usr/bin
 }
 
+function installApp() {
+    install $1 /Applications
+}
+
 function extractAll() {
-    for zip in $(find $1 -name *.zip); do
+    for zip in $(find $@ -name *.zip); do
         extract $zip
     done
 }
 
 function installApps() {
-    for app in $(find $1 -name *.app); do
+    for app in $(find $@ -name *.app); do
         installApp $app
     done
 }
 
+function installBinaries() {
+    for bin in $(find $@ -type f -perm -u+x -not -path \*.kext/* -not -path \*.app/* -not -path \*/Debug/*); do
+        if [[ $(echo $(basename $bin) | grep -vE $exceptions) != "" ]]; then
+            installBinary $bin
+        fi
+    done
+}
+
 function installKexts() {
-    for kext in $(findKext $1 *.kext); do
+    for kext in $(findKext "*.kext" $@); do
         if [[ $(echo $(basename $kext) | grep -vE $exceptions) != "" ]]; then
             installKext $kext
         fi
     done
 }
 
-if [ -d ./downloads ]; then
-    cd ./downloads
+function uninstallKext() {
+    sudo rm -Rf $(findKext $1 /System/Library/Extensions /Library/Extensions)
+}
 
-    # Extract all zip files within ./downloads
-    extractAll ./
+# Extract all zip files within ./downloads folder
+extractAll ./downloads
 
-    # Install all apps (*.app) within ./downloads
-    installApps ./
+# Install all apps (*.app) within ./downloads folder
+installApps ./downloads
 
-    # Install iasl
-    installBinary $(find . -type f -name iasl)
-    # Install patchmatic
-    installBinary $(find . -type f -name patchmatic)
+# Install all binaries withing ./downloads folder
+installBinaries ./downloads
 
-    # Install all the kexts within ./downloads that are not in the 'exceptions'
-    installKexts ./
+# Install all the kexts within ./downloads & ./kexts folders that are not in the 'exceptions'
+installKexts ./downloads ./kexts
 
-    # Install AppleBacklightInjector.kext
-    installKext ../kexts/AppleBacklightInjector.kext
+# Intel HD 4400 needs Lilu.kext+IntelGraphicsFixup.kext on macOS 10.12
+if [[ $os_version -ge 12 ]]; then
+    installKext Lilu.kext
+    installKext IntelGraphicsFixup.kext
+fi
 
-    # Intel HD 4400 needs Lilu.kext+IntelGraphicsFixup.kext on macOS 10.12
-    if [[ $os_version -ge 12 ]]; then
-        installKext $(findKext ./ Lilu.kext)
-        installKext $(findKext ./ IntelGraphicsFixup.kext)
-    fi
-
-    # If trackpad is Synaptics, install RehabMan's VoodooPS2Controller.kext
-    if [[ $trackpad_model == "SYN"* ]]; then
-        sudo rm -Rf /Library/Extensions/ApplePS2SmartTouchPad.kext
-        installKext $(findKext ./ VoodooPS2Controller.kext)
-        installBinary $(find ./ -path */Release/VoodooPS2Daemon)
-        install $(find ./ -name org.rehabman.voodoo.driver.Daemon.plist) /Library/LaunchDaemons
-    # Otherwise, install EMlyDinEsH's ApplePS2SmartTouchPad.kext
-    else
-        sudo rm -Rf /Library/Extensions/VoodooPS2Controller.kext
-        installKext ../kexts/ApplePS2SmartTouchPad.kext
-    fi
-
-    cd ..
+# If trackpad is Synaptics, install RehabMan's VoodooPS2Controller.kext
+if [[ $trackpad_model == "SYN"* ]]; then
+    uninstallKext ApplePS2SmartTouchPad.kext
+    installKext VoodooPS2Controller.kext
+# Otherwise, install EMlyDinEsH's ApplePS2SmartTouchPad.kext
+else
+    uninstallKext VoodooPS2Controller.kext
+    installKext ApplePS2SmartTouchPad.kext
 fi
 
 # Create & install AppleHDA injector kext for CX20751
