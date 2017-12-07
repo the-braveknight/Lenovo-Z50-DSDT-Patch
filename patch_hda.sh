@@ -57,7 +57,7 @@ function createAppleHDAResources() {
         resources=AppleHDA_$1_Resources
     fi
 
-    if [[ "$3" == *"-xml" ]]; then
+    if [[ "$3" == "-xml" ]]; then
         extension=xml
     else
         extension=zml

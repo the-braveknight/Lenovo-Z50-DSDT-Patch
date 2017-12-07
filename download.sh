@@ -1,6 +1,6 @@
 function download() {
-    curl --location --silent --output /tmp/org.rehabman.download.txt https://bitbucket.org/RehabMan/$1/downloads/
-    scrape=$(grep -o -m 1 "RehabMan/$1/downloads/$2.*\.zip" /tmp/org.rehabman.download.txt|perl -ne 'print $1 if /(.*)\"/')
+    curl --silent --output /tmp/org.$1.download.txt --location https://bitbucket.org/$1/$2/downloads/
+    scrape=$(grep -o -m 1 "$1/$2/downloads/$3.*\.zip" /tmp/org.$1.download.txt | sed 's/".*//')
     echo Downloading $(basename $scrape)
     curl --remote-name --progress-bar --location https://bitbucket.org/$scrape
 }
@@ -9,22 +9,22 @@ rm -Rf ./downloads && mkdir ./downloads && cd ./downloads
 
 # Download kexts
 mkdir ./kexts && cd ./kexts
-download os-x-fakesmc-kozlek RehabMan-FakeSMC
-download os-x-realtek-network RehabMan-Realtek-Network
-download os-x-voodoo-ps2-controller RehabMan-Voodoo
-download os-x-acpi-battery-driver RehabMan-Battery
-download os-x-fake-pci-id RehabMan-FakePCIID
-download os-x-brcmpatchram RehabMan-BrcmPatchRAM
-download os-x-usb-inject-all RehabMan-USBInjectAll
-download os-x-eapd-codec-commander RehabMan-CodecCommander
-download lilu RehabMan-Lilu
-download intelgraphicsfixup RehabMan-IntelGraphicsFixup
-download ath9kfixup RehabMan-ATH9KFixup
+download RehabMan os-x-fakesmc-kozlek
+download RehabMan os-x-realtek-network
+download RehabMan os-x-voodoo-ps2-controller
+download RehabMan os-x-acpi-battery-driver
+download RehabMan os-x-fake-pci-id
+download RehabMan os-x-brcmpatchram
+download RehabMan os-x-usb-inject-all
+download RehabMan os-x-eapd-codec-commander
+download RehabMan lilu
+download RehabMan intelgraphicsfixup
+download RehabMan ath9kfixup
 cd ..
 
 # Download tools
 mkdir ./tools && cd ./tools
-download os-x-maciasl-patchmatic RehabMan-patchmatic
-download os-x-maciasl-patchmatic RehabMan-MaciASL
-download acpica iasl iasl.zip
+download RehabMan os-x-maciasl-patchmatic
+download RehabMan os-x-maciasl-patchmatic RehabMan-patchmatic
+download RehabMan acpica
 cd ..
