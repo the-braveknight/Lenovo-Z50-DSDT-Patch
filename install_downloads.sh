@@ -90,7 +90,7 @@ extractAll ./downloads
 # Install all apps (*.app) within ./downloads folder
 installApps ./downloads
 
-# Install all binaries withing ./downloads folder
+# Install all binaries within ./downloads folder
 installBinaries ./downloads
 
 # Install all the kexts within ./downloads & ./kexts folders that are not in the 'exceptions'
@@ -118,5 +118,4 @@ HDA=CX20751
 installKext AppleHDA_$HDA.kext
 
 # Repair permissions & update kernel cahce
-echo Updating kernel cache...
-sudo kextcache -i / 2>/dev/null
+sudo kextcache -i /

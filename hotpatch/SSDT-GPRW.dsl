@@ -1,4 +1,6 @@
 // For solving instant wake by hooking GPRW
+// With the current setup, no instant wake issues appear to exist
+// This SSDT is used to disable wake on USB which can be annoying on laptops
 
 DefinitionBlock("", "SSDT", 2, "hack", "GPRW", 0)
 {

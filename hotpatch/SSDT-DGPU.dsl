@@ -1,6 +1,6 @@
 // SSDT-NVDA: Disable nVidia
 
-DefinitionBlock ("", "SSDT", 2, "hack", "NVDA", 0)
+DefinitionBlock ("", "SSDT", 2, "hack", "DGPU", 0)
 {
     External(_SB.PCI0, DeviceObj)
     Scope(_SB.PCI0)

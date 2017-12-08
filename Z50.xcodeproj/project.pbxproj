@@ -22,7 +22,7 @@
 		B83F12031DA17EA800CAE62A /* SSDT-USB.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-USB.dsl"; path = "hotpatch/SSDT-USB.dsl"; sourceTree = "<group>"; };
 		B83F12041DA17EA800CAE62A /* SSDT-XOSI.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-XOSI.dsl"; path = "hotpatch/SSDT-XOSI.dsl"; sourceTree = "<group>"; };
 		B871C3871DC488A900C86534 /* SSDT-PS2K.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-PS2K.dsl"; path = "hotpatch/SSDT-PS2K.dsl"; sourceTree = "<group>"; };
-		B897A3581E5A013100030FB9 /* SSDT-NVDA.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-NVDA.dsl"; path = "hotpatch/SSDT-NVDA.dsl"; sourceTree = "<group>"; };
+		B897A3581E5A013100030FB9 /* SSDT-DGPU.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-DGPU.dsl"; path = "hotpatch/SSDT-DGPU.dsl"; sourceTree = "<group>"; };
 		B8AF85041E03E8FF006076A7 /* SSDT-UIAC.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-UIAC.dsl"; path = "hotpatch/SSDT-UIAC.dsl"; sourceTree = "<group>"; };
 		B8B0B0DB1DC4FCDD000FC6AE /* SSDT-GPRW.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-GPRW.dsl"; path = "hotpatch/SSDT-GPRW.dsl"; sourceTree = "<group>"; };
 		B8E4E3461EC309E7008EAB79 /* SSDT-PM.dsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "SSDT-PM.dsl"; path = "hotpatch/SSDT-PM.dsl"; sourceTree = "<group>"; };
@@ -72,7 +72,7 @@
 				B83F12021DA17EA800CAE62A /* SSDT-PNLF.dsl */,
 				B871C3871DC488A900C86534 /* SSDT-PS2K.dsl */,
 				B8037A461DAD27BC0000EA48 /* SSDT-IGPU.dsl */,
-				B897A3581E5A013100030FB9 /* SSDT-NVDA.dsl */,
+				B897A3581E5A013100030FB9 /* SSDT-DGPU.dsl */,
 				B83F11FF1DA17EA800CAE62A /* SSDT-HDEF.dsl */,
 				B83F11FE1DA17EA800CAE62A /* SSDT-HDAU.dsl */,
 				B83F11FC1DA17EA800CAE62A /* SSDT-BATT.dsl */,

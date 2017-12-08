@@ -4,32 +4,20 @@ DefinitionBlock("", "SSDT", 2, "hack", "PS2K", 0)
 {   
     // Enabling brightness keys
     External(_SB.PCI0.LPCB.EC, DeviceObj)
-    External(PS2V, FieldUnitObj)
     External(_SB.PCI0.LPCB.PS2K, DeviceObj)
     Scope(_SB.PCI0.LPCB.EC) // brightness buttons
     {
+        External(PS2K, DeviceObj)
         Method (_Q11) // Brightness down
         {
-            If (PS2V == 2) // If the touchpad is Synaptics & using RehabMan's VoodooPS2 driver...
-            {
-                Notify (PS2K, 0x0405)
-            }
-            Else // If the touchpad is ELAN/Other & using EMlyDinEsH's PS2 driver...
-            {
-                Notify (PS2K, 0x20)
-            }
+            Notify (PS2K, 0x0405) // For VoodooPS2Controller.kext (by RehabMan)
+            Notify (PS2K, 0x20) // For ApplePS2SmartTouchPad.kext (by EMlyDinEsH)
         }
         
         Method (_Q12) // Btightness up
         {
-            If (PS2V == 2) // If the touchpad is Synaptics & using RehabMan's VoodooPS2 driver...
-            {
-                Notify (PS2K, 0x0406)
-            }
-            Else // If the touchpad is ELAN/Other & using EMlyDinEsH's PS2 driver...
-            {
-                Notify (PS2K, 0x10)
-            }
+            Notify (PS2K, 0x0406) // For VoodooPS2Controller.kext (by RehabMan)
+            Notify (PS2K, 0x10) // For ApplePS2SmartTouchPad.kext (by EMlyDinEsH)
         }
     }
 }
