@@ -84,17 +84,20 @@ function uninstallKext() {
     sudo rm -Rf $(findKext $1 /System/Library/Extensions /Library/Extensions)
 }
 
-# Extract all zip files within ./downloads folder
-extractAll ./downloads
+# Check for ./downloads directory
+if [ -d ./downloads ]; then
+    # Extract all zip files within ./downloads folder
+    extractAll ./downloads
 
-# Install all apps (*.app) within ./downloads folder
-installApps ./downloads
+    # Install all apps (*.app) within ./downloads folder
+    installApps ./downloads
 
-# Install all binaries within ./downloads folder
-installBinaries ./downloads
+    # Install all binaries within ./downloads folder
+    installBinaries ./downloads
 
-# Install all the kexts within ./downloads & ./kexts folders that are not in the 'exceptions'
-installKexts ./downloads ./kexts
+    # Install all the kexts within ./downloads & ./kexts folders that are not in the 'exceptions'
+    installKexts ./downloads ./kexts
+fi
 
 # Intel HD 4400 needs Lilu.kext+IntelGraphicsFixup.kext on macOS 10.12
 if [[ $os_version -ge 12 ]]; then
